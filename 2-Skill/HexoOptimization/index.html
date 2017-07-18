@@ -1,0 +1,32 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Hexo 双线部署及性能优化 · Woonden Bar</title><meta name="description" content="Hexo 双线部署及性能优化 - Aiden Zhao"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/blog/favicon.png"><link rel="stylesheet" href="/blog/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="Woonden Bar"></head><body><div class="wrap"><header><a href="/blog/" class="logo-link"><img src="/blog/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/blog/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/blog/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="http://weibo.com/sunchongsheng" target="_blank" class="nav-list-link">WEIBO</a></li><li class="nav-list-item"><a href="https://github.com/pinggod" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/blog/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">Hexo 双线部署及性能优化</h1><div class="post-info">Jan 30, 2017</div><div class="post-content"><p>本文旨在从两个方面对 Hexo 的访问速度进行优化。</p>
+<h2 id="为主题设置外链字体库"><a href="#为主题设置外链字体库" class="headerlink" title="为主题设置外链字体库"></a>为主题设置外链字体库</h2><p>我使用的主题是 NexT，其字体默认使用 Google Fonts，而 Google Fonts 在国内的访问速度极其蛋疼，这也直接导致大陆地区加载博客极其缓慢。好在 Hexo 给出了自定义字体的选项，我们可以将字体库的引用改为国内 CDN。NexT 字体设置的官方文档：</p>
+<blockquote>
+<p><a href="http://theme-next.iissnan.com/theme-settings.html#fonts-customization" target="_blank" rel="external">http://theme-next.iissnan.com/theme-settings.html#fonts-customization</a></p>
+</blockquote>
+<p>打开 NexT 主题的设置文件 <code>_config.yml</code>，通过搜索找到 <code>font:</code> 这一栏，在 <code>host</code> 中，填入您找到的国内 CDN。目前我在使用的是下面这个：</p>
+<blockquote>
+<p><a href="https://fonts.css.network/" target="_blank" rel="external">https://fonts.css.network/</a></p>
+</blockquote>
+<p>此方法适用于其他使用 Google Fonts 的主题。</p>
+<h2 id="Hexo-双线部署"><a href="#Hexo-双线部署" class="headerlink" title="Hexo 双线部署"></a>Hexo 双线部署</h2><p><strong>NOTICE HERE</strong>: 现在 Coding.net 非会员用户创建的 Coding Pages 在访问时时会加入几秒钟的广告，请谨慎考虑是否使用</p>
+<p>在我之前写过的“Hexo 不完全指南”一文中，我仅使用了 Github 作为文章部署地址，这将导致国内用户访问我的博客不会特别快。解决方案就是将部署地址改为国内的 Coding，可是这将导致国外用户访问速度变慢。其实，我们可以通过一些简单的设置，实现国内访问 Coding 服务器，国外访问 Github 服务器的效果。</p>
+<p>在此之前，我们需要做几个准备工作：</p>
+<ol>
+<li>注册 Coding 账号</li>
+<li>新建一个名为 <code>[user_name].coding.me</code> 的公开仓库，并开启 pages 服务</li>
+<li>绑定自定义域名</li>
+<li>将 Coding 通过 SSH 密钥的方式与本机连接</li>
+</ol>
+<p>上述工作完成后，我们就可以开始下面的设置了。</p>
+<h3 id="设置部署地址"><a href="#设置部署地址" class="headerlink" title="设置部署地址"></a>设置部署地址</h3><p>打开 Hexo 的 <code>_config.yml</code> 文件，将 <code>deploy</code> 这一栏改为如下代码，格式为 <code>名称： 仓库,分支</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repo:</div><div class="line">    github: git@github.com:[user_name]/[user_name].github.io.git,master</div><div class="line">    coding: git@git.coding.net:[user_name]/[user_name].coding.me.git,master</div></pre></td></tr></table></figure>
+<h3 id="设置域名解析"><a href="#设置域名解析" class="headerlink" title="设置域名解析"></a>设置域名解析</h3><p>我的域名目前托管在阿里云，并且可以自由选择 <code>解析路线</code>。如果您的域名供应商处没有提供此设置，可以考虑将域名 DNS 改为阿里云的 DNS 服务器。</p>
+<p>在解析控制台中，将指向 Github Pages 的解析路线设置为 <code>海外</code>，将指向 Coding Pages 的解析路线设置为 <code>默认</code>，依次保存即可。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/HexoOptimization.png" alt=""></p>
+<h2 id="一些链接"><a href="#一些链接" class="headerlink" title="一些链接"></a>一些链接</h2><ul>
+<li>NexT 主题官网：<a href="http://theme-next.iissnan.com/" target="_blank" rel="external">http://theme-next.iissnan.com/</a></li>
+<li>常用前端公共库 CDN 服务：<a href="https://css.net/" target="_blank" rel="external">https://css.net/</a></li>
+<li>极客族公共加速服务：<a href="https://cdn.geekzu.org/" target="_blank" rel="external">https://cdn.geekzu.org/</a></li>
+</ul>
+<p>最后，对所有开源主义者和公益项目提供者表示由衷的感谢。</p>
+</div></article></div></main><footer><div class="paginator"><a href="/blog/3-Essay/AlcoholAndPeople/" class="prev">PREV</a><a href="/blog/2-Skill/SSGuide/" class="next">NEXT</a></div><div class="copyright"><p>© 2015 - 2017 <a href="http://yoursite.com">Aiden Zhao</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>
