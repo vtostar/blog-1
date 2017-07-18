@@ -1,0 +1,75 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Windows 下撸 PHP 的最佳实践 · Hexo</title><meta name="description" content="Windows 下撸 PHP 的最佳实践 - John Doe"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/blog/favicon.png"><link rel="stylesheet" href="/blog/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="Hexo"></head><body><div class="wrap"><header><a href="/blog/" class="logo-link"><img src="/blog/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/blog/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/blog/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="http://weibo.com/sunchongsheng" target="_blank" class="nav-list-link">WEIBO</a></li><li class="nav-list-item"><a href="https://github.com/pinggod" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/blog/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">Windows 下撸 PHP 的最佳实践</h1><div class="post-info">Jul 17, 2017</div><div class="post-content"><p>撸 PHP 代码讲究的是一个 <del>说学逗唱</del> 开发环境与运行环境的大一统。而 Windows 平台天生与 PHP 相性不合，怎么在 Windows 下撸 PHP 也算是一门学问。谨以此文献给和我一样买不起 mac，玩不转 Gnome，又离不开 Windows 的 phper。</p>
+<a id="more"></a>
+<h2 id="为什么不使用-vagrant"><a href="#为什么不使用-vagrant" class="headerlink" title="为什么不使用 vagrant"></a>为什么不使用 vagrant</h2><p>现成的 vagrant 是好用，但毕竟不是自己撸出来的东西，不一定对自己的胃口。而且对于个人开发者，相较于再花时间学习 vagrant ，还是直接动手撸一套自己的环境更加简单。</p>
+<h2 id="大致思路"><a href="#大致思路" class="headerlink" title="大致思路"></a>大致思路</h2><ul>
+<li>代码写在本地，跑在虚拟机</li>
+<li>Git, npm, composer 等工具全部在 Windows 上使用</li>
+<li>使用端口转发技术和文件共享技术将虚拟机变成自己的服务器</li>
+</ul>
+<h2 id="推荐使用的虚拟机和系统"><a href="#推荐使用的虚拟机和系统" class="headerlink" title="推荐使用的虚拟机和系统"></a>推荐使用的虚拟机和系统</h2><ul>
+<li><code>VirtualBox</code>: <a href="https://www.virtualbox.org/" target="_blank" rel="external">https://www.virtualbox.org/</a></li>
+<li><code>Ubuntu Server</code>: <a href="https://www.ubuntu.com/download/server" target="_blank" rel="external">https://www.ubuntu.com/download/server</a></li>
+</ul>
+<h2 id="前期准备工作"><a href="#前期准备工作" class="headerlink" title="前期准备工作"></a>前期准备工作</h2><h3 id="在-VirtualBox-中安装-Ubuntu-Server"><a href="#在-VirtualBox-中安装-Ubuntu-Server" class="headerlink" title="在 VirtualBox 中安装 Ubuntu Server"></a>在 VirtualBox 中安装 Ubuntu Server</h3><p>略</p>
+<h3 id="设置端口转发"><a href="#设置端口转发" class="headerlink" title="设置端口转发"></a>设置端口转发</h3><p>VirtualBox 中的虚拟机默认使用 NAT 模式进行网络连接，此时虚拟机的 ipv4 地址是一个不能被 ping 通的虚拟地址。而我们想要让虚拟机作为我们的服务器，必须保证 Windows 和虚拟机之间的通信。有两种解决方案：</p>
+<ul>
+<li>使用 VirtualBox 的桥接模式。此模式下虚拟机将使用物理机的真实网卡，相当于一台真实的计算机。此时虚拟机将占用一个真实的局域网 ip 地址</li>
+<li>使用 NAT 模式下的端口转发。这是由 VirtualBox 提供的一个功能，可以将本机的 ip 地址通过监听自定义端口的方式转发至虚拟机，实现通信</li>
+</ul>
+<p>由于桥接模式下虚拟机的 ip 会随着真实机的 ip 地址更改而改变，尤其是当我们的物理机经常更换工作地点的时候，那你每次 ssh 连接几乎都要查看新的 ip 地址 (当然也可以选择固定 ip，但每次只能固定某一个 ip 网段的)。但端口转发就仅需一次配置，此后就非常省心了。本文强烈推荐采用端口转发模式。</p>
+<p>使用方法：</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/WinLuPHP_1.png" alt="WinLuPHP_1"></p>
+<h3 id="使用-ssh-连接虚拟机"><a href="#使用-ssh-连接虚拟机" class="headerlink" title="使用 ssh 连接虚拟机"></a>使用 ssh 连接虚拟机</h3><p>Ubuntu Server 系统自带了 openssl 软件，因此可以直接使用 ssh。如果你使用了其他系统，可能需要先安装 openssl。</p>
+<p>选一款你喜欢的 ssh 连接软件，如 putty，连接你的虚拟机。<code>Host Name</code> 为 <code>localhost</code>，端口设置为端口转发中自己填写的端口。比如按照我的设置，此处就是 2222。</p>
+<h3 id="换源！换源！换源！"><a href="#换源！换源！换源！" class="headerlink" title="换源！换源！换源！"></a>换源！换源！换源！</h3><p>首先吼一句，<strong>fuck gfw</strong>。然后进入正题。</p>
+<p>此处推荐使用清华大学的 Ubuntu 镜像。吃水不忘挖井人，在此对清华大学开源软件镜像站表示由衷的感谢。网站地址：</p>
+<blockquote>
+<p><a href="https://mirror.tuna.tsinghua.edu.cn/help/ubuntu/" target="_blank" rel="external">https://mirror.tuna.tsinghua.edu.cn/help/ubuntu/</a></p>
+</blockquote>
+<p>首先备份原始的源文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak</div></pre></td></tr></table></figure>
+<p>再修改 <code>sources.list</code> 文件中的内容为清华大学给定的源。</p>
+<p>更新本地源列表：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt update</div></pre></td></tr></table></figure>
+<p>(可选) 更新软件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt upgrade</div></pre></td></tr></table></figure>
+<h2 id="搭建-lnmp-环境"><a href="#搭建-lnmp-环境" class="headerlink" title="搭建 lnmp 环境"></a>搭建 lnmp 环境</h2><h3 id="安装-nginx"><a href="#安装-nginx" class="headerlink" title="安装 nginx"></a>安装 nginx</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install nginx</div></pre></td></tr></table></figure>
+<h3 id="安装-mysql"><a href="#安装-mysql" class="headerlink" title="安装 mysql"></a>安装 mysql</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install mysql-server</div></pre></td></tr></table></figure>
+<p>安装过程中需要设置 mysql 的 root 用户的初始密码</p>
+<h3 id="将-mysql-的默认编码设置为-utf-8"><a href="#将-mysql-的默认编码设置为-utf-8" class="headerlink" title="将 mysql 的默认编码设置为 utf-8"></a>将 mysql 的默认编码设置为 utf-8</h3><p>编辑 mysql 的配置文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo vuim /etc/mysql/conf.d/mysql.cnf</div></pre></td></tr></table></figure>
+<p>插入字符编码的相关设置：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[client]</div><div class="line">default-character-set=utf8</div><div class="line"></div><div class="line">[mysqld]</div><div class="line">character-set-server=utf8</div><div class="line"></div><div class="line">[mysql]</div><div class="line">default-character-set=utf8</div></pre></td></tr></table></figure>
+<p>启动 mysql 服务:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo service mysql start</div></pre></td></tr></table></figure>
+<p>登录 mysql，用以下命令查看当前字符编码：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SHOW VARIABLES LIKE 'character%';</div></pre></td></tr></table></figure>
+<p>如果除了 <code>character_set_filesystem</code> 为 <code>binary</code>，其余都为 <code>utf8</code>，即表示设置成功。</p>
+<h3 id="使-mysql-的端口转发可用"><a href="#使-mysql-的端口转发可用" class="headerlink" title="使 mysql 的端口转发可用"></a>使 mysql 的端口转发可用</h3><p>mysql 的配置中默认禁止来自 <code>127.0.0.1</code> 的连接，因此我们修改 mysql 的配置使端口转发可用。</p>
+<p>编辑 mysqld.cnf:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf</div></pre></td></tr></table></figure>
+<p>搜索并注释 <code>bind-address = 127.0.0.1</code></p>
+<h3 id="安装-php-及其必要扩展"><a href="#安装-php-及其必要扩展" class="headerlink" title="安装 php 及其必要扩展"></a>安装 php 及其必要扩展</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install php7.0 php7.0-mysql php7.0-fpm php7.0-dev php7.0-mbstring</div></pre></td></tr></table></figure>
+<h3 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">service nginx start</div><div class="line">service mysql start</div><div class="line">service php7.0-fpm start</div></pre></td></tr></table></figure>
+<h3 id="检验劳动成果"><a href="#检验劳动成果" class="headerlink" title="检验劳动成果"></a>检验劳动成果</h3><p>在 windows 的浏览器中输入 <code>localhost:8008</code>，如果出现 <code>Welcome to nginx!</code>，则表示上述步骤完全没有问题。</p>
+<h2 id="lnmp-的一些配置"><a href="#lnmp-的一些配置" class="headerlink" title="lnmp 的一些配置"></a>lnmp 的一些配置</h2><h3 id="nmp-杂七杂八的路径"><a href="#nmp-杂七杂八的路径" class="headerlink" title="nmp 杂七杂八的路径"></a>nmp 杂七杂八的路径</h3><p>配置文件路径：</p>
+<ul>
+<li><code>nginx</code>: <code>/etc/nginx/</code></li>
+<li><code>mysql</code>: <code>/etc/mysql/conf.d/my.cnf</code></li>
+<li><code>php</code>: <code>/etc/php/7.0/fpm/php.ini</code></li>
+</ul>
+<p>nginx 的默认站点: <code>/var/www/html</code></p>
+<h3 id="如何设置-nginx-的虚拟主机？"><a href="#如何设置-nginx-的虚拟主机？" class="headerlink" title="如何设置 nginx 的虚拟主机？"></a>如何设置 nginx 的虚拟主机？</h3><p>在 <code>/etc/nginx/</code> 目录下有 <code>sites-available</code> 和 <code>sites-enabled</code> 两个目录。其中 <code>sites-available</code> 表示可用的主机配置文件，<code>sites-enabled</code> 表示启用的主机配置文件。</p>
+<p>当需要创建虚拟主机时，我们可以在 <code>sites-available</code> 目录下设置 nginx 的虚拟主机配置文件，在 <code>sites-enabled</code> 中创建一个软链接指向 <code>sites-available</code> 中的配置文件。</p>
+<h2 id="设置-VirtualBox-的共享文件夹"><a href="#设置-VirtualBox-的共享文件夹" class="headerlink" title="设置 VirtualBox 的共享文件夹"></a>设置 VirtualBox 的共享文件夹</h2><p>我们可以将本地的代码文件夹与虚拟机进行共享，那么我们在本地所有的修改就相当于通过 ftp 实时传输到了服务器上，保证我们看到的效果即时线上效果。</p>
+<h3 id="安装-VirtualBox-的扩展程序"><a href="#安装-VirtualBox-的扩展程序" class="headerlink" title="安装 VirtualBox 的扩展程序"></a>安装 VirtualBox 的扩展程序</h3><p>点击 VirtualBox 的 <code>Devices</code> -&gt; <code>Insert Guest Additions CD image</code> 选项，VirtualBox 将下载一个增强文件并自动插入 cd 介质。接着我们需要在虚拟机上挂载并安装 VirtualBox 的增强文件。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo mount /dev/cdrom /media</div><div class="line">cd /media</div><div class="line">sudo ./VBoxLinuxAdditions.run</div></pre></td></tr></table></figure>
+<p>等待安装完成后，取消挂载并弹出介质</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo umount /media</div><div class="line">eject</div></pre></td></tr></table></figure>
+<p>重启 Ubuntu 系统</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo reboot</div></pre></td></tr></table></figure>
+<h3 id="设置-Windows-上的共享文件夹"><a href="#设置-Windows-上的共享文件夹" class="headerlink" title="设置 Windows 上的共享文件夹"></a>设置 Windows 上的共享文件夹</h3><h3 id="将共享文件夹挂载至虚拟机上"><a href="#将共享文件夹挂载至虚拟机上" class="headerlink" title="将共享文件夹挂载至虚拟机上"></a>将共享文件夹挂载至虚拟机上</h3><p>运行以下指令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mount -t vboxsf CodeHub /mnt/cdhb</div></pre></td></tr></table></figure>
+<p>其中，<code>CodeHub</code> 是指上一步在 VirtualBox 中设置的共享文件夹名，<code>/mnt/cdhb</code> 是虚拟机上的挂载路径。注意：<code>/mnt/cdhb</code> 文件夹必须事先手动创建</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>至此，属于你个人的 PHP 开发环境就搭建完毕了。开心的吃个黄焖鸡吧！</p>
+</div></article></div></main><footer><div class="paginator"><a href="/blog/2017/06/23/1-Life/MyBirthdayOf2017/" class="next">NEXT</a></div><div class="copyright"><p>© 2015 - 2017 <a href="http://yoursite.com">John Doe</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>

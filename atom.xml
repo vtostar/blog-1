@@ -1,0 +1,1143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Hexo</title>
+  
+  <link href="/blog/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2017-07-18T00:41:55.466Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>John Doe</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Windows 下撸 PHP 的最佳实践</title>
+    <link href="http://yoursite.com/2017/07/17/0-Mess/win-lu-php/"/>
+    <id>http://yoursite.com/2017/07/17/0-Mess/win-lu-php/</id>
+    <published>2017-07-16T16:00:00.000Z</published>
+    <updated>2017-07-18T00:41:55.466Z</updated>
+    
+    <content type="html"><![CDATA[<p>撸 PHP 代码讲究的是一个 <del>说学逗唱</del> 开发环境与运行环境的大一统。而 Windows 平台天生与 PHP 相性不合，怎么在 Windows 下撸 PHP 也算是一门学问。谨以此文献给和我一样买不起 mac，玩不转 Gnome，又离不开 Windows 的 phper。</p>
+<a id="more"></a>
+<h2 id="为什么不使用-vagrant"><a href="#为什么不使用-vagrant" class="headerlink" title="为什么不使用 vagrant"></a>为什么不使用 vagrant</h2><p>现成的 vagrant 是好用，但毕竟不是自己撸出来的东西，不一定对自己的胃口。而且对于个人开发者，相较于再花时间学习 vagrant ，还是直接动手撸一套自己的环境更加简单。</p>
+<h2 id="大致思路"><a href="#大致思路" class="headerlink" title="大致思路"></a>大致思路</h2><ul>
+<li>代码写在本地，跑在虚拟机</li>
+<li>Git, npm, composer 等工具全部在 Windows 上使用</li>
+<li>使用端口转发技术和文件共享技术将虚拟机变成自己的服务器</li>
+</ul>
+<h2 id="推荐使用的虚拟机和系统"><a href="#推荐使用的虚拟机和系统" class="headerlink" title="推荐使用的虚拟机和系统"></a>推荐使用的虚拟机和系统</h2><ul>
+<li><code>VirtualBox</code>: <a href="https://www.virtualbox.org/" target="_blank" rel="external">https://www.virtualbox.org/</a></li>
+<li><code>Ubuntu Server</code>: <a href="https://www.ubuntu.com/download/server" target="_blank" rel="external">https://www.ubuntu.com/download/server</a></li>
+</ul>
+<h2 id="前期准备工作"><a href="#前期准备工作" class="headerlink" title="前期准备工作"></a>前期准备工作</h2><h3 id="在-VirtualBox-中安装-Ubuntu-Server"><a href="#在-VirtualBox-中安装-Ubuntu-Server" class="headerlink" title="在 VirtualBox 中安装 Ubuntu Server"></a>在 VirtualBox 中安装 Ubuntu Server</h3><p>略</p>
+<h3 id="设置端口转发"><a href="#设置端口转发" class="headerlink" title="设置端口转发"></a>设置端口转发</h3><p>VirtualBox 中的虚拟机默认使用 NAT 模式进行网络连接，此时虚拟机的 ipv4 地址是一个不能被 ping 通的虚拟地址。而我们想要让虚拟机作为我们的服务器，必须保证 Windows 和虚拟机之间的通信。有两种解决方案：</p>
+<ul>
+<li>使用 VirtualBox 的桥接模式。此模式下虚拟机将使用物理机的真实网卡，相当于一台真实的计算机。此时虚拟机将占用一个真实的局域网 ip 地址</li>
+<li>使用 NAT 模式下的端口转发。这是由 VirtualBox 提供的一个功能，可以将本机的 ip 地址通过监听自定义端口的方式转发至虚拟机，实现通信</li>
+</ul>
+<p>由于桥接模式下虚拟机的 ip 会随着真实机的 ip 地址更改而改变，尤其是当我们的物理机经常更换工作地点的时候，那你每次 ssh 连接几乎都要查看新的 ip 地址 (当然也可以选择固定 ip，但每次只能固定某一个 ip 网段的)。但端口转发就仅需一次配置，此后就非常省心了。本文强烈推荐采用端口转发模式。</p>
+<p>使用方法：</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/WinLuPHP_1.png" alt="WinLuPHP_1"></p>
+<h3 id="使用-ssh-连接虚拟机"><a href="#使用-ssh-连接虚拟机" class="headerlink" title="使用 ssh 连接虚拟机"></a>使用 ssh 连接虚拟机</h3><p>Ubuntu Server 系统自带了 openssl 软件，因此可以直接使用 ssh。如果你使用了其他系统，可能需要先安装 openssl。</p>
+<p>选一款你喜欢的 ssh 连接软件，如 putty，连接你的虚拟机。<code>Host Name</code> 为 <code>localhost</code>，端口设置为端口转发中自己填写的端口。比如按照我的设置，此处就是 2222。</p>
+<h3 id="换源！换源！换源！"><a href="#换源！换源！换源！" class="headerlink" title="换源！换源！换源！"></a>换源！换源！换源！</h3><p>首先吼一句，<strong>fuck gfw</strong>。然后进入正题。</p>
+<p>此处推荐使用清华大学的 Ubuntu 镜像。吃水不忘挖井人，在此对清华大学开源软件镜像站表示由衷的感谢。网站地址：</p>
+<blockquote>
+<p><a href="https://mirror.tuna.tsinghua.edu.cn/help/ubuntu/" target="_blank" rel="external">https://mirror.tuna.tsinghua.edu.cn/help/ubuntu/</a></p>
+</blockquote>
+<p>首先备份原始的源文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak</div></pre></td></tr></table></figure>
+<p>再修改 <code>sources.list</code> 文件中的内容为清华大学给定的源。</p>
+<p>更新本地源列表：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt update</div></pre></td></tr></table></figure>
+<p>(可选) 更新软件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt upgrade</div></pre></td></tr></table></figure>
+<h2 id="搭建-lnmp-环境"><a href="#搭建-lnmp-环境" class="headerlink" title="搭建 lnmp 环境"></a>搭建 lnmp 环境</h2><h3 id="安装-nginx"><a href="#安装-nginx" class="headerlink" title="安装 nginx"></a>安装 nginx</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install nginx</div></pre></td></tr></table></figure>
+<h3 id="安装-mysql"><a href="#安装-mysql" class="headerlink" title="安装 mysql"></a>安装 mysql</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install mysql-server</div></pre></td></tr></table></figure>
+<p>安装过程中需要设置 mysql 的 root 用户的初始密码</p>
+<h3 id="将-mysql-的默认编码设置为-utf-8"><a href="#将-mysql-的默认编码设置为-utf-8" class="headerlink" title="将 mysql 的默认编码设置为 utf-8"></a>将 mysql 的默认编码设置为 utf-8</h3><p>编辑 mysql 的配置文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo vuim /etc/mysql/conf.d/mysql.cnf</div></pre></td></tr></table></figure>
+<p>插入字符编码的相关设置：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[client]</div><div class="line">default-character-set=utf8</div><div class="line"></div><div class="line">[mysqld]</div><div class="line">character-set-server=utf8</div><div class="line"></div><div class="line">[mysql]</div><div class="line">default-character-set=utf8</div></pre></td></tr></table></figure>
+<p>启动 mysql 服务:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo service mysql start</div></pre></td></tr></table></figure>
+<p>登录 mysql，用以下命令查看当前字符编码：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SHOW VARIABLES LIKE 'character%';</div></pre></td></tr></table></figure>
+<p>如果除了 <code>character_set_filesystem</code> 为 <code>binary</code>，其余都为 <code>utf8</code>，即表示设置成功。</p>
+<h3 id="使-mysql-的端口转发可用"><a href="#使-mysql-的端口转发可用" class="headerlink" title="使 mysql 的端口转发可用"></a>使 mysql 的端口转发可用</h3><p>mysql 的配置中默认禁止来自 <code>127.0.0.1</code> 的连接，因此我们修改 mysql 的配置使端口转发可用。</p>
+<p>编辑 mysqld.cnf:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf</div></pre></td></tr></table></figure>
+<p>搜索并注释 <code>bind-address = 127.0.0.1</code></p>
+<h3 id="安装-php-及其必要扩展"><a href="#安装-php-及其必要扩展" class="headerlink" title="安装 php 及其必要扩展"></a>安装 php 及其必要扩展</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install php7.0 php7.0-mysql php7.0-fpm php7.0-dev php7.0-mbstring</div></pre></td></tr></table></figure>
+<h3 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">service nginx start</div><div class="line">service mysql start</div><div class="line">service php7.0-fpm start</div></pre></td></tr></table></figure>
+<h3 id="检验劳动成果"><a href="#检验劳动成果" class="headerlink" title="检验劳动成果"></a>检验劳动成果</h3><p>在 windows 的浏览器中输入 <code>localhost:8008</code>，如果出现 <code>Welcome to nginx!</code>，则表示上述步骤完全没有问题。</p>
+<h2 id="lnmp-的一些配置"><a href="#lnmp-的一些配置" class="headerlink" title="lnmp 的一些配置"></a>lnmp 的一些配置</h2><h3 id="nmp-杂七杂八的路径"><a href="#nmp-杂七杂八的路径" class="headerlink" title="nmp 杂七杂八的路径"></a>nmp 杂七杂八的路径</h3><p>配置文件路径：</p>
+<ul>
+<li><code>nginx</code>: <code>/etc/nginx/</code></li>
+<li><code>mysql</code>: <code>/etc/mysql/conf.d/my.cnf</code></li>
+<li><code>php</code>: <code>/etc/php/7.0/fpm/php.ini</code></li>
+</ul>
+<p>nginx 的默认站点: <code>/var/www/html</code></p>
+<h3 id="如何设置-nginx-的虚拟主机？"><a href="#如何设置-nginx-的虚拟主机？" class="headerlink" title="如何设置 nginx 的虚拟主机？"></a>如何设置 nginx 的虚拟主机？</h3><p>在 <code>/etc/nginx/</code> 目录下有 <code>sites-available</code> 和 <code>sites-enabled</code> 两个目录。其中 <code>sites-available</code> 表示可用的主机配置文件，<code>sites-enabled</code> 表示启用的主机配置文件。</p>
+<p>当需要创建虚拟主机时，我们可以在 <code>sites-available</code> 目录下设置 nginx 的虚拟主机配置文件，在 <code>sites-enabled</code> 中创建一个软链接指向 <code>sites-available</code> 中的配置文件。</p>
+<h2 id="设置-VirtualBox-的共享文件夹"><a href="#设置-VirtualBox-的共享文件夹" class="headerlink" title="设置 VirtualBox 的共享文件夹"></a>设置 VirtualBox 的共享文件夹</h2><p>我们可以将本地的代码文件夹与虚拟机进行共享，那么我们在本地所有的修改就相当于通过 ftp 实时传输到了服务器上，保证我们看到的效果即时线上效果。</p>
+<h3 id="安装-VirtualBox-的扩展程序"><a href="#安装-VirtualBox-的扩展程序" class="headerlink" title="安装 VirtualBox 的扩展程序"></a>安装 VirtualBox 的扩展程序</h3><p>点击 VirtualBox 的 <code>Devices</code> -&gt; <code>Insert Guest Additions CD image</code> 选项，VirtualBox 将下载一个增强文件并自动插入 cd 介质。接着我们需要在虚拟机上挂载并安装 VirtualBox 的增强文件。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo mount /dev/cdrom /media</div><div class="line">cd /media</div><div class="line">sudo ./VBoxLinuxAdditions.run</div></pre></td></tr></table></figure>
+<p>等待安装完成后，取消挂载并弹出介质</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo umount /media</div><div class="line">eject</div></pre></td></tr></table></figure>
+<p>重启 Ubuntu 系统</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo reboot</div></pre></td></tr></table></figure>
+<h3 id="设置-Windows-上的共享文件夹"><a href="#设置-Windows-上的共享文件夹" class="headerlink" title="设置 Windows 上的共享文件夹"></a>设置 Windows 上的共享文件夹</h3><h3 id="将共享文件夹挂载至虚拟机上"><a href="#将共享文件夹挂载至虚拟机上" class="headerlink" title="将共享文件夹挂载至虚拟机上"></a>将共享文件夹挂载至虚拟机上</h3><p>运行以下指令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mount -t vboxsf CodeHub /mnt/cdhb</div></pre></td></tr></table></figure>
+<p>其中，<code>CodeHub</code> 是指上一步在 VirtualBox 中设置的共享文件夹名，<code>/mnt/cdhb</code> 是虚拟机上的挂载路径。注意：<code>/mnt/cdhb</code> 文件夹必须事先手动创建</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>至此，属于你个人的 PHP 开发环境就搭建完毕了。开心的吃个黄焖鸡吧！</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;撸 PHP 代码讲究的是一个 &lt;del&gt;说学逗唱&lt;/del&gt; 开发环境与运行环境的大一统。而 Windows 平台天生与 PHP 相性不合，怎么在 Windows 下撸 PHP 也算是一门学问。谨以此文献给和我一样买不起 mac，玩不转 Gnome，又离不开 Windows 的 phper。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="0-Mess" scheme="http://yoursite.com/categories/0-Mess/"/>
+    
+    
+      <category term="original" scheme="http://yoursite.com/tags/original/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>落雨记</title>
+    <link href="http://yoursite.com/2017/06/23/1-Life/MyBirthdayOf2017/"/>
+    <id>http://yoursite.com/2017/06/23/1-Life/MyBirthdayOf2017/</id>
+    <published>2017-06-22T16:00:00.000Z</published>
+    <updated>2017-07-12T02:09:28.884Z</updated>
+    
+    <content type="html"><![CDATA[<p>昨天 6.22，是我生日。</p>
+<p>北京送给我的礼物是一场飘忽不定而连绵不绝的大雨，有如操着地道京片儿的白庙村老炮儿们攒在一块吹逼一般，时而气势磅礴，如雷贯耳；时而如怨如慕，余音袅袅。</p>
+<p>人行道则送了莫及脚踝的积水，蜗居旁的小道也是毫不吝啬，只不过小道的水中怕是夹杂了不少犬类的排泄物。</p>
+<p>雨水不能荡涤肮脏，只能让本就肮脏的地方变得更加泥泞。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;昨天 6.22，是我生日。&lt;/p&gt;
+&lt;p&gt;北京送给我的礼物是一场飘忽不定而连绵不绝的大雨，有如操着地道京片儿的白庙村老炮儿们攒在一块吹逼一般，时而气势磅礴，如雷贯耳；时而如怨如慕，余音袅袅。&lt;/p&gt;
+&lt;p&gt;人行道则送了莫及脚踝的积水，蜗居旁的小道也是毫不吝啬，只不过小道的水
+    
+    </summary>
+    
+      <category term="1-Life" scheme="http://yoursite.com/categories/1-Life/"/>
+    
+    
+      <category term="original" scheme="http://yoursite.com/tags/original/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>VSCode 插件梳理</title>
+    <link href="http://yoursite.com/2017/04/10/2-Skill/VSCodeGuide/"/>
+    <id>http://yoursite.com/2017/04/10/2-Skill/VSCodeGuide/</id>
+    <published>2017-04-09T16:00:00.000Z</published>
+    <updated>2017-07-12T02:09:28.940Z</updated>
+    
+    <content type="html"><![CDATA[<p>我的 VSCode 配置，不定时更新。</p>
+<h2 id="EXTENSIONS"><a href="#EXTENSIONS" class="headerlink" title="EXTENSIONS"></a>EXTENSIONS</h2><ul>
+<li><code>Auto Rename Tag</code>: 改变一对标签的其中一个，另一个会跟着改变</li>
+<li><code>Beautify css/sass/scss/less</code>: 目前的 vscode 自带了格式化 html 和 js 的功能，唯独少了 css，故装之</li>
+<li><code>Better Merge</code>: merge 操作出现冲突时，可以在冲突区域通过简单的点击快速解决冲突</li>
+<li><code>CSS Peek</code>: 在 html 中编辑 class 中的 css 代码，也可以快速跳转至相应样式名所在的位置</li>
+<li><code>EditorConfig for VS Code</code>: 为当前项目添加 .editorconfig</li>
+<li><code>Git Blame</code>: 在状态栏显示当前行代码的提交信息</li>
+<li><code>Git History</code>: 查看 git log，美观且强大</li>
+<li><code>gitignore</code>: 为当前项目添加 .gitignore</li>
+<li><code>Indenticator</code>: 高亮当前行的缩进线</li>
+<li><code>IntelliSense for CSS class name</code>: 在书写 html 代码时自动补全已有的 css 名。不过我一般都用 emmet 语法写标签了，不太能用得着这玩意</li>
+<li><code>Path Intellisense</code>: 自动补全文件路径</li>
+<li><code>phpfmt</code>: 格式化 php 代码，不需要自行下载 php-cs-fixer</li>
+<li><code>Rainbow Brackets</code>: 彩色显示括号，便于区分括号归属</li>
+<li><code>Settings Sync</code>: 将插件和配置同步至 Gist</li>
+<li><code>snippet-creator</code>: 快速创建代码片段</li>
+<li><code>View In Browser</code>: 通过快捷键在默认浏览器中打开 html 文件</li>
+<li><code>vscode-icons</code>: 侧边栏文件图标</li>
+<li><code>WakaTime</code>: 统计代码书写情况</li>
+</ul>
+<h2 id="THEMES"><a href="#THEMES" class="headerlink" title="THEMES"></a>THEMES</h2><ul>
+<li><code>Monokai Dimmed</code>: 默认插件之一。js 配色美到不行，是我使用时间最长的主题</li>
+<li><code>Railgun Theme</code>: 目前在使用的主力主题，含有三个 scheme</li>
+<li><code>Darktooth Theme</code>: 配色偏暗，喜欢复古风格的朋友可以试试</li>
+<li><code>Material Theme</code>: VSCode 主题中下载量最高的一个，整体素质不错，但个人认为其配色太过鲜艳，不适合 coding</li>
+</ul>
+<h2 id="SETTINGS"><a href="#SETTINGS" class="headerlink" title="SETTINGS"></a>SETTINGS</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">* @file   VSCode Main Settings</div><div class="line">* @author zy(i@zyis.me)</div><div class="line">* @date   last update in 2017.05.03</div><div class="line">*/</div><div class="line">/**</div><div class="line">  * ===================================</div><div class="line">  * Editor</div><div class="line">  * ===================================</div><div class="line">  */</div><div class="line">&quot;editor.fontFamily&quot;: &quot;&apos;Source Code Pro&apos;, &apos;Consolas&apos;, &apos;Courier New&apos;, &apos;monospace&apos;&quot;,</div><div class="line">&quot;editor.fontWeight&quot;: &quot;normal&quot;,</div><div class="line">&quot;editor.fontSize&quot;: 14,</div><div class="line">&quot;editor.lineHeight&quot;: 16,</div><div class="line">&quot;editor.lineNumbers&quot;: &quot;on&quot;,</div><div class="line">&quot;editor.tabSize&quot;: 2,</div><div class="line">&quot;editor.minimap.enabled&quot;: true,</div><div class="line">&quot;editor.wordWrap&quot;: &quot;on&quot;,</div><div class="line">&quot;editor.quickSuggestions&quot;: &#123;</div><div class="line">  &quot;other&quot;: true,</div><div class="line">  &quot;comments&quot;: false,</div><div class="line">  &quot;strings&quot;: false</div><div class="line">&#125;,</div><div class="line">&quot;editor.formatOnType&quot;: true,</div><div class="line">&quot;editor.formatOnPaste&quot;: true,</div><div class="line">&quot;editor.cursorBlinking&quot;: &quot;phase&quot;,</div><div class="line">&quot;editor.cursorStyle&quot;: &quot;underline&quot;,</div><div class="line">&quot;editor.mouseWheelZoom&quot;: false,</div><div class="line">&quot;editor.fontLigatures&quot;: true,</div><div class="line">&quot;editor.renderWhitespace&quot;: &quot;boundary&quot;,</div><div class="line">&quot;editor.renderIndentGuides&quot;: true,</div><div class="line">&quot;editor.renderLineHighlight&quot;: &quot;gutter&quot;,</div><div class="line">&quot;editor.dragAndDrop&quot;: true,</div><div class="line">&quot;editor.formatOnSave&quot;: false,</div><div class="line">/**</div><div class="line">  * ===================================</div><div class="line">  * Workbench</div><div class="line">  * ===================================</div><div class="line">  */</div><div class="line">&quot;workbench.welcome.enabled&quot;: true,</div><div class="line">&quot;workbench.colorTheme&quot;: &quot;Railgun&quot;,</div><div class="line">&quot;workbench.iconTheme&quot;: &quot;vscode-icons&quot;,</div><div class="line">// ! Notes</div><div class="line">// Leftest: &quot;activityBarBackground&quot;</div><div class="line">// Source tree: &quot;sideBarBackground&quot;</div><div class="line">// Main Body: &quot;editorBackground&quot;</div><div class="line">// Cursor: &quot;editorCursor&quot;</div><div class="line">// ! end Notes</div><div class="line">&quot;workbench.experimental.colorCustomizations&quot;: &#123;</div><div class="line">  &quot;editorCursor&quot;: &quot;#b7472a&quot;,</div><div class="line">  &quot;statusBarBackground&quot;: &quot;#121212&quot;,</div><div class="line">  &quot;editorBackground&quot;: &quot;#1d1d1d&quot;</div><div class="line">&#125;,</div><div class="line">/**</div><div class="line">  * ===================================</div><div class="line">  * Windows</div><div class="line">  * ===================================</div><div class="line">  */</div><div class="line">// &quot;window.zoomLevel&quot;: -0.2,</div><div class="line">&quot;window.title&quot;: &quot;$&#123;dirty&#125;$&#123;activeEditorShort&#125;$&#123;separator&#125;$&#123;rootName&#125;$&#123;separator&#125; - VSCode&quot;,</div><div class="line">&quot;window.newWindowDimensions&quot;: &quot;inherit&quot;,</div><div class="line">&quot;window.menuBarVisibility&quot;: &quot;toggle&quot;,</div><div class="line">/**</div><div class="line">  * ===================================</div><div class="line">  * File Explorer</div><div class="line">  * ===================================</div><div class="line">  */</div><div class="line">&quot;files.insertFinalNewline&quot;: false,</div><div class="line">&quot;files.autoSave&quot;: &quot;onFocusChange&quot;,</div><div class="line">&quot;explorer.openEditors.visible&quot;: 5,</div><div class="line">/**</div><div class="line">  * ===================================</div><div class="line">  * HTTP</div><div class="line">  * ===================================</div><div class="line">  */</div><div class="line">&quot;http.proxy&quot;: &quot;http://127.0.0.1:1080&quot;,</div><div class="line">&quot;http.proxyStrictSSL&quot;: false,</div><div class="line">/**</div><div class="line">  * ===================================</div><div class="line">  * Markdown</div><div class="line">  * ===================================</div><div class="line">  */</div><div class="line">&quot;markdown.styles&quot;: [],</div><div class="line">/**</div><div class="line">  * ===================================</div><div class="line">  * PHP</div><div class="line">  * ===================================</div><div class="line">  */</div><div class="line">&quot;php.validate.executablePath&quot;: &quot;d:/amp/php/php.exe&quot;,</div><div class="line">/**</div><div class="line">  * ===================================</div><div class="line">  * Integrated Terminal</div><div class="line">  * ===================================</div><div class="line">  */</div><div class="line">&quot;terminal.integrated.shell.windows&quot;: &quot;C:/Windows/Sysnative/WindowsPowerShell/v1.0/powershell.exe&quot;,</div><div class="line">/**</div><div class="line">  * ===================================</div><div class="line">  * Beautify css/sass/scss/less</div><div class="line">  * ===================================</div><div class="line">  */</div><div class="line">&quot;beautify.tabSize&quot;: 2,</div><div class="line">/**</div><div class="line">  * ===================================</div><div class="line">  * phpfmt</div><div class="line">  * ===================================</div><div class="line">  */</div><div class="line">// &quot;phpfmt.indent_with_space&quot;: 2,</div><div class="line">/**</div><div class="line">  * ===================================</div><div class="line">  * PHP Formatter</div><div class="line">  * ===================================</div><div class="line">  */</div><div class="line">// &quot;phpformatter.pharPath&quot;: &quot;d:/_Moudle/php-cs-fixer-v2.phar&quot;,</div><div class="line">// &quot;phpformatter.arguments&quot;: [</div><div class="line">//   &quot;--rules=psr2&quot;</div><div class="line">// ]</div><div class="line">/**</div><div class="line">  * ===================================</div><div class="line">  * Mess</div><div class="line">  * The new settings will appear here</div><div class="line">  * ===================================</div><div class="line">  */</div><div class="line">&quot;End Line&quot;: &quot;----------------&quot;</div></pre></td></tr></table></figure>
+<p>Last Update on 2017.05.03</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;我的 VSCode 配置，不定时更新。&lt;/p&gt;
+&lt;h2 id=&quot;EXTENSIONS&quot;&gt;&lt;a href=&quot;#EXTENSIONS&quot; class=&quot;headerlink&quot; title=&quot;EXTENSIONS&quot;&gt;&lt;/a&gt;EXTENSIONS&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code
+    
+    </summary>
+    
+      <category term="2-Skill" scheme="http://yoursite.com/categories/2-Skill/"/>
+    
+    
+      <category term="original" scheme="http://yoursite.com/tags/original/"/>
+    
+      <category term="microsoft" scheme="http://yoursite.com/tags/microsoft/"/>
+    
+      <category term="tutorial" scheme="http://yoursite.com/tags/tutorial/"/>
+    
+      <category term="software" scheme="http://yoursite.com/tags/software/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Apache + MySQL + PHP 压缩版安装</title>
+    <link href="http://yoursite.com/2017/03/29/2-Skill/AMPZipInstall/"/>
+    <id>http://yoursite.com/2017/03/29/2-Skill/AMPZipInstall/</id>
+    <published>2017-03-28T16:00:00.000Z</published>
+    <updated>2017-07-12T02:09:28.908Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Notice-here"><a href="#Notice-here" class="headerlink" title="Notice here"></a>Notice here</h2><ul>
+<li>本人使用的操作系统为 Windows 10；</li>
+<li>在下的软件安装路径在 d: 下 amp 文件夹，并分别新建了名为 apache, mysql, php 的文件夹来存放解压后的文件。下文中凡是出现路径的地方，还请自行替换为您的安装目录；</li>
+<li>囿于洒家的能力，本文仅介绍了最基础的安装操作。您在操作过程中出现的各种问题，小子不负任何责任，还望诸位担待则个。</li>
+</ul>
+<h2 id="起步"><a href="#起步" class="headerlink" title="起步"></a>起步</h2><p>新建一个名为 <code>amp</code> 的文件夹，并新建三个子文件夹，名为 <code>apache</code>, <code>mysql</code>, <code>php</code></p>
+<p>获取 apache、mysql 和 php 的 zip 格式压缩包，并分别解压相关文件至 amp 各个文件夹中</p>
+<ul>
+<li>apache: <a href="http://www.apachehaus.com/cgi-bin/download.plx" target="_blank" rel="external">http://www.apachehaus.com/cgi-bin/download.plx</a></li>
+<li>mysql: <a href="https://dev.mysql.com/downloads/mysql/" target="_blank" rel="external">https://dev.mysql.com/downloads/mysql/</a></li>
+<li>php: <a href="http://php.net/downloads.php" target="_blank" rel="external">http://php.net/downloads.php</a></li>
+</ul>
+<p>添加环境变量</p>
+<ul>
+<li>apache: D:\amp\apache\bin</li>
+<li>mysql: D:\amp\mysql\bin</li>
+<li>php: D:\amp\php</li>
+</ul>
+<h2 id="安装-Apache"><a href="#安装-Apache" class="headerlink" title="安装 Apache"></a>安装 Apache</h2><p>使用文本编辑器打开 <code>/conf/httpd.conf</code>，编辑默认目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Define SRVROOT &quot;d:/amp/apache&quot;</div></pre></td></tr></table></figure>
+<p>使用管理员权限的 cmd 执行以下命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">httpd -k install</div></pre></td></tr></table></figure>
+<p>如果执行以上命令无反应，有可能需要将名为 <code>vcruntime140.dll</code> 的文件拖入 <code>C:/Windows/System32</code> 文件夹下</p>
+<h2 id="安装-MySQL"><a href="#安装-MySQL" class="headerlink" title="安装 MySQL"></a>安装 MySQL</h2><p>使用管理员权限的 cmd 执行以下命令以初始化 data 目录。使用该命令，root 用户的默认密码为空</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysqld --initialize-insecure --user=mysql</div></pre></td></tr></table></figure>
+<p>继续执行以下命令以安装 mysql</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysqld --install</div></pre></td></tr></table></figure>
+<h2 id="配置-MySQL"><a href="#配置-MySQL" class="headerlink" title="配置 MySQL"></a>配置 MySQL</h2><p>如果使用 5.7.17 及其以下版本，可以复制一份 mysql 根目录的 <code>my_default.ini</code> 并重命名为 <code>my.ini</code></p>
+<p>如果使用 5.7.18 及其以上版本，需要手动在 mysql 根目录新建一个 my.ini 文件，在管理员权限的 cmd 中执行以下命令以设置 mysql 的配置文件路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysqld --default-files=&quot;d:/amp/mysql/my.ini&quot;</div></pre></td></tr></table></figure>
+<p>5.7.18 以上版本 (可能) 需要安装运行库：<code>Microsoft Visual C++ 2013 Redistributable Package (MSVCR120.dll)</code>。下载地址为</p>
+<blockquote>
+<p><a href="https://www.microsoft.com/en-hk/download/details.aspx?id=40784" target="_blank" rel="external">https://www.microsoft.com/en-hk/download/details.aspx?id=40784</a></p>
+</blockquote>
+<p>设置字符编码 (需要保持 [mysqld] 一项在最下方)。设置完毕后需要重启 cmd 并重新登录方可查看编码的更新。查看整体编码命令：<code>SHOW VARIABLES LIKE &#39;character%&#39;;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[client]</div><div class="line">default-character-set=utf8</div><div class="line">[mysql]</div><div class="line">default-character-set=utf8</div><div class="line">[mysqld]</div><div class="line">character-set-server=utf8</div></pre></td></tr></table></figure>
+<p>修改 mysql 的 root 用户密码。登陆 mysql，运行以下指令。<code>(&#39;&#39;)</code> 之间的是新密码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SET PASSWORD FOR &apos;root&apos;@&apos;localhost&apos;=PASSWORD(&apos;&apos;);</div></pre></td></tr></table></figure>
+<h2 id="Apache-加载-PHP"><a href="#Apache-加载-PHP" class="headerlink" title="Apache 加载 PHP"></a>Apache 加载 PHP</h2><p>创建 php 的配置文件。在 php 目录下找到 php.ini-development，复制一份并重命名为 php.ini</p>
+<blockquote>
+<p>注意：由于空格的不兼容性，以下命令不保证复制粘贴后可以正常使用。可以使用 <code>httpd -t</code> 命令进行语法检查</p>
+</blockquote>
+<p>加载 php 模块。打开 apache 的配置文件 httpd.conf，在模块部分根据自己的 php 版本插入以下内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">LoadModule php5_module &quot;d:/amp/php/php5apache2_4.dll&quot;</div><div class="line">LoadModule php7_module &quot;d:/amp/php/php7apache2_4.dll&quot;</div></pre></td></tr></table></figure>
+<p>为 php 模块分配任务。在上面的命令下发插入以上命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">AddType application/x-httpd-php .php .html</div></pre></td></tr></table></figure>
+<p>引入 php 的配置文件。在 httpd.conf 中搜索并插入 php.ini 的路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">PHPIniDir &quot;d:/amp/php/&quot;</div></pre></td></tr></table></figure>
+<p>修改 php 默认时区。在 php 的配置文件 php.ini 中搜索并修改 <code>date.timezone</code> 为 <code>PRC</code>。注意，需要去掉语句前的注释符号 (分号)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">date.timezone = PRC</div></pre></td></tr></table></figure>
+<h2 id="Apache-加载-vhosts-配置文件"><a href="#Apache-加载-vhosts-配置文件" class="headerlink" title="Apache 加载 vhosts 配置文件"></a>Apache 加载 vhosts 配置文件</h2><p>打开 http.conf 文件，搜索并取消注释</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Include conf/extra/httpd-vhosts.conf</div></pre></td></tr></table></figure>
+<h2 id="php-链接-mysql"><a href="#php-链接-mysql" class="headerlink" title="php 链接 mysql"></a>php 链接 mysql</h2><p>将 php 配置成 mysql 的客户端。在 php.ini 中搜索并设置 <code>extension=php_mysql.dll</code>，取消其注释</p>
+<p>告知 php 在哪个目录下能找到 php 的扩展文件。在 php.ini 中搜索并设置 php 扩展的绝对路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">extension_dir = &quot;d:/amp/php/ext&quot;</div></pre></td></tr></table></figure>
+<h2 id="安装-phpMyAdmin"><a href="#安装-phpMyAdmin" class="headerlink" title="安装 phpMyAdmin"></a>安装 phpMyAdmin</h2><ul>
+<li>解压文件至 <code>/apache/htdosc</code> 目录 (或将其解压至其他虚拟目录)</li>
+<li>更改文件名为 <code>phpmyadmin</code></li>
+<li>复制 <code>libraries/config.default</code> 文件至 <code>phpmyadmin</code> 主目录，并更名为 <code>config.inc</code></li>
+<li>搜索并取消 php.ini 中的 <code>extension=php_mbstring.dll4.23</code></li>
+<li>设置 config.inc 和 config.sample.inc 中的 <code>$cfg[&#39;blowfish_secret&#39;]</code> 为 32 位以上的字符</li>
+<li>访问 <code>localhost/phpmyadmin/index.php</code></li>
+</ul>
+<h2 id="安装-Xdebug"><a href="#安装-Xdebug" class="headerlink" title="安装 Xdebug"></a>安装 Xdebug</h2><ul>
+<li>下载：<a href="https://xdebug.org/download.php" target="_blank" rel="external">https://xdebug.org/download.php</a></li>
+<li>将文件复制到 <code>amp/php/ext</code> 目录下，并改名为 <code>php_xdebug.dll</code> (非必需)</li>
+<li>在 php.ini 中添加以下内容</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[Xdebug]</div><div class="line">zend_extension=&quot;D:/amp/php/ext/php_xdebug.dll&quot;</div><div class="line">xdebug.auto_trace=1</div><div class="line">xdebug.collect_params=1</div><div class="line">xdebug.collect_return=1</div><div class="line">xdebug.trace_output_dir=&quot;D:/amp/_xdebug/trace&quot;</div><div class="line">xdebug.profiler_enable=1</div><div class="line">xdebug.profiler_output_dir=&quot;D:/amp/_xdebug/profiler&quot;</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Notice-here&quot;&gt;&lt;a href=&quot;#Notice-here&quot; class=&quot;headerlink&quot; title=&quot;Notice here&quot;&gt;&lt;/a&gt;Notice here&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;本人使用的操作系统为 Windows 10；&lt;/li&gt;
+
+    
+    </summary>
+    
+      <category term="2-Skill" scheme="http://yoursite.com/categories/2-Skill/"/>
+    
+    
+      <category term="original" scheme="http://yoursite.com/tags/original/"/>
+    
+      <category term="tutorial" scheme="http://yoursite.com/tags/tutorial/"/>
+    
+      <category term="php" scheme="http://yoursite.com/tags/php/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>至京思</title>
+    <link href="http://yoursite.com/2017/03/11/1-Life/TravelOfBeijing/"/>
+    <id>http://yoursite.com/2017/03/11/1-Life/TravelOfBeijing/</id>
+    <published>2017-03-10T16:00:00.000Z</published>
+    <updated>2017-07-12T02:09:28.905Z</updated>
+    
+    <content type="html"><![CDATA[<p>2017 年 3 月 4 日 22:37 分，我乘上了从新乡开往北京西的火车，而现在是 2017 年 3 月 11 日 0 点 11 分，时至此时此刻我才得空写下这段文字。</p>
+<p>伴随着烟味，大爷们的脚臭味，康师傅红烧牛肉面的香味，一位漂亮的东北妹子打王者荣耀时不时蹦出的脏字，以及另一位大姐姐富有节奏感得不停嗑瓜子的声音，我就这么半梦半醒地到达了传说中的雾都。</p>
+<p>自此，我也成为了一名北漂。</p>
+<h2 id="只一天，我所有的新奇感就被现实冲跨了"><a href="#只一天，我所有的新奇感就被现实冲跨了" class="headerlink" title="只一天，我所有的新奇感就被现实冲跨了"></a>只一天，我所有的新奇感就被现实冲跨了</h2><p>出了校门才意识到生活原来是一件这么力不从心的事情。在起得早睡得晚住得远盖得薄面前，一切的诗与远方都变成了扯淡。每每晚上 10 点多走进我住的村子，踩着沾满“找小姐”小纸片的道路，踱步间还要小心提防狗屎地雷，总会有一股失落感涌出心头。</p>
+<p>我想我正在经历每一名北漂都不得不经历的那一段最难受的时光。</p>
+<h2 id="能吃饱就行"><a href="#能吃饱就行" class="headerlink" title="能吃饱就行"></a>能吃饱就行</h2><p>这边的饭菜确实是贵，味道也只能说凑合。好在我不是一个挑食的人，除了蒜苔几乎没有不吃的蔬菜。至于分量倒是挺给劲，一份足以得饱。这也算是为数不多的欣慰之处了。</p>
+<h2 id="不过是换了个口音而已"><a href="#不过是换了个口音而已" class="headerlink" title="不过是换了个口音而已"></a>不过是换了个口音而已</h2><p>我一直以为帝都会和新乡洛阳有所不同，然而这里仍然有闯红灯的人，有便宜的路边摊，有热情亦或冰冷的饭店老板，以及满地满墙的找小姐和办证……</p>
+<p>除了人们说话的口音，貌似确实没什么不同。</p>
+<h2 id="无论身在何方，家人总是最靠谱的后盾"><a href="#无论身在何方，家人总是最靠谱的后盾" class="headerlink" title="无论身在何方，家人总是最靠谱的后盾"></a>无论身在何方，家人总是最靠谱的后盾</h2><p>如题。</p>
+<h2 id="这他娘的就是青春啊！"><a href="#这他娘的就是青春啊！" class="headerlink" title="这他娘的就是青春啊！"></a>这他娘的就是青春啊！</h2><p>再怎么无奈的日子，都是我剩不了几天的青春岁月。想找一句话来形容我目前的生活状态，首先蹦出来的是教科书式的，又红又专的“忙碌且充实”，但总觉得还缺点什么意思。琢磨了半天，还是觉得应该改成“在无奈中忙碌且充实”。</p>
+<p>在此引用王胖子《万物死》里的一句歌词：</p>
+<blockquote>
+<p>青春青春青春你青你妈个逼，才活了几天就开始回忆</p>
+</blockquote>
+<p>说梦想实在矫情，所以还是迎着朝阳，踩着小广告，避着狗屎，暂且朝前走吧。</p>
+<p>倦甚，语无伦次，至此搁笔。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;2017 年 3 月 4 日 22:37 分，我乘上了从新乡开往北京西的火车，而现在是 2017 年 3 月 11 日 0 点 11 分，时至此时此刻我才得空写下这段文字。&lt;/p&gt;
+&lt;p&gt;伴随着烟味，大爷们的脚臭味，康师傅红烧牛肉面的香味，一位漂亮的东北妹子打王者荣耀时不时
+    
+    </summary>
+    
+      <category term="1-Life" scheme="http://yoursite.com/categories/1-Life/"/>
+    
+    
+      <category term="article" scheme="http://yoursite.com/tags/article/"/>
+    
+      <category term="idea" scheme="http://yoursite.com/tags/idea/"/>
+    
+      <category term="original" scheme="http://yoursite.com/tags/original/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>如果中国一开始就禁止微软和英特尔AMD进入中国，现在的中国会出现哪些现象？ - 绝影的回答</title>
+    <link href="http://yoursite.com/2017/03/02/3-Essay/BanCPU/"/>
+    <id>http://yoursite.com/2017/03/02/3-Essay/BanCPU/</id>
+    <published>2017-03-01T16:00:00.000Z</published>
+    <updated>2017-07-12T02:09:28.951Z</updated>
+    
+    <content type="html"><![CDATA[<p>前几天看到一个节目，关于津巴布韦的通货膨胀的。以前津巴布韦的70%土地在极少数的白人手中，后来政府强制从白人手中夺走土地，分给黑人，导致白人纷纷逃到国外，政府的做法也导致了其他国家对它的封锁。黑人拿到土地之后，由于没有技术，导致很多土地种植不了，饥荒饿死了很多人。后来政府更是大量印制钞票，最终通货膨胀到100万亿津巴布韦元=40美分。而且印一张100万亿的津巴布韦元的成本超过了100万亿津巴布韦元。现在是有9种法定货币（包括人民币）在津巴布韦流通，而本国的货币不用了。结论：有时候，把强者干掉，不一定弱者就能变强。把Google干掉，百度如何？</p>
+<hr>
+<p>作者：绝影<br>链接：<a href="https://www.zhihu.com/question/33611803/answer/57016358" target="_blank" rel="external">https://www.zhihu.com/question/33611803/answer/57016358</a><br>来源：知乎</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;前几天看到一个节目，关于津巴布韦的通货膨胀的。以前津巴布韦的70%土地在极少数的白人手中，后来政府强制从白人手中夺走土地，分给黑人，导致白人纷纷逃到国外，政府的做法也导致了其他国家对它的封锁。黑人拿到土地之后，由于没有技术，导致很多土地种植不了，饥荒饿死了很多人。后来政府更
+    
+    </summary>
+    
+      <category term="3-Essay" scheme="http://yoursite.com/categories/3-Essay/"/>
+    
+    
+      <category term="zhihu" scheme="http://yoursite.com/tags/zhihu/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>The Sound Of Slience</title>
+    <link href="http://yoursite.com/2017/02/14/0-Mess/TheSoundOfSlience/"/>
+    <id>http://yoursite.com/2017/02/14/0-Mess/TheSoundOfSlience/</id>
+    <published>2017-02-13T16:00:00.000Z</published>
+    <updated>2017-07-12T02:09:28.864Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://youtu.be/u9Dg-g7t2l4" target="_blank" rel="external">(YouTube) Disturbed - The Sound Of Silence [Official Music Video]</a></p>
+<p>Hello darkness, my old friend<br>I’ve come to talk with you again<br>Because a vision softly creeping<br>Left its seeds while I was sleeping<br>And the vision that was planted in my brain<br>Still remains<br>Within the sound of silence</p>
+<p>In restless dreams I walked alone<br>Narrow streets of cobblestone<br>Neath the halo of a street lamp<br>I turned my collar to the cold and damp<br>When my eyes were stabbed by the flash of a neon light<br>That split the night<br>And touched the sound of silence</p>
+<p>And in the naked light I saw<br>Ten thousand people, maybe more<br>People talking without speaking<br>People hearing without listening<br>People writing songs that voices never share<br>And no one dared<br>Disturb the sound of silence</p>
+<p>Fools, said I, you do not know<br>Silence like a cancer grows<br>Hear my words that I might teach you<br>Take my arms that I might reach you<br>But my words, like silent raindrops fell<br>And echoed in the wells of silence</p>
+<p>And the people bowed and prayed<br>To the neon god they made<br>And the sign flashed out its warning<br>In the words that it was forming<br>And the sign said, the words of the prophets are written on the subway walls<br>And tenement halls<br>And whispered in the sounds of silence</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;https://youtu.be/u9Dg-g7t2l4&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;(YouTube) Disturbed - The Sound Of Silence [Official Music Video]&lt;/
+    
+    </summary>
+    
+      <category term="0-Mess" scheme="http://yoursite.com/categories/0-Mess/"/>
+    
+    
+      <category term="music" scheme="http://yoursite.com/tags/music/"/>
+    
+      <category term="article" scheme="http://yoursite.com/tags/article/"/>
+    
+      <category term="idea" scheme="http://yoursite.com/tags/idea/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于春晚，关于后辈</title>
+    <link href="http://yoursite.com/2017/01/31/3-Essay/IdeaOnNewYear/"/>
+    <id>http://yoursite.com/2017/01/31/3-Essay/IdeaOnNewYear/</id>
+    <published>2017-01-31T12:00:00.000Z</published>
+    <updated>2017-07-12T02:09:28.982Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness, it was the epoch of belief, it was the epoch of incredulity, it was the season of Light, it was the season of Darkness, it was the spring of hope, it was the winter of despair, we had everything before us, we had nothing before us, we were all going direct to Heaven, we were all going direct the other way. </p>
+<p>—— 《A Tale of Two Cities》, Charles John Huffam Dickens</p>
+</blockquote>
+<p>2017 年春晚开始之前我还抱有一丝侥幸，也许 2016 年的春晚只是导演恶意舔菊，今年会有变化呢，然而意料之中的仍然是一节欢天喜地的政治课。想来怕是未来所有的春晚都要这样了。</p>
+<p>我突然想到，2016 年后才出生的后辈们，或许会对春晚讲政治习以为常吧。</p>
+<p>我身为 90 后大概是幸运的。我的眼睛曾经明亮过，曾“有幸”登临过不需要 VPN 就可以上的 Google 和 Facebook。可未来的后辈们将再也瞥不见那一丝自由的曙光。</p>
+<p>我不想让后辈们在公交车上看见沾满烟尘的 leader，不想在小情侣开房时还看到酒店的滚动字幕上写着“富强、民主……”，不想在让在国内搜索某个中美洲的某个国家结果出现“根据相关法律法规和政策，部分搜索结果未予显示”……</p>
+<p>我只是不想接受一小部分人刻意灌输地极其格式化的东西。我希望可以用我自己的眼睛去看，用我自己的脑子去判断，用我自己的手去检举不爱国者。我只是渴望睁开那只瞎掉的眼睛。</p>
+<p>这盛世，或许真的如你所愿吧。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness, it was the epo
+    
+    </summary>
+    
+      <category term="3-Essay" scheme="http://yoursite.com/categories/3-Essay/"/>
+    
+    
+      <category term="idea" scheme="http://yoursite.com/tags/idea/"/>
+    
+      <category term="original" scheme="http://yoursite.com/tags/original/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>劝你喝酒的都是看不起你的 - 霍真布鲁兹老爷</title>
+    <link href="http://yoursite.com/2017/01/31/3-Essay/AlcoholAndPeople/"/>
+    <id>http://yoursite.com/2017/01/31/3-Essay/AlcoholAndPeople/</id>
+    <published>2017-01-31T05:00:00.000Z</published>
+    <updated>2017-07-12T02:09:28.949Z</updated>
+    
+    <content type="html"><![CDATA[<p>“过节了吧，喝酒了吧，你不喝这杯就是看不起他。过节了吧，喝酒了吧，从初一喝到初四了吧。”</p>
+<p>春节期间，少不了各种聚会，家族聚会，朋友聚会，甚至上下级，客户之间乘机联络感情，有聚会，自然免不了推杯换盏。中国人的聚会，是少不了酒，也少不了让人头疼的劝酒文化，尤其是这句“你不喝这杯就是看不起我”，让人形同绑架，此句一出，只有两个结果，要么撕破脸，要么得遂人愿，乖乖喝酒。</p>
+<p>很多女性很烦躁，怎么老公男朋友就这么不听劝呢，明明平时看起来优雅矜持，上了酒桌，怎么也这么不要命地喝？男人也很苦恼啊，这个是同事领导，那个是同学发小，还有一个没啥本事，那人跟你一个姥姥，哪个不得喝，哪个不得给面子？最最头疼的是，我们的父母，有的也要赴这样的酒局，甚至喝得酩酊大醉，让人不得不担忧，问起来却又振振有词，“你不喝就是看不起人家。”</p>
+<p>“你不喝就是看不起我”让人深恶痛绝，很多人对它恨之入骨，可是为什么总要有人用它来劝酒，而你偏偏又不得不喝？</p>
+<p>.酒精可以使人快速的分泌多巴胺，只要一小点就能让你快活，不是中国人爱喝酒，全世界人民其实都爱喝酒，在所有国家，喝酒都是社交的信号，酒精是一种最廉价的拉近距离的方式，喝酒跟社交紧密地联系在一起，甚至可以说，任何喝酒的吃饭都是社交。</p>
+<p>但是劝酒文化却是中国独有，而且劝就劝高度白酒，喝白酒就喝一大杯，不喝就是看不起我，更是全世界独一份儿。“你不喝就是看不起我”这句话其实概括了中国劝酒文化的精髓，霍老爷今天给大家解读一下。</p>
+<p>首先要说 ，劝酒这个传统远远超过高度白酒的历史，中国蒸馏酒有史以来最早明确记录是元代，目前认为最早也不会超过宋代。但是劝酒却古已有之。</p>
+<p>东汉末年，张绣投降曹操，曹操一高兴张绣群臣和诸将。曹操在前面敬酒，典韦拿着斧子紧随其后。曹操向谁敬酒，典韦都举起斧子，斧刃径有尺余，寒光闪闪，这堪称史上最强势劝酒，酒宴至始自终，张绣及其将帅均不敢仰视，乖乖喝酒。当然这个故事结局也不好，张绣后来还是反了曹操。</p>
+<p>石崇（就是那个比富的石崇）宴请宾客，常令美人劝酒，如果宾客不喝酒，就把美人杀掉。王导仁厚，虽然不能喝酒，但每次都勉强饮下，每次都大醉。王敦一点都不给面子，一次行酒，石崇连杀三个美人，王敦还是不喝。王导劝王敦，王敦反而说：”他杀自家人，关我何事？“</p>
+<p>这两个故事最能体现劝酒文化的特质。</p>
+<p>劝酒是一种展现权力的手段，是一种服从性测试。张绣刚投降曹操，心意未定，曹操就拿酒测试他，通不过这个测试，旁边的典韦立刻就把你的头剁下来，这是在展现自己的权力。</p>
+<p>石崇请人喝酒，不喝酒就杀美人，这也是在展现自己的权力。王导认同他这个权威，或者说王导虽然不认同他的权威，但受不了人被杀，喝了酒也等于在仪式上认同了石崇。</p>
+<p>就这就是劝酒的本质，当然古人没有现代人聪明，他们特别直接，劝酒就真在旁边放个斧头，你看，那时代既没有高度白酒，也没有合餐制，甚至连今天的酒桌都没有，然而酒桌文化的风俗却一样存在，借此展示自己权力的手法和今天如出一辙，血腥程度犹有过之。</p>
+<p>现代酒桌上的逻辑一样，酒桌不是酒桌，酒桌是权力桌，酒桌是政治桌。现代的劝酒文化，虽然不会有人在旁边拿着斧子逼着你喝，但是被劝的人都知道，有些是不能不喝的，你愿意喝被劝的这杯酒，代表你认同这个人，愿意服从这个领导，愿意跟他有亲密关系，喝酒关系到“你不喝就是看不起我”，它的逻辑看似荒谬，却大有深意，“你对我有所求，喝了这杯，我就给你。”既是威逼，也是利诱，甚至可能是色诱。</p>
+<p>这种劝酒形式还会改头换面变成几个变种，“喝了这杯酒，明年就给你进步的机会。”“连干三杯，这合同就签了。”“这事能不能成，得看你能不能喝”。“关系铁不铁，全在酒里呢!”句句关乎权力。</p>
+<p>人是一种领地生物，一个人的身体和周围是他的势力范围，如果侵入这个势力范围别人会本能地反感，只有更亲密关系才会靠近，触摸，亲吻，关系如果没有达到亲密程度，会有被冒犯的感觉，所以人与人交往中，一个人拍另一个人肩膀，如果两人不太熟，就是在展现权力，通常权力地位更高的人会拍低权力地位人的肩膀。这其实就是在利用伤害权彰显权力。</p>
+<p>劝酒同样的道理，喝酒是一种伤害权，喝酒在带给人多巴胺的同时，同时也带给人轻微的伤害，喝多了 ，还可能出洋相，这是一种轻微地羞辱。一旦你愿意接受这个设定，愿意把这种伤害权交给对方，大家就是自己人了。</p>
+<p>中国原来有四大铁，“一起同过窗，一起扛过枪。一起分过赃，一起嫖过娼。”前两者都需要长期的相处，而后两者却不需要，就是因为大家一起做过丑事，如果感情破裂，那么就可以互相揭发，所以这样的关系反而是最稳固的。喝酒也是如此，一起互相羞辱，互相欣赏丑态，其实也等于互相掌握了隐私。</p>
+<p>这就是在中国，高度白酒不可取代的原因，啤酒红酒都不能取代这种伤害权，他们的损伤过于轻微，要达到互相欣赏丑态的地步又过于缓慢，所以充斥着劝酒文化的酒桌，一定是以白酒为主，排斥红酒和啤酒的。同样，我们的父辈年轻时候，白酒是用陶瓷小盅一盅一盅喝的，但现在却变成了大杯，正是迎合这种社交需要的结果。</p>
+<p>这种酒桌，同样被排斥在外的还有女性，女性在酒桌上有天然的豁免权。</p>
+<p>“女的就算了，不要逼女孩子喝酒。”</p>
+<p>“女士抿一口，大男人必须干。”</p>
+<p>但是注意，这种女性的优势其实是一种劣势，代表着女性是弱势的，虽然女性争取到了上桌权，但是在这个桌子上，是排斥在这个圈子之外，有女性在场，这个酒也会“不尽兴”，“喝不到位”，事自然也不谈了。在这种劝酒文化里，“能喝”是一种美好的属性，是属于男性的。除非女性愿意放弃这种优势，这其实是对女性的一种歧视，从晋代石崇到今天的男人，都在秉承这个观念，但毕竟是有进步的，女性从劝酒用的道具，不好用就杀掉，变成了被保护的弱势群体。</p>
+<p>一个酒桌之上，谁该给谁劝酒，谁该给谁敬酒，酒杯谁高谁低，都是有规矩的。</p>
+<p>上了这种酒桌，就是进了权利场，如果别人频频向你或你丈夫劝酒，而且张口就是“你不喝就是看不起我”，其实就是等同于说，你的地位是不重要的，你该改变这种地位了。</p>
+<p>霍老爷解释完了这种劝酒的逻辑，但这种劝酒真的管用吗？曹操劝完酒，面子赚足了，张绣测试也通过了，但张绣还是反了，把典韦剁成了肉泥，曹操的大儿子也死在了叛乱里。石崇杀多少美女，也不能让王敦正眼看他。</p>
+<p>测试也只是测试，这种judge更多的是引起别人的反感。在中国的文化里，劝酒通常是上对下，长者对晚辈劝的，尤其是，“你不喝就是看不起我”这句劝酒词，不是随便说的，一旦说出来就是他对你有绝对的掌控，或者说他自认为地位高于你，直接了当地说，他说这句话，就是看不起你，他才敢说。没有人会对曹操直接说，你不喝就是看不起我，因为典韦手里的斧子不干，也没有人会对自己的顶头上司说，你不喝就是看不起我，因为大家都知道，吃饭的家伙不能丢。</p>
+<p>我曾经见过一个特别会钻营的人，只要是上司的酒场必凑进去，上司对他也很欣赏，什么聚会都带着他，偶尔让他代酒，他也以跟上司关系近为荣。有一次，上司带他去视察一个大区分公司，酒过三巡之后，他看出来上司喝多了，于是主动出击，向那些敬上司酒的人敬酒：李总喝多了，我替他敬敬大家，不喝就是看不起我们李总。结果这群分公司头目根本不理他，都放下酒杯，李总一拍桌子，对他一顿臭骂：老子就是这个大区出来的，这都是我的老兄弟。你算什么东西，也配代表我。</p>
+<p>汉武帝时，宰相田蚡娶燕王之女为夫人，太后设宴款待宗室和列侯。灌夫一向看不起田蚡，于是向田蚡敬酒，田蚡推辞不能喝满杯，灌夫怒了，假装嬉笑说：“你是贵人，请你满饮。”田蚡就是不答应。</p>
+<p>灌夫又行酒至临汝侯灌贤，灌贤只顾与程不识说话，没有按礼节避席，灌夫把一肚子气都撒在灌贤头上，指着灌贤的鼻子破口大骂：“生平毁程不识不直一钱，今日长者敬酒，居然跟个妇人一样窃窃私语。”程不识是皇宫的卫尉，灌夫虽然也是京城巨豪，曾经也是高官，但现在只是平民。</p>
+<p>田蚡趁机拿程不识是西宫卫尉大做文章，甚至要族灭灌氏。</p>
+<p>所以劝酒这活儿有风险，而且劝酒实在没什么用，真喝了他的酒，他只会更看不起你。有的人摆酒喝酒动机不良，敬酒劝酒目的不纯，让正常的人际交往越来越low，有的人更是借机炫耀自己的交际和权力，对于这种动辄说出“你不喝就是看不起我”的人，要坚决说“不”。</p>
+<hr>
+<p>作者：霍真布鲁兹老爷<br>链接：<a href="http://mp.weixin.qq.com/s?__biz=MzA4ODE3OTY5NQ==&amp;mid=2649702924&amp;idx=1&amp;sn=d7a0231c38360eccffe7b247fc7b826a&amp;chksm=8835f48cbf427d9ab528cff44e783e2ca7abc2c414bba815254dc9685db11f46742ad768d772&amp;mpshare=1&amp;scene=1&amp;srcid=0131ZXv6yVRyom7Qqarn307T#rd" target="_blank" rel="external">劝你喝酒的都是看不起你的</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;“过节了吧，喝酒了吧，你不喝这杯就是看不起他。过节了吧，喝酒了吧，从初一喝到初四了吧。”&lt;/p&gt;
+&lt;p&gt;春节期间，少不了各种聚会，家族聚会，朋友聚会，甚至上下级，客户之间乘机联络感情，有聚会，自然免不了推杯换盏。中国人的聚会，是少不了酒，也少不了让人头疼的劝酒文化，尤其是这
+    
+    </summary>
+    
+      <category term="3-Essay" scheme="http://yoursite.com/categories/3-Essay/"/>
+    
+    
+      <category term="article" scheme="http://yoursite.com/tags/article/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo 双线部署及性能优化</title>
+    <link href="http://yoursite.com/2017/01/30/2-Skill/HexoOptimization/"/>
+    <id>http://yoursite.com/2017/01/30/2-Skill/HexoOptimization/</id>
+    <published>2017-01-29T16:00:00.000Z</published>
+    <updated>2017-07-12T02:09:28.923Z</updated>
+    
+    <content type="html"><![CDATA[<p>本文旨在从两个方面对 Hexo 的访问速度进行优化。</p>
+<h2 id="为主题设置外链字体库"><a href="#为主题设置外链字体库" class="headerlink" title="为主题设置外链字体库"></a>为主题设置外链字体库</h2><p>我使用的主题是 NexT，其字体默认使用 Google Fonts，而 Google Fonts 在国内的访问速度极其蛋疼，这也直接导致大陆地区加载博客极其缓慢。好在 Hexo 给出了自定义字体的选项，我们可以将字体库的引用改为国内 CDN。NexT 字体设置的官方文档：</p>
+<blockquote>
+<p><a href="http://theme-next.iissnan.com/theme-settings.html#fonts-customization" target="_blank" rel="external">http://theme-next.iissnan.com/theme-settings.html#fonts-customization</a></p>
+</blockquote>
+<p>打开 NexT 主题的设置文件 <code>_config.yml</code>，通过搜索找到 <code>font:</code> 这一栏，在 <code>host</code> 中，填入您找到的国内 CDN。目前我在使用的是下面这个：</p>
+<blockquote>
+<p><a href="https://fonts.css.network/" target="_blank" rel="external">https://fonts.css.network/</a></p>
+</blockquote>
+<p>此方法适用于其他使用 Google Fonts 的主题。</p>
+<h2 id="Hexo-双线部署"><a href="#Hexo-双线部署" class="headerlink" title="Hexo 双线部署"></a>Hexo 双线部署</h2><p><strong>NOTICE HERE</strong>: 现在 Coding.net 非会员用户创建的 Coding Pages 在访问时时会加入几秒钟的广告，请谨慎考虑是否使用</p>
+<p>在我之前写过的“Hexo 不完全指南”一文中，我仅使用了 Github 作为文章部署地址，这将导致国内用户访问我的博客不会特别快。解决方案就是将部署地址改为国内的 Coding，可是这将导致国外用户访问速度变慢。其实，我们可以通过一些简单的设置，实现国内访问 Coding 服务器，国外访问 Github 服务器的效果。</p>
+<p>在此之前，我们需要做几个准备工作：</p>
+<ol>
+<li>注册 Coding 账号</li>
+<li>新建一个名为 <code>[user_name].coding.me</code> 的公开仓库，并开启 pages 服务</li>
+<li>绑定自定义域名</li>
+<li>将 Coding 通过 SSH 密钥的方式与本机连接</li>
+</ol>
+<p>上述工作完成后，我们就可以开始下面的设置了。</p>
+<h3 id="设置部署地址"><a href="#设置部署地址" class="headerlink" title="设置部署地址"></a>设置部署地址</h3><p>打开 Hexo 的 <code>_config.yml</code> 文件，将 <code>deploy</code> 这一栏改为如下代码，格式为 <code>名称： 仓库,分支</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repo:</div><div class="line">    github: git@github.com:[user_name]/[user_name].github.io.git,master</div><div class="line">    coding: git@git.coding.net:[user_name]/[user_name].coding.me.git,master</div></pre></td></tr></table></figure>
+<h3 id="设置域名解析"><a href="#设置域名解析" class="headerlink" title="设置域名解析"></a>设置域名解析</h3><p>我的域名目前托管在阿里云，并且可以自由选择 <code>解析路线</code>。如果您的域名供应商处没有提供此设置，可以考虑将域名 DNS 改为阿里云的 DNS 服务器。</p>
+<p>在解析控制台中，将指向 Github Pages 的解析路线设置为 <code>海外</code>，将指向 Coding Pages 的解析路线设置为 <code>默认</code>，依次保存即可。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/HexoOptimization.png" alt=""></p>
+<h2 id="一些链接"><a href="#一些链接" class="headerlink" title="一些链接"></a>一些链接</h2><ul>
+<li>NexT 主题官网：<a href="http://theme-next.iissnan.com/" target="_blank" rel="external">http://theme-next.iissnan.com/</a></li>
+<li>常用前端公共库 CDN 服务：<a href="https://css.net/" target="_blank" rel="external">https://css.net/</a></li>
+<li>极客族公共加速服务：<a href="https://cdn.geekzu.org/" target="_blank" rel="external">https://cdn.geekzu.org/</a></li>
+</ul>
+<p>最后，对所有开源主义者和公益项目提供者表示由衷的感谢。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文旨在从两个方面对 Hexo 的访问速度进行优化。&lt;/p&gt;
+&lt;h2 id=&quot;为主题设置外链字体库&quot;&gt;&lt;a href=&quot;#为主题设置外链字体库&quot; class=&quot;headerlink&quot; title=&quot;为主题设置外链字体库&quot;&gt;&lt;/a&gt;为主题设置外链字体库&lt;/h2&gt;&lt;p&gt;我使用的
+    
+    </summary>
+    
+      <category term="2-Skill" scheme="http://yoursite.com/categories/2-Skill/"/>
+    
+    
+      <category term="original" scheme="http://yoursite.com/tags/original/"/>
+    
+      <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
+    
+      <category term="net" scheme="http://yoursite.com/tags/net/"/>
+    
+      <category term="tutorial" scheme="http://yoursite.com/tags/tutorial/"/>
+    
+      <category term="github" scheme="http://yoursite.com/tags/github/"/>
+    
+      <category term="coding" scheme="http://yoursite.com/tags/coding/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Shadowsocks 使用教程及技巧</title>
+    <link href="http://yoursite.com/2017/01/26/2-Skill/SSGuide/"/>
+    <id>http://yoursite.com/2017/01/26/2-Skill/SSGuide/</id>
+    <published>2017-01-25T16:00:00.000Z</published>
+    <updated>2017-07-12T02:09:28.936Z</updated>
+    
+    <content type="html"><![CDATA[<p>本教程谨献给那些每次用 ss 看片都要跑来问我的朋友们。</p>
+<h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>Windows 系统上您可以使用 ShadowsocksR 和 Shadowsocks 两种软件，差异不算很大，这里我们统一使用 ShadowsocksR( 以下简称为 SSR )。如果您学会了 ShadowsocksR 的操作，那么 Shadowsocks 您也一定可以无障碍使用了。<strong>注意，写下本文时，SSR 的最新版本是 4.0.3。在下不保证本文将会随着 SSR 的更新而更新。</strong></p>
+<p>在您预备艹墙时，首先您需要获取 SSR 的可执行文件。您可以从 SSR 的 Github 项目地址获取 SSR 的获取方式( 这句话真的没有语病 )。Github 项目地址：</p>
+<blockquote>
+<p><a href="https://github.com/breakwa11/shadowsocks-rss" target="_blank" rel="external">https://github.com/breakwa11/shadowsocks-rss</a></p>
+</blockquote>
+<p>完整可用的 SSR 文件应该是一个压缩包，由作者 breakwa11 发布，内含如下文件：</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/SSGuide_1.png" alt=""></p>
+<p>其中，我们只需要将红框内的三个文件复制到一个新文件夹即可。<strong>注意：<code>-dotnet2.0</code> 版本用于 Windws 7 及以下系统使用，<code>-dotnet4.0</code> 版本用于 Windows 8 及以上版本使用。</strong></p>
+<h3 id="pac-txt-amp-gui-config-json"><a href="#pac-txt-amp-gui-config-json" class="headerlink" title="pac.txt &amp; gui-config.json"></a>pac.txt &amp; gui-config.json</h3><p>一个完整可用的 SSR，在其同一文件夹内必须包含 <code>pac.txt</code> 和 <code>gui-config.json</code> 这两个文件。<code>pac.txt</code> 规定了 SSR 代理的域名，按照一定规则写入此文件的域名，都将被 SSR 代理。<code>gui-config.json</code> 则是我们的节点列表。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/SSGuide_2.png" alt=""></p>
+<p><strong>注意，如果您已经有了这两个文件，将其放入 SSR 同一目录下，并仅执行步骤 1 即可。</strong>如果您没有这两个文件，那么请按照以下步骤操作。</p>
+<p>1、双击 <code>ShadowsocksR-dotnet4.0</code> 打开 SSR，您的任务栏将会多出一个小飞机的图标<br>2、右键小飞机，选择 <code>系统代理模式</code> -&gt; <code>PAC 模式</code></p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/SSGuide_3.png" alt=""></p>
+<p>3、然后选择 <code>PAC</code> -&gt; <code>更新 PAC 为 GFWList</code></p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/SSGuide_4.png" alt=""></p>
+<p>4、添加节点。SSR 内置了很多种方式来添加节点。您可以双击打开 SSR，在 GUI 中手动添加，也可以右键 SSR，进行二维码扫描，或者通过 ssr:// 链接导入。目前的大部分 ss 卖家都提供了批量导出 gui-config.json 的功能，您也可以直接替换文件夹中的 gui-config，重启 SSR 即可。</p>
+<h3 id="选择节点"><a href="#选择节点" class="headerlink" title="选择节点"></a>选择节点</h3><p>右键小飞机，在 <code>服务器</code> 一项中即可选择自己想要使用的节点。</p>
+<h3 id="开机自启"><a href="#开机自启" class="headerlink" title="开机自启"></a>开机自启</h3><p>如果您想让 SSR 开机自启，请右键小飞机，打开 <code>选项设置</code>，勾选 <code>开机自启</code>。</p>
+<h3 id="如果某些网站打不开怎么办？"><a href="#如果某些网站打不开怎么办？" class="headerlink" title="如果某些网站打不开怎么办？"></a>如果某些网站打不开怎么办？</h3><p>即使打开了 SSR，您也不一定能访问某些国外网站。这时候您有两种解决方案：</p>
+<ol>
+<li>打开 SSR 的全局代理。右键小飞机，选择 <code>系统代理模式</code> -&gt; <code>全局模式</code>。此时您所有的流量都将通过 SSR，所以您访问国内网站或使用国内软件，其速度将会变慢。这种方式适合您临时访问某个网站时使用。</li>
+<li><p>将您需要访问的域名加入 <code>pac.txt</code>。打开 <code>pac.txt</code>，在域名列表处新起一行，按照如下格式填入您想要访问的网站的<strong>根域名</strong>。<strong>注意，左右引号、逗号都是英文半角标点符号。</strong>这种方式适合您经常访问某个网站时使用。</p>
+<blockquote>
+<p>“[test].com”,</p>
+</blockquote>
+</li>
+</ol>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/SSGuide_5.png" alt=""></p>
+<h3 id="如何测试所有节点中的最优路线？"><a href="#如何测试所有节点中的最优路线？" class="headerlink" title="如何测试所有节点中的最优路线？"></a>如何测试所有节点中的最优路线？</h3><p>在 SSR 中，有一个 <code>服务器负载均衡</code> 的选项，我们可以借助它大致测出当前最优路线。</p>
+<p>右键勾选 <code>服务器负载均衡</code>，再选择 <code>服务器</code> -&gt; <code>服务器连接统计</code>。接着我们打开 Fackbook, Twitter 或者 Instagram 等可以流式加载页面的网站，然后一边将滚轮往下滑，一边观察 <code>服务器连接统计</code> 界面，根据延迟和最高下载速度决定当前的最优节点。当您决定当前最优节点后，即可关闭 <code>服务器负载均衡</code>。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/SSGuide_6.png" alt=""></p>
+<h2 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h2><p>Android 端我目前使用的仍然是 Shadowsocks，因为我实在是对 SSR 的配色接受不能。当然，您也可以在 ShadowsocksR 的 Github 项目里找到 ShadowsocksR 的 Android 版。</p>
+<h3 id="获取-apk-文件"><a href="#获取-apk-文件" class="headerlink" title="获取 apk 文件"></a>获取 apk 文件</h3><p>您可以通过以下几个方式获取 Shadowsocks 的 apk 文件：</p>
+<ol>
+<li>Apkpure: <a href="https://apkpure.com/shadowsocks/com.github.shadowsocks" target="_blank" rel="external">https://apkpure.com/shadowsocks/com.github.shadowsocks</a></li>
+<li>Google Play: <a href="https://play.google.com/store/apps/details?id=com.github.shadowsocks" target="_blank" rel="external">https://play.google.com/store/apps/details?id=com.github.shadowsocks</a></li>
+</ol>
+<h3 id="添加节点"><a href="#添加节点" class="headerlink" title="添加节点"></a>添加节点</h3><p>Android 版本添加和更新节点最方便的方式大概是扫描 ss 节点二维码。您打开 Shadowsocks 后，可以点击左上角的 <code>shadowsocks</code> 字样进入节点列表，点击右下角的 fab 即可打开添加方式选项。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/SSGuide_7.png" alt=""></p>
+<p>如果您想从电脑端正在使用的节点添加到手机，可以双击小飞机图标，在列表上选中您想要添加的节点，将 <code>SSR 链接</code> <strong>去勾</strong>，然后点击该链接，右侧二维码区域将会出现该节点的二维码，用手机扫描即可。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/SSGuide_8.png" alt=""></p>
+<h3 id="设置"><a href="#设置" class="headerlink" title="设置"></a>设置</h3><p>当您通过手动或者扫描二维码的方式添加二维码以后，就可以返回主界面了。在主界面，您需要将 <code>Route</code> 一项改为 <code>Bypass LAN &amp; China</code>( 中文版是 <code>路由</code>，改为 <code>绕过局域网及中国大陆地址</code> )。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/SSGuide_9.png" alt=""></p>
+<p>至此，您就可以点击右上角的小飞机图标开始艹墙啦~</p>
+<h2 id="ios"><a href="#ios" class="headerlink" title="ios"></a>ios</h2><p>如果您不想越狱，那么主流的两个选择如下：</p>
+<ul>
+<li>Surge: <a href="https://itunes.apple.com/us/app/surge-web-developer-tool-proxy/id1040100637?mt=8" target="_blank" rel="external">https://itunes.apple.com/us/app/surge-web-developer-tool-proxy/id1040100637?mt=8</a></li>
+<li>Shadowrocket: <a href="https://itunes.apple.com/cn/app/shadowrocket/id932747118?mt=8" target="_blank" rel="external">https://itunes.apple.com/cn/app/shadowrocket/id932747118?mt=8</a></li>
+</ul>
+<h2 id="Mac-OS"><a href="#Mac-OS" class="headerlink" title="Mac OS"></a>Mac OS</h2><p>略略略。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本教程谨献给那些每次用 ss 看片都要跑来问我的朋友们。&lt;/p&gt;
+&lt;h2 id=&quot;Windows&quot;&gt;&lt;a href=&quot;#Windows&quot; class=&quot;headerlink&quot; title=&quot;Windows&quot;&gt;&lt;/a&gt;Windows&lt;/h2&gt;&lt;h3 id=&quot;准备工作&quot;&gt;&lt;a 
+    
+    </summary>
+    
+      <category term="2-Skill" scheme="http://yoursite.com/categories/2-Skill/"/>
+    
+    
+      <category term="original" scheme="http://yoursite.com/tags/original/"/>
+    
+      <category term="net" scheme="http://yoursite.com/tags/net/"/>
+    
+      <category term="tutorial" scheme="http://yoursite.com/tags/tutorial/"/>
+    
+      <category term="software" scheme="http://yoursite.com/tags/software/"/>
+    
+      <category term="shadowsocks" scheme="http://yoursite.com/tags/shadowsocks/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Git 命令梳理</title>
+    <link href="http://yoursite.com/2017/01/18/2-Skill/GitList/"/>
+    <id>http://yoursite.com/2017/01/18/2-Skill/GitList/</id>
+    <published>2017-01-17T16:00:00.000Z</published>
+    <updated>2017-07-12T02:09:28.914Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git config --global user.name &quot;[user_name]&quot;</div><div class="line">git config --global user.email &quot;[user_email]&quot;</div><div class="line"># 如果留有以前的配置文件，直接将其放入 user 目录下，即可不需再次配置</div></pre></td></tr></table></figure>
+<h2 id="新建"><a href="#新建" class="headerlink" title="新建"></a>新建</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">git init</div><div class="line"># 在当前目录创建 Git 仓库</div><div class="line"></div><div class="line">git init [floder_name]</div><div class="line"># 新建一个目录，并将其初始化为 Git 仓库</div><div class="line"></div><div class="line">git init --bare</div><div class="line"># 创建一个 Git 裸仓库​​</div></pre></td></tr></table></figure>
+<h2 id="增删文件"><a href="#增删文件" class="headerlink" title="增删文件"></a>增删文件</h2><h3 id="添加文件"><a href="#添加文件" class="headerlink" title="添加文件"></a>添加文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">git add [dir]/[file]</div><div class="line"># 添加指定文件或指定文件夹到暂存区</div><div class="line"></div><div class="line">git add *.[file_type]</div><div class="line"># 添加某个类型的所有文件到暂存区</div><div class="line"></div><div class="line">git add .</div><div class="line"># 添加当前目录所有文件到暂存区​</div><div class="line"></div><div class="line">git add -p</div><div class="line"># 将文件添加到暂存区时，要求逐次手动确认</div></pre></td></tr></table></figure>
+<h3 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">git rm [file]</div><div class="line"># 删除工作区的文件，并将此操作放入暂存区。等同于在文件资源管理器中手动删除</div><div class="line"></div><div class="line">git rm --cached [file]</div><div class="line"># 停止追踪指定文件，但该文件会保留在工作区</div></pre></td></tr></table></figure>
+<h2 id="提交"><a href="#提交" class="headerlink" title="提交"></a>提交</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">git commit -m &quot;[description]&quot;</div><div class="line"># 提交暂存区的所有文件到仓库</div><div class="line"></div><div class="line">git commit -m &quot;[description]&quot; [file1] [file2]</div><div class="line"># 提交暂存区的指定文件到仓库</div></pre></td></tr></table></figure>
+<h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">git status</div><div class="line"># 显示变更过的文件</div><div class="line"></div><div class="line">git log ( -[num] )</div><div class="line"># 显示当前分支的版本历史，默认显示三次。可以在后面跟 -[num] 参数自定义显示次数</div><div class="line"></div><div class="line">git log --pretty=oneline ( -[num] )</div><div class="line"># 使提交信息一条仅占一行。如果不加 -[num] 参数，则默认显示过去 30 次提交信息</div><div class="line"></div><div class="line">git log --graph</div><div class="line"># 查看分支合并图</div><div class="line"></div><div class="line">git reflog</div><div class="line"># 查看 HEAD 的每一次变化历史</div><div class="line"></div><div class="line">git diff</div><div class="line"># 显示所有文件的暂存区和工作区的差异</div><div class="line"></div><div class="line">git diff -- [file]</div><div class="line"># 显示某个文件的暂存区和工作区的差异</div><div class="line"></div><div class="line">git diff HEAD</div><div class="line"># 显示所有文件的工作区与当前分支最新 commit 之间的差异</div><div class="line"></div><div class="line">git diff HEAD -- [file]</div><div class="line"># 显示某个文件的工作区与当前分支最新 commit 之间的差异</div></pre></td></tr></table></figure>
+<h2 id="撤销"><a href="#撤销" class="headerlink" title="撤销"></a>撤销</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">git checkout [file]</div><div class="line"># 让某个文件回到最近一次 git commit 或 git add 时的状态</div><div class="line"></div><div class="line">git checkout [commit] [file]</div><div class="line"># 恢复某个 commit 的指定文件到暂存区和工作区</div><div class="line"></div><div class="line">git checkout .</div><div class="line"># 恢复目前暂存区的所有文件到工作区</div><div class="line"></div><div class="line">git reset --hard</div><div class="line"># 重置暂存区与工作区，与上一次 commit 保持一致​</div><div class="line"></div><div class="line">git reset --hard HEAD^</div><div class="line"># 将文件版本快速回退至上一个版本。在 Git 中，HEAD 表示当前版本，上一个版本是 HEAD^，上上一个版本是 HEAD^^。也可以用数字表示，比如上 100 个版本是 HEAD~100</div><div class="line"></div><div class="line">git reset [commit]</div><div class="line"># 重置当前分支的 HEAD 为指定 commit，同时重置暂存区，但工作区不变</div><div class="line"></div><div class="line">git reset --hard [commit]</div><div class="line"># 重置当前分支的 HEAD 为 指定commit，同时重置暂存区和工作区，与指定 commit 一致</div><div class="line"></div><div class="line">git stash</div><div class="line"># 将未提交的变化暂时移除​</div><div class="line"></div><div class="line">git stash pop</div><div class="line"># 将未提交的变化再次移入</div></pre></td></tr></table></figure>
+<h2 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">git branch</div><div class="line"># 列出所有本地分支</div><div class="line"></div><div class="line">git branch -r</div><div class="line"># 列出所有远程分支</div><div class="line"></div><div class="line">git branch -a</div><div class="line"># 列出所有本地分支和远程分支</div><div class="line"></div><div class="line">git branch [branch]</div><div class="line"># 新建一个分支，但依然停留在当前分支</div><div class="line"></div><div class="line">git checkout -b [branch]</div><div class="line"># 新建一个分支，并切换到该分支</div><div class="line"></div><div class="line">git checkout -b [branch] origin/[branch]</div><div class="line"># 在本地新建一个分支，并使其与远程分支保持同步</div><div class="line"></div><div class="line">git checkout --orphan [branch]</div><div class="line"># 新建一个空白分支​。常用于创建 gh-pages 分支</div><div class="line"></div><div class="line">git merge [branch]</div><div class="line"># 使用快速合并，合并指定分支到当前分支</div><div class="line"></div><div class="line">git merge --no-ff [branch]</div><div class="line"># 使用正常合并，合并指定分支到当前分支​</div><div class="line"></div><div class="line">git rebase [branch]</div><div class="line"># 在一个分支里提交的改变移到另一个分支里重放一遍</div><div class="line"></div><div class="line">git push origin -d [branch]</div><div class="line">git branch -dr [remote/branch]</div><div class="line"># 删除远程分支</div><div class="line"></div><div class="line">git branch [branch] [commit]</div><div class="line"># 新建一个分支，指向指定 commit</div></pre></td></tr></table></figure>
+<h2 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">git tag</div><div class="line"># 列出所有标签</div><div class="line"></div><div class="line">git tag [tag]</div><div class="line"># 在当前 commit 新建一个标签</div><div class="line"></div><div class="line">git tag [tag] [commit]</div><div class="line"># 在指定 commit 新建一个标签</div><div class="line"></div><div class="line">git show [tag]</div><div class="line"># 查看标签信息</div><div class="line"></div><div class="line">git push origin [tag]</div><div class="line"># 提交指定标签</div><div class="line"></div><div class="line">git push origin --tags</div><div class="line"># 提交所有标签</div><div class="line"></div><div class="line">git tag -d [tag]</div><div class="line"># 删除本地标签</div><div class="line"></div><div class="line">git push origin :refs/tags/[tag]</div><div class="line"># 删除远程标签。要想删除远程标签，必须先删除本地标签</div><div class="line"></div><div class="line">git checkout -b [branch] [tag]</div><div class="line"># 新建一个分支，指向某个标签</div></pre></td></tr></table></figure>
+<h2 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h2><h3 id="SSH-Key"><a href="#SSH-Key" class="headerlink" title="SSH Key"></a>SSH Key</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa -C &quot;[user_email]&quot;</div><div class="line"># 创建 SSH 密钥</div><div class="line"></div><div class="line">ssh -T git@github.com</div><div class="line"># 测试是否顺利连接到 Github</div><div class="line"></div><div class="line">ssh -T git@git.coding.net</div><div class="line"># 测试是否顺利连接到 Coding.net</div></pre></td></tr></table></figure>
+<h3 id="克隆"><a href="#克隆" class="headerlink" title="克隆"></a>克隆</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git clone [URL] ( --depth [num] )</div><div class="line"># 如果添加 --depth [num] 参数可以指定克隆深度。比如 --depth 1 表示仅克隆最近的一次 commit</div></pre></td></tr></table></figure>
+<h3 id="拉取"><a href="#拉取" class="headerlink" title="拉取"></a>拉取</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">git remote -v</div><div class="line"># 显示所有远程仓库</div><div class="line"></div><div class="line">git pull ( [remote] [remote_branch]:[local_branch] )</div><div class="line"># 拉取远程仓库相应追踪分支的更改并直接合并到本地当前分支。如果当前分支只有一个追踪分支，连远程主机名都可以省略</div><div class="line"></div><div class="line">git pull origin [branch]</div><div class="line"># 取回远程仓库的变化，并直接与本地分支合并</div><div class="line"></div><div class="line">git fetch ( [remote] )</div><div class="line"># 下载远程仓库的所有变动</div><div class="line"></div><div class="line">git fetch -p</div><div class="line"># 获取远程仓库对远程分支的删除操作</div><div class="line"></div><div class="line">git remote show [remote]</div><div class="line"># 显示某个远程仓库的信息</div></pre></td></tr></table></figure>
+<h3 id="推送"><a href="#推送" class="headerlink" title="推送"></a>推送</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">git push ( [remote] [local_branch]:[remote_branch] )</div><div class="line"># 推送本地当前分支的修改到远程仓库相应追踪分支。如果当前分支只有一个追踪分支，连远程主机名都可以省略</div><div class="line"># 如果该远程分支不存在，则会被新建</div><div class="line"># 注意，分支推送顺序的写法是 &lt;来源地&gt;:&lt;目的地&gt;，所以 git pull 是 &lt;远程分支&gt;:&lt;本地分支&gt;，而 git push 是 &lt;本地分支&gt;:&lt;远程分支&gt;</div><div class="line"></div><div class="line">git push -u origin master</div><div class="line"># 把当前 master 分支首次推送到远程</div><div class="line"></div><div class="line">git push origin [branch]</div><div class="line"># 上传本地指定分支到远程仓库</div><div class="line"></div><div class="line">git push origin -a</div><div class="line"># 推送所有分支到远程仓库</div></pre></td></tr></table></figure>
+<h3 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">git remote add origin [URL]</div><div class="line"># 添加远程仓库</div><div class="line"></div><div class="line">git remote set-url origin [URL]</div><div class="line"># 修改远程仓库</div><div class="line"></div><div class="line">git remote add [name] [URL]</div><div class="line"># 添加一个名为 [name] 的新远程仓库</div><div class="line"></div><div class="line">git remote set-url --add origin [URL]</div><div class="line"># 添加一个远程仓库，并使其名字为 origin</div><div class="line"># 使用此方法可以实现一键推送至多个远程仓库</div><div class="line"># 但拉取时仅能拉取 .git/config 中列出的第一个原始仓库的更改</div></pre></td></tr></table></figure>
+<h2 id="子模块"><a href="#子模块" class="headerlink" title="子模块"></a>子模块</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">git submodule add [URL]</div><div class="line"># 添加子模块</div><div class="line"></div><div class="line">git submodule init</div><div class="line"># 初始化你的本地配置文件</div><div class="line"></div><div class="line">git submodule update</div><div class="line"># 更新子模块</div></pre></td></tr></table></figure>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="配置命令别名"><a href="#配置命令别名" class="headerlink" title="配置命令别名"></a>配置命令别名</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git config --global alias.[st] status</div><div class="line"># 配置命令别名。比如用 st 代替 status</div><div class="line"># --global 参数是全局参数，也就是这些命令在这台电脑的所有 Git 仓库下都有用</div><div class="line"># 此修改将保存至 .gitconfig 文件中，也可以直接进入 .gitconfig 文件批量修改</div></pre></td></tr></table></figure>
+<h3 id="一些参数简写意义"><a href="#一些参数简写意义" class="headerlink" title="一些参数简写意义"></a>一些参数简写意义</h3><p>来自 <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html" target="_blank" rel="external">阮一峰：常用 Git 命令清单</a> 一文中 AnnabellChan 的评论：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">git checkout -b，b 其实是 browse 的 abbr</div><div class="line">git branch -r, r -&gt; remote</div><div class="line">git branch -a, a -&gt; all</div><div class="line">git config -l, l -&gt; list</div><div class="line">git commit -m, m -&gt; message</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;配置&quot;&gt;&lt;a href=&quot;#配置&quot; class=&quot;headerlink&quot; title=&quot;配置&quot;&gt;&lt;/a&gt;配置&lt;/h2&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div c
+    
+    </summary>
+    
+      <category term="2-Skill" scheme="http://yoursite.com/categories/2-Skill/"/>
+    
+    
+      <category term="original" scheme="http://yoursite.com/tags/original/"/>
+    
+      <category term="tutorial" scheme="http://yoursite.com/tags/tutorial/"/>
+    
+      <category term="git" scheme="http://yoursite.com/tags/git/"/>
+    
+      <category term="github" scheme="http://yoursite.com/tags/github/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用同步盘建立自己的私有 Git 仓库</title>
+    <link href="http://yoursite.com/2017/01/07/2-Skill/PrivateGitRepository/"/>
+    <id>http://yoursite.com/2017/01/07/2-Skill/PrivateGitRepository/</id>
+    <published>2017-01-06T16:00:00.000Z</published>
+    <updated>2017-07-12T02:09:28.929Z</updated>
+    
+    <content type="html"><![CDATA[<p>同步型云盘可以让我们较好的同步代码，而 git 能让我们进行较好的版本控制。那么当我既需要代码同步功能，又需要版本控制时，该如何解决呢？可能很多人会想到，将整个代码文件夹扔到同步盘里面。这是最简单，但也是极其不稳定的解决方案。之前我一直是这样做的，但由于同步盘存在不稳定性，尤其是在频繁切换分支时，极有可能会由于同步盘的判断失误，导致代码回档、.git 文件夹损坏的情况。</p>
+<p>另一种解决方案就是放弃同步盘，仅使用远程仓库。Github 就提供私有仓库的服务，但每月 7 刀的价格对于我来说还是有些贵了，而我又不想因为私有仓库的需求单独使用其他家的代码托管服务。</p>
+<p>所以我想到一种新的解决方案：</p>
+<p><strong>在自己的同步盘里仅建立一个 Git 仓库，把它当作项目的远程仓库。当需要使用时，就像使用 Github 一样，通过 clone 命令将代码克隆至其他文件夹进行操作。</strong></p>
+<p>上网一查，发现有很多“前辈”已经想到了这种办法。实现方法如下：</p>
+<h2 id="在同步盘中初始化一个-Git-裸仓库"><a href="#在同步盘中初始化一个-Git-裸仓库" class="headerlink" title="在同步盘中初始化一个 Git 裸仓库"></a>在同步盘中初始化一个 Git 裸仓库</h2><p>在合适的同步盘文件夹内此处使用该命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git init --bare</div></pre></td></tr></table></figure>
+<h2 id="将“远程仓库”克隆至其他文件夹"><a href="#将“远程仓库”克隆至其他文件夹" class="headerlink" title="将“远程仓库”克隆至其他文件夹"></a>将“远程仓库”克隆至其他文件夹</h2><p>使用 git clone 的方式，将同步盘内的“远程仓库”克隆至非同步盘文件夹下。克隆的地址就是远程仓库文件夹的路径。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git clone [path]</div></pre></td></tr></table></figure>
+<p>比如我的远程仓库建立在 <code>D:\Nutstore\zyStudio\demo</code> 路径下，那么我就应当输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git clone D:\Nutstore\zyStudio\demo</div></pre></td></tr></table></figure>
+<h2 id="不同计算机之间的代码互通"><a href="#不同计算机之间的代码互通" class="headerlink" title="不同计算机之间的代码互通"></a>不同计算机之间的代码互通</h2><p>由于 git 不像同步盘那样可以时时同步代码，所以当我们切换电脑进行工作时，必须提交上一台电脑的代码，并在新的电脑上使用 <code>git fetch</code> 或 <code>git pull</code> 等命令进行代码同步。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;同步型云盘可以让我们较好的同步代码，而 git 能让我们进行较好的版本控制。那么当我既需要代码同步功能，又需要版本控制时，该如何解决呢？可能很多人会想到，将整个代码文件夹扔到同步盘里面。这是最简单，但也是极其不稳定的解决方案。之前我一直是这样做的，但由于同步盘存在不稳定性，
+    
+    </summary>
+    
+      <category term="2-Skill" scheme="http://yoursite.com/categories/2-Skill/"/>
+    
+    
+      <category term="original" scheme="http://yoursite.com/tags/original/"/>
+    
+      <category term="tutorial" scheme="http://yoursite.com/tags/tutorial/"/>
+    
+      <category term="git" scheme="http://yoursite.com/tags/git/"/>
+    
+      <category term="github" scheme="http://yoursite.com/tags/github/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>八等人</title>
+    <link href="http://yoursite.com/2017/01/05/3-Essay/Rank8People/"/>
+    <id>http://yoursite.com/2017/01/05/3-Essay/Rank8People/</id>
+    <published>2017-01-04T16:00:00.000Z</published>
+    <updated>2017-07-12T02:09:28.987Z</updated>
+    
+    <content type="html"><![CDATA[<p>第一等人，栋梁之才<br>有脑子，有血性，有廉耻</p>
+<p>第二等人，文人政客<br>有脑子，无血性，有廉耻</p>
+<p>第三等人，无畏战士<br>无脑子，有血性，有廉耻</p>
+<p>第四等人，螺丝钉<br>无脑子，无血性，有廉耻</p>
+<p>第五等人，枭雄民贼<br>有脑子，有血性，无廉耻</p>
+<p>第六等人，懦弱匹夫<br>无脑子，无血性，无廉耻</p>
+<p>第七等人，匹夫之勇<br>无脑子，有血性，无廉耻</p>
+<p>第八等人，汉奸国贼<br>有脑子，无血性，无廉耻</p>
+<hr>
+<p>作者：无边无际<br>链接：<a href="https://www.zhihu.com/question/37939671/answer/112474700" target="_blank" rel="external">https://www.zhihu.com/question/37939671/answer/112474700</a><br>来源：知乎</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;第一等人，栋梁之才&lt;br&gt;有脑子，有血性，有廉耻&lt;/p&gt;
+&lt;p&gt;第二等人，文人政客&lt;br&gt;有脑子，无血性，有廉耻&lt;/p&gt;
+&lt;p&gt;第三等人，无畏战士&lt;br&gt;无脑子，有血性，有廉耻&lt;/p&gt;
+&lt;p&gt;第四等人，螺丝钉&lt;br&gt;无脑子，无血性，有廉耻&lt;/p&gt;
+&lt;p&gt;第五等人，枭雄民贼&lt;
+    
+    </summary>
+    
+      <category term="3-Essay" scheme="http://yoursite.com/categories/3-Essay/"/>
+    
+    
+      <category term="zhihu" scheme="http://yoursite.com/tags/zhihu/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2016 年度小结</title>
+    <link href="http://yoursite.com/2016/12/31/1-Life/2016Summary/"/>
+    <id>http://yoursite.com/2016/12/31/1-Life/2016Summary/</id>
+    <published>2016-12-31T15:59:59.000Z</published>
+    <updated>2017-07-12T02:09:28.871Z</updated>
+    
+    <content type="html"><![CDATA[<p>这是我的第一篇年度小结，写到哪算哪。若是未来可以坚持，那么等到了耄耋之年把每年的总结合起来编成一辑，也算是留下一点东西，不虚此生走一回(笑)。</p>
+<h2 id="这一年发生的许多事"><a href="#这一年发生的许多事" class="headerlink" title="这一年发生的许多事"></a>这一年发生的许多事</h2><ul>
+<li>2 月 28 日，莱昂纳多·迪卡普里奥终获小金人</li>
+<li>4 月 12 日，魏则西过世。此处应有脏话万字赠予百度及李彦宏，但为了展现个人风度，整洁页面排版，略去不表</li>
+<li>5 月 7 日，雷洋事件。略去不表</li>
+<li>5 月 24 日，《守望先锋》 发行。没钱买，而且就算买了电脑也带不动</li>
+<li>6 月 8 日，电影《魔兽》上映，穿着我的部落战袍和基友一起去刷了。第一次遇到坐满的电影场次。Lok’tar O’gar!</li>
+<li>6 月 21 日，快播案二审，并没有出什么结果</li>
+<li>7 月 9 日，新乡暴雨。雨水深到淹了地下车库，生科院的鱼在大马路上满世界跑。而我那时在家吃瓜看戏，无法体验此事竟深觉遗憾~</li>
+<li>7 月 20 日，魏则西过世百天</li>
+<li>7 月 20 日，表妹确定被河师大生物专业录取</li>
+<li>7 月 31 日，《魔兽世界》推出月卡，我的魔兽生涯暂告一段落</li>
+<li>8 月 20 日，铁门老家修房顶</li>
+<li>9 月 3 日，开始使用双拼</li>
+<li>9 月 10 日，表妹到校报到</li>
+<li>10 月 8 日，买了人生中第一件风衣</li>
+<li>12 月 2 日，和女友一起去看了《你的名字。》，自认为非常不错</li>
+<li>12 月 7 日，将博客转移至 Hexo 平台</li>
+<li>12 月 23 日，雷洋事件。北京市检察院官方微博宣布，将不对涉案 5 名警员进行起诉</li>
+<li>12 月 24 日，考研开始</li>
+<li>12 月 24 日，英语考试结束后，在宾馆坐电梯回房间时和其他 13 人一起被困于 4 楼至 5 楼之间。讲实话，前 30 秒是怕的，之后就无所谓了。想来 21 世纪的电梯再怎么差劲，也不会没有什么保护措施让电梯直接自由落体。被困 30 分钟有余，体验了一把缺氧的感觉</li>
+<li>12 月 26 日，确定毕业论文题目</li>
+</ul>
+<h2 id="关于学习"><a href="#关于学习" class="headerlink" title="关于学习"></a>关于学习</h2><p>如果把大学四年我学到的知识分为 10 份，那么 2016 年就要占 9 份有余。能做到这一点倒不是说步入了大四，时间充裕了，而是步入了大四，突然觉得有压力了。身边的人或考研，或工作，几乎都是瞬间按下鼠标右键转入了高姿态，我要是不学习就显得十分尴尬。</p>
+<p>这一年里我确实是学了不少东西，前端占大头。我的学习流程杂乱不堪且不成章法，这直接导致了我时常做到“茅塞顿开”(笑)。我的提升是巨大的，但愈是学习便愈是发觉自己真是菜的抠脚。我开始后悔自己没有好好学习算法和数据结构，遇到了极多的坑。也是应了那句话，出来混，迟早是要还的。后悔归后悔，但若问我难过吗，这倒是没有。我懂得，如果大学四年重来一遍，恐怕我依然是这个鸟样。天性如此不可改。</p>
+<h2 id="对工作的展望"><a href="#对工作的展望" class="headerlink" title="对工作的展望"></a>对工作的展望</h2><p>我一直是半个强迫症，半个完美主义者以及半个被害妄想症患者，写一句代码按一下 Ctrl + S，指不定还顺手按个 Alt + Shift + F(格式化代码的快捷键)。目前的我还是极其菜，所以大抵也是要去培训机构转一圈的。</p>
+<p>我能看到的未来，是 Deep ♂ Dark 中带有一丝光明的。这一丝光明来源于，我见到的去培训的人大多都是一些对计算机没有兴趣，甚至算不上有求知欲的人。他们在做的可能只是一种贬义的“面向工资编程”。而我确实是喜欢 it 的。我有信仰，我嫉百度如仇；我有求知欲，在身边人还用百度云求种的时候我已然用上了 tumblr；我有一颗爱折腾的心，会装系统，会拆电脑；我愿意为 it 花钱，去购买能提升幸福感的服务；我还是一个正版支持者……</p>
+<p>有如此多信仰加成的我有理由相信，我起码不会比那些人用着盗版、百度，连系统都不会装的程序员混的更差。</p>
+<h2 id="遗憾"><a href="#遗憾" class="headerlink" title="遗憾"></a>遗憾</h2><p>大四时间最为充裕，但我仍然没有来一场文青们常挂在嘴巴的，说走就走的旅行。(主要原因是没钱)</p>
+<h2 id="心态的转变"><a href="#心态的转变" class="headerlink" title="心态的转变"></a>心态的转变</h2><p>在说转变之前，我觉得我应当先交代一下自己的性格。不敢评价过多，但心思缜密的优点和瞻前顾后的缺点是自己能明显感受到的。</p>
+<p>得益于我的细心，连着打了四年的热水，从来没有哪次忘带饭卡，使得我无法用借饭卡为由去搭讪女同学，憾甚。另外，连着四年吃饭都是我带纸巾，这也直接导致了我用纸速度比较快，再加上室友总是找我借，想来大学四年也是多用了挺多卫生纸，怕是加起来得有一两棵树了，对我国环保事业造成了不可估量的损失，有罪。</p>
+<p>至于瞻前顾后，说白了就是胆小。这种性格在方方面面影响着我，直接导致我的生活十分平稳，不会大起大伏，也导致我错过了一大堆本该属于我的，美好的经历。各种影响中有一条尤甚，就是对待“上级”有一种自卑感和压抑感，直至今日我也认为这和我小学和初中时期老师们的训斥和体罚直接挂钩。在高中，农村来的孩子普遍不善于表达，几乎从来不主动举手回答问题。因为在小学和初中，答错问题迎来的是骂和打，在我们那指不定还来一波“蹲讲台”。在人生中塑造性格的最关键阶段，我(们)遇到的却是大把大把的棍棒，而手持棍棒的人往往是被大肆歌颂的教师。自卑和怯懦将陪伴我(们)的一生直至大学、工作、结婚、入土。</p>
+<p>至于转变，今年深深的感觉到自己确实是“老”了。明明身处弱冠，大好年华，但总觉心已垂垂老矣，如若迟暮，其中尤以好奇心为最甚。我不再是一串炸响的鞭炮，我的戾气变轻了。回头看之前的文章，去年的我还很喜欢用感叹号，并且喜欢豪言壮语的去骂，去抒情，现在看来挺傻逼的。现在的我心如止水还达不到，但起码不会疾风骤雨了。自认为这是个好的改变。</p>
+<p>另外，我的强迫症减轻了不少，也是好事。</p>
+<h2 id="在断舍离的道路上日夜兼程"><a href="#在断舍离的道路上日夜兼程" class="headerlink" title="在断舍离的道路上日夜兼程"></a>在断舍离的道路上日夜兼程</h2><p>去年 6 月下旬我关闭了 qq 空间、微信朋友圈之类的东西，无他，只是不想再看到那些矫情的文字，低俗的谣言，以及各种自我感觉良好的自拍。我只是想找个地方，能让我安安静静的写一些文字而已。</p>
+<p>于是我视察了新浪、网易等“知名”博客平台，但很快便决定 pass。我觉得我真心实意写的东西，却和一堆“紧身衣美少女诱惑”，或者“让老公受不了的调情秘技”之类的玩意摆在一起，实在是有碍观瞻，且让我觉得十分尴尬。后来呢，我找到了一个叫做简书的网站，很不错，但我认为这个平台不极客，达不够 it 人浪漫的标准。</p>
+<p>于是我毅然决定去搞一个博客不依托于“知名”博客平台的，数据都在自己手里的博客。前后换了很多很多家，终于换到了目前在用的 Hexo。说实在的，没几个人看我的博客，但没关系，我还是在写，并且会继续写下去。我的目的已经达到了：“能让我安安静静的写一些文字而已。”</p>
+<p>目前我安装的电脑软件早已形成套路，重装系统后只需 10 分钟就能恢复到重装前的状态。这些软件之中甚至连 qq 的桌面版都没装，仅用 uwp 版和女友交流。关闭 qq 空间也并没有引起很多人的注意，由此可见我确实是一个存在感不强的人，很好。</p>
+<p>不喜抢红包。除过舅舅单独发给我的一次红包以及室友转钱发给我的红包，至今从未抢过什么红包。无他，觉得 low。</p>
+<h2 id="关于我的父母"><a href="#关于我的父母" class="headerlink" title="关于我的父母"></a>关于我的父母</h2><p>室友中有能人，一直靠自己的努力挣取自己的生活费和学费。我没有做到这点，确实是惭愧。生活费每月 700 月左右，不多，但也不少。我一直感到缺钱，但打心眼里没有抱怨过父母给我的钱不够。我认为这是中国穷人子女应该做到的，也是必须做到的事情。</p>
+<p>我无才无能，没有做到在大学时期让父母减轻压力，所以我只能盼望早日迎来经济独立，让父母不用再操心于我。人生不过几十载，父母终将迎来椅闾望子的一天，但求那时我有能力让父母过的舒心。</p>
+<h2 id="兴趣和爱好"><a href="#兴趣和爱好" class="headerlink" title="兴趣和爱好"></a>兴趣和爱好</h2><p>我是一个爱玩游戏的人，奈何自己的电脑太菜，带不动什么 3A 大作，所以只能看看各类游戏实况以及攻略解说，今年春天逐渐发展成为兴趣。此类视频只看 B 站游戏区，最喜欢纯黑、黑桐谷歌、王老菊、C 菌四人。</p>
+<p>其他倒也没什么改变。。。比如，还是个死宅。</p>
+<h2 id="小结的小结"><a href="#小结的小结" class="headerlink" title="小结的小结"></a>小结的小结</h2><p>我对跨年这种东西没什么特别大的感觉，因为雾霾不会变轻，房子不会掉价，互联网封锁不会减弱，我也不会因为跨年而失掉处男的身份（在此祝福那些喜欢打跨年炮的人平安喜乐）。</p>
+<p>2017 年我注定会走出校门，踏入社会。我将再也吃不到 5 块 5 管饱的饭，住不到一年 750 不限水电的房间，也将迎来毕业季的分手诅咒。这一切都让我感到彷徨失措。但我也感到兴奋。明年将会是我遇到的第一个人生重大转折点，这一年将或多或少决定我的人生走向，我很想看看这一年的我到底会混成什么样子。</p>
+<p>来吧，2017，我畏惧着你，并期待着你。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这是我的第一篇年度小结，写到哪算哪。若是未来可以坚持，那么等到了耄耋之年把每年的总结合起来编成一辑，也算是留下一点东西，不虚此生走一回(笑)。&lt;/p&gt;
+&lt;h2 id=&quot;这一年发生的许多事&quot;&gt;&lt;a href=&quot;#这一年发生的许多事&quot; class=&quot;headerlink&quot; ti
+    
+    </summary>
+    
+      <category term="1-Life" scheme="http://yoursite.com/categories/1-Life/"/>
+    
+    
+      <category term="original" scheme="http://yoursite.com/tags/original/"/>
+    
+      <category term="summary" scheme="http://yoursite.com/tags/summary/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>将域名邮箱服务迁移到 FastMail</title>
+    <link href="http://yoursite.com/2016/12/30/1-Life/FastMail/"/>
+    <id>http://yoursite.com/2016/12/30/1-Life/FastMail/</id>
+    <published>2016-12-29T16:00:00.000Z</published>
+    <updated>2017-07-12T02:09:28.879Z</updated>
+    
+    <content type="html"><![CDATA[<p>我的域名邮箱服务商几经更换，从腾讯企业邮到 qq 域名邮箱，接着是网易域名邮箱，然后是 pawnmail 和 zoho，始终没有哪个让我觉得特别合适。在此必须点名腾讯企业邮，注册后的账户连续 30 天不使用将删除原账户，而且重新注册时，原账号使用的邮箱和手机号都无法再次使用了，十分扯淡。</p>
+<p>这次试着使用了一下 FastMail，还真是不错，到信率、收发速度都值得称道。至于很多人吐槽的 ui，我倒是觉得非常漂亮。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_life/FastMail.png" alt=""></p>
+<p>我选用的计划是 5$/m，在我可接受的范围内。在遇到备份邮箱的问题后，我仍然用我那四级没过的蹩脚英语写了邮件向客服寻求帮助。不得不说，客服的响应速度真的是快到不行。</p>
+<p>目前来说 FastMail 是我用过的最舒适的域名邮箱服务了，希望这次能用的久一点（flag?）。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;我的域名邮箱服务商几经更换，从腾讯企业邮到 qq 域名邮箱，接着是网易域名邮箱，然后是 pawnmail 和 zoho，始终没有哪个让我觉得特别合适。在此必须点名腾讯企业邮，注册后的账户连续 30 天不使用将删除原账户，而且重新注册时，原账号使用的邮箱和手机号都无法再次使用
+    
+    </summary>
+    
+      <category term="1-Life" scheme="http://yoursite.com/categories/1-Life/"/>
+    
+    
+      <category term="original" scheme="http://yoursite.com/tags/original/"/>
+    
+      <category term="net" scheme="http://yoursite.com/tags/net/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Github Pages 知识梳理</title>
+    <link href="http://yoursite.com/2016/12/10/2-Skill/GithubPages/"/>
+    <id>http://yoursite.com/2016/12/10/2-Skill/GithubPages/</id>
+    <published>2016-12-09T16:00:00.000Z</published>
+    <updated>2017-07-12T02:09:28.917Z</updated>
+    
+    <content type="html"><![CDATA[<p>之前一直被 Github Pages 搞得很迷，昨晚通过自己的实验，总算是有了清晰的思路，故在此梳理一番。</p>
+<h2 id="到底需不需要-gh-pages-分支？"><a href="#到底需不需要-gh-pages-分支？" class="headerlink" title="到底需不需要 gh-pages 分支？"></a>到底需不需要 gh-pages 分支？</h2><p>网上关于 Github Pages 的第三方介绍都比较简单，而且有很多矛盾的描述。你会发现有些人不创建 gh-pages 分支，而有些人则创建了该分支。实际上，Github Pages 是既可以在 master 分支建立，也可以在 gh-pages 分支上建立的。其区别在于，如果你在 master 分支上建立 Github Pages，那么你必须将网页文件统统放在 master 分支下。那么如果你的仓库不是前端项目，或者不打算制作为博客，而是只需要一个不太复杂的项目展示页，那么你就可以通过创建一个 gh-pages 的方式来单独存放网页文件，而 master 分支存放项目内容。</p>
+<h2 id="Github-Pages-的分类"><a href="#Github-Pages-的分类" class="headerlink" title="Github Pages 的分类"></a>Github Pages 的分类</h2><p>根据 <a href="https://pages.github.com/" target="_blank" rel="external">Github Pages 官网</a>的解释，Github Pages 分为 <code>User or organization site</code> 和 <code>Project site</code> 两种形式。这两种形式的区别如下：</p>
+<h3 id="User-or-organization-site"><a href="#User-or-organization-site" class="headerlink" title="User or organization site"></a>User or organization site</h3><p>如果要创建这种页面，你需要新建一个名为 <code>{yourUserName}.github.io</code> 的仓库，{yourUserName} 就是你的 Github 用户名。比如我的用户名是 varzy，那么我需要创建的仓库名称就是 varzy.github.io。<strong>这个站点相当于入口，也相当于网站的顶级域名，</strong>所以网上很多人用这种方式去制作自己的个人博客或网站。比如我就用了这种方式制作了该博客。如果有兴趣，欢迎参考我的这一篇文章：<a href="http://varzy.me/2-Skill/HexoGuide/" target="_blank" rel="external">Hexo 不完全指南 - 安装、备份、注意事项</a>。</p>
+<p>使用这种仓库，一般是不需要创建 gh-pages 分支的，我们会直接使用 master 分支来存放网站文件。当然，如果你更想使用 gh-pages 分支来存放网页文件也不是不可以。</p>
+<h3 id="Project-site"><a href="#Project-site" class="headerlink" title="Project site"></a>Project site</h3><p>如果你的某一个仓库需要一个简单的页面来介绍它的相关内容，那么你就可以新建一个名为 gh-pages 的分支，并将网页文件存放于该分支下。Github 将默认将此分支下的内容解析为一个 Github Pages，而不需要进行任何设置。</p>
+<p>Project site 的域名规则是 <code>{yourUserName}.github.io/{repoName}</code>。比如我有一个名为 demo 的仓库，那么当我创建了 gh-pages 分支并推送后，就可以在浏览器中敲入 varzy.github.io/demo 来访问该项目的 Github Pages。</p>
+<h2 id="域名绑定"><a href="#域名绑定" class="headerlink" title="域名绑定"></a>域名绑定</h2><p>任何一个项目页面都可以绑定自定义域名，只需要将域名使用 CNAME 记录指向自己的 Github Pages 地址，并在 master 分支或 gh-pages 分支下建立名为 CNAME 的文件，将需要绑定的域名写入其中即可。</p>
+<p>大致思路如此，具体做法不再赘述。</p>
+<h2 id="一些自问自答"><a href="#一些自问自答" class="headerlink" title="一些自问自答"></a>一些自问自答</h2><p><strong>Q: 为什么我的 Github Pages 不加载引用资源(css, js, 图片)？</strong></p>
+<p>index.html 必须放置在用作 master 分支或 gh-pages 分支的根目录下，并且 index.html 中的资源引用路径必须正确。</p>
+<p><strong>Q: Github Pages 有没有什么限制？</strong></p>
+<p>有的。详见 Github Pages 帮助文档：</p>
+<blockquote>
+<p>GitHub Pages source repositories have a recommended limit of 1GB .<br>Published GitHub Pages sites may be no larger than 1 GB.<br>GitHub Pages sites have a bandwidth limit of 100GB or 100,000 requests per month.<br>GitHub Pages sites have a limit of 10 builds per hour.</p>
+</blockquote>
+<p><strong>Q: 国内 Github 访问缓慢，有没有解决办法？</strong></p>
+<p>共有三种解决方案，请按需选择：</p>
+<ul>
+<li>去把墙炸了；</li>
+<li>教会所有看你博客的人翻墙；</li>
+<li>选择国内的 <a href="https://coding.net/" target="_blank" rel="external">Coding.net</a> 来存放你的页面。</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;之前一直被 Github Pages 搞得很迷，昨晚通过自己的实验，总算是有了清晰的思路，故在此梳理一番。&lt;/p&gt;
+&lt;h2 id=&quot;到底需不需要-gh-pages-分支？&quot;&gt;&lt;a href=&quot;#到底需不需要-gh-pages-分支？&quot; class=&quot;headerlink&quot; 
+    
+    </summary>
+    
+      <category term="2-Skill" scheme="http://yoursite.com/categories/2-Skill/"/>
+    
+    
+      <category term="original" scheme="http://yoursite.com/tags/original/"/>
+    
+      <category term="net" scheme="http://yoursite.com/tags/net/"/>
+    
+      <category term="tutorial" scheme="http://yoursite.com/tags/tutorial/"/>
+    
+      <category term="github" scheme="http://yoursite.com/tags/github/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo 不完全指北</title>
+    <link href="http://yoursite.com/2016/12/08/2-Skill/HexoGuide/"/>
+    <id>http://yoursite.com/2016/12/08/2-Skill/HexoGuide/</id>
+    <published>2016-12-07T16:00:00.000Z</published>
+    <updated>2017-07-12T02:09:28.920Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>之前决定迁移博客平台的时候选择了 jekyll，但在下愚笨，连 jekyll 的开发环境都没搭建成功，调整时只能先 push 到 github 才能看到效果，实属痛苦。今日花了一天时间，终于把博客迁移到了 Hexo，顿时有一种脱离苦海的感觉。虽说 Hexo 非常简单，但官方文档实在简略，第三方教程又繁杂不一，我在实践过程中还是遇到了不少问题，因此还是决定自己动手写上一写，一来帮助自己梳理思路，二来如果能帮到遇到相同问题的朋友就再好不过了。如有纰漏，欢迎斧正。</p>
+<p><strong>注意：</strong></p>
+<ol>
+<li>我使用的开发环境为 Windows 10，工具为 Visual Studio Code，博客托管于 Github，图床为七牛云；</li>
+<li>我不会把所有的步骤全部列出，而是仅列出我认为必要的部分。如果你有不懂的地方，还请自行谷歌。</li>
+</ol>
+<h2 id="大致思路"><a href="#大致思路" class="headerlink" title="大致思路"></a>大致思路</h2><h3 id="关于托管"><a href="#关于托管" class="headerlink" title="关于托管"></a>关于托管</h3><p>使用 Github Pages 托管 Hexo。如果你想要提高博客的访问速度，可以将你的 Hexo 部署在国内的 <a href="https://coding.net/" target="_blank" rel="external">Coding</a>。</p>
+<h3 id="关于备份"><a href="#关于备份" class="headerlink" title="关于备份"></a>关于备份</h3><p>和 jekyll 不同，Hexo 的博客文件都需要在本地生成，再 push 到远程仓库的某一个分支，所以博客的源文件是无法直接同步至 github 的，活脱脱一个本地文件，几乎零容灾。</p>
+<p>这时候我们只能“曲线救国”了。本来我打算使用同步型云盘直接备份整个文件夹，但这样实在既不优雅也不省心。偶然间在知乎看到了一位昵称为“CrazyMilk”的答主给出的方案(<a href="https://www.zhihu.com/question/21193762/answer/79109280" target="_blank" rel="external">点我查看原文链接</a>)，其思路是使用同一个仓库下的两个分支进行管理。主分支保存 Hexo 生成的博客文件，另一个分支保存 Hexo 文件夹的源文件。这种思路非常好，所以我也采用了这种方式进行管理。由于作者给出的回答较为简略，我将在下面的流程中详细演示。</p>
+<h3 id="关于图床的选择和使用"><a href="#关于图床的选择和使用" class="headerlink" title="关于图床的选择和使用"></a>关于图床的选择和使用</h3><p>国内像样的图床确实不多，其中最优解大概就是七牛了吧。但七牛的存储管理实在蛋疼，于是也是使用了一个曲线救国的方案：通过一个名为 <code>qiniu upload files</code> 的 chrome 插件对图片进行批量管理，目前感觉良好。 </p>
+<h2 id="安装并配置-Node-js-和-Git"><a href="#安装并配置-Node-js-和-Git" class="headerlink" title="安装并配置 Node.js 和 Git"></a>安装并配置 Node.js 和 Git</h2><p>接下来就要搞 Hexo 了。在使用 Hexo 之前，请先安装 Node.js 和 Git。官网地址：</p>
+<ul>
+<li>Hexo : <a href="https://nodejs.org/" target="_blank" rel="external">https://nodejs.org/</a></li>
+<li>Git : <a href="https://git-scm.com/" target="_blank" rel="external">https://git-scm.com/</a></li>
+</ul>
+<p><strong>注意：</strong></p>
+<ol>
+<li>最好在科学上网的环境下访问网站并下载文件；</li>
+<li>安装 Node.js 时，最好勾选将路径添加至环境变量的选项，可以省去后续自己添加的麻烦。</li>
+</ol>
+<p>安装完成后，在 Git Bash 或 cmd 中配置用户名和邮箱，并生成 ssh 密钥。登陆 Github 或 Coding，使用公钥将计算机与远程仓库关联。</p>
+<h2 id="安装并配置-Hexo"><a href="#安装并配置-Hexo" class="headerlink" title="安装并配置 Hexo"></a>安装并配置 Hexo</h2><h3 id="安装-Hexo"><a href="#安装-Hexo" class="headerlink" title="安装 Hexo"></a>安装 Hexo</h3><p>在命令行中输入以下命令以安装 hexo-cli：</p>
+<blockquote>
+<p>npm install hexo-cli -g</p>
+</blockquote>
+<h3 id="初始化一个-Hexo-目录"><a href="#初始化一个-Hexo-目录" class="headerlink" title="初始化一个 Hexo 目录"></a>初始化一个 Hexo 目录</h3><p>等待安装完成后，在你认为合适的目录下创建一个新文件夹作为 Hexo 的根目录，在这个文件夹的空白处按住 <code>Shift</code> + <code>鼠标右键</code> ，点击 <code>在此处打开命令窗口</code>，输入以下命令以初始化一个 Hexo 目录：</p>
+<blockquote>
+<p>hexo init</p>
+</blockquote>
+<p>等待初始化完成后，输入以下命令以安装依赖包：</p>
+<blockquote>
+<p>npm install</p>
+</blockquote>
+<h3 id="验证-Hexo-是否安装成功"><a href="#验证-Hexo-是否安装成功" class="headerlink" title="验证 Hexo 是否安装成功"></a>验证 Hexo 是否安装成功</h3><p>在命令行中，输入以下命令以生成静态网站：</p>
+<blockquote>
+<p>hexo g</p>
+</blockquote>
+<p>完成后继续输入以下命令以本地运行：</p>
+<blockquote>
+<p>hexo s</p>
+</blockquote>
+<p>如果命令提示符反馈：<code>INFO  Hexo is running at http://localhost:4000/. Press Ctrl+C to stop.</code> ，那么请在浏览器地址栏中输入：</p>
+<blockquote>
+<p>localhost:4000</p>
+</blockquote>
+<p>如果出现以下页面，那么恭喜，你的 Hexo 已经成功部署到本地了！之后如果你需要调试你的博客内容，可以优先使用这种本地查看的方式。</p>
+<p><strong>注意：</strong>在浏览器查看该页面时，必须保证命令提示符为打开状态。如果关闭命令提示符或者键入 <code>Ctrl</code> + <code>C</code> 停止服务，你的页面将变成空白页。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/HexoGuide_1.png" alt=""></p>
+<h2 id="将本地的-Hexo-博客推送至-Github-Pages"><a href="#将本地的-Hexo-博客推送至-Github-Pages" class="headerlink" title="将本地的 Hexo 博客推送至 Github Pages"></a>将本地的 Hexo 博客推送至 Github Pages</h2><h3 id="配置一个合适的-Github-仓库"><a href="#配置一个合适的-Github-仓库" class="headerlink" title="配置一个合适的 Github 仓库"></a>配置一个合适的 Github 仓库</h3><p><strong>注意：</strong> 此步骤所以操作均在 Github 上进行，不需要将此仓库同步至本地。</p>
+<p>新建一个用于存放 Hexo 的 Github 仓库，仓库名为 <code>{yourUserName}.github.io</code> 。比如，我的 github 用户名是 <code>varzy</code> ，那么我的仓库名应该是 <code>varzy.github.io</code>。</p>
+<p>然后，重点来了。<strong>你的 master 分支将会用于存放 Hexo 在本地生成的网页文件，所以你需要新建一个新的分支并将其设为默认分支，该分支用于存放你的 Hexo 源文件，也就是将此分支用于备份。</strong>比如，我创建了一个名为 <code>hexo</code> 的分支，并将其设置为默认分支：</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/HexoGuide_2.png" alt=""></p>
+<p>打开该仓库的 <code>Settings</code>，将页面下拉至 <code>GitHub Pages</code> 位置，在 <code>Source</code> 中选择 <code>master branch</code> 并点击 <code>Save</code> 保存。如果不出意外，你将得到一个页面链接：<code>https://yourUserName.github.io</code>，这就是你之后将要访问的博客链接。</p>
+<p>至此，Github 仓库部分的配置已经全部完成了。可能有小伙伴有疑问，是否可以先将该仓库全部配置好，再 clone 至本地，然后在该仓库的本地文件夹下初始化一个 Hexo 目录呢？经过我的尝试发现这是不行的。<code>hexo init</code> 命名将会清空该文件夹下的所有文件，包括 <code>.git</code> 隐藏目录，导致与远程仓库的链接断开。所以，老老实实用我现在的步骤进行操作吧~</p>
+<h3 id="配置本地-Hexo-文件夹"><a href="#配置本地-Hexo-文件夹" class="headerlink" title="配置本地 Hexo 文件夹"></a>配置本地 Hexo 文件夹</h3><p>打开本地 Hexo 文件夹，使用 Visual Studio Code 等工具打开 <code>_config.yml</code>，在最下方找到 <code># Deployment</code>，将其修改为如下格式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># Deployment</div><div class="line">## Docs: https://hexo.io/docs/deployment.html</div><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repo: git@github.com:&#123;UserName&#125;/&#123;UserName&#125;.github.io.git</div><div class="line">  branch: master</div></pre></td></tr></table></figure>
+<p>保存并关闭 <code>_config.yml</code> 文件，在根目录空白处按下 <code>Shift</code> + <code>鼠标右键</code>，打开命令提示符，输入以下命令以安装 git 依赖文件：</p>
+<blockquote>
+<p>npm install hexo-deployer-git –save</p>
+</blockquote>
+<p><strong>注意：</strong>该命令仅适用于使用 git 方式进行部署的情况，如果你采用其他方式进行部署，还请自行查询相关命令。</p>
+<h3 id="推送本地-Hexo-文件至-Github-Pages"><a href="#推送本地-Hexo-文件至-Github-Pages" class="headerlink" title="推送本地 Hexo 文件至 Github Pages"></a>推送本地 Hexo 文件至 Github Pages</h3><p>在命令提示符中输入以下命令以生成最新的网页文件并推送至远程仓库的 master 分支：</p>
+<blockquote>
+<p>hexo g -d</p>
+</blockquote>
+<h3 id="查看-Github-Pages"><a href="#查看-Github-Pages" class="headerlink" title="查看 Github Pages"></a>查看 Github Pages</h3><p>等待推送完成，你就可以在浏览器中访问你之前得到的 Github Pages 链接了，其格式应为：<code>https://yourUserName.github.io/</code>。</p>
+<p>如果可以正常访问，那么恭喜，你的博客已经全部完成且可以正常使用了！不过不要慌着去写文章，接下来的微调和后续工作也是非常必要的。</p>
+<h2 id="备份-Hexo-源文件"><a href="#备份-Hexo-源文件" class="headerlink" title="备份 Hexo 源文件"></a>备份 Hexo 源文件</h2><h3 id="连接-github-仓库并推送-Hexo-源文件"><a href="#连接-github-仓库并推送-Hexo-源文件" class="headerlink" title="连接 github 仓库并推送 Hexo 源文件"></a>连接 github 仓库并推送 Hexo 源文件</h3><p>这一步我将使用命令行的方式说明，当然你也可以用其他的 git 管理工具完成这一步，比如 VSCode 等。</p>
+<p>在 Hexo 的根目录下打开 Git Bash 或者 cmd，输入以下命令以初始化一个 git 仓库：</p>
+<blockquote>
+<p>git init</p>
+</blockquote>
+<p>使用以下命令创建并切换至 <code>hexo</code> 分支：</p>
+<blockquote>
+<p>git checkout -b hexo</p>
+</blockquote>
+<p>添加所有文件到暂存区：</p>
+<blockquote>
+<p>git add .</p>
+</blockquote>
+<p>提交暂存区所有文件：</p>
+<blockquote>
+<p>git commit -m “{message}”</p>
+</blockquote>
+<p>通过 HTTPS 方式或者 SSH 方式连接远程仓库，推荐使用 SSH 方式：</p>
+<blockquote>
+<p>git remote add origin git@github.com:{UserName}/{UserName}.github.io.git</p>
+</blockquote>
+<p>推送 Hexo 目录下的文件至远程仓库的 <code>hexo</code> 分支：</p>
+<blockquote>
+<p>git push -u origin hexo</p>
+</blockquote>
+<p>至此，所有的备份工作就结束了。当你想要更新博客的时候，需要通过 <code>hexo g -d</code> 命令发布一次，这时，你更新过的内容会出现在 Github 仓库的 master 分支上，并且自动更新在 Github Pages 页面上，当你访问 UserName.github.io 就可以看到你刚刚更新的内容了。</p>
+<p>但是 <code>hexo g -d</code> 只更新了远程仓库的 <code>master</code> 分支，你还需要通过再次推送源文件至 <code>hexo</code> 分支进行源文件的备份。所以，如果你想要更新博客内容，一般的流程是这样的：<code>本地调试</code> -&gt; <code>hexo g -d</code> -&gt; <code>git push origin hexo</code>。</p>
+<h3 id="通过备份快速生成-Hexo-目录"><a href="#通过备份快速生成-Hexo-目录" class="headerlink" title="通过备份快速生成 Hexo 目录"></a>通过备份快速生成 Hexo 目录</h3><p>如果你更换了电脑，或者更换了硬盘，或者巴拉巴拉，总之就是你需要快速得到一份可以写博客的 Hexo 文件目录，操作也非常简单。</p>
+<p>当然，你需要先安装 Node.js 和 Git，此过程于之前相同，在此不再赘述。</p>
+<p>接着，输入以下命令以安装 Hexo 到本机：</p>
+<blockquote>
+<p>npm install hexo-cli -g</p>
+</blockquote>
+<p>然后你需要将整个 Github 仓库 clone 到本地：</p>
+<blockquote>
+<p>git clone git@github.com:{UserName}/{UserName}.github.io.git –depth 1</p>
+</blockquote>
+<p>由于博客这种东西一般不需要回退或查看以前的提交版本，所以这里加入 <code>--depth 1</code> 表示只克隆最近一次的提交。这样可以加快 clone 速度，减小文件夹体积。</p>
+<p>在该仓库文件夹空白处按住 <code>Shift</code> + <code>鼠标右键</code> 打开命令提示符，输入以下命令以安装所有的依赖文件：</p>
+<blockquote>
+<p>npm install</p>
+</blockquote>
+<p>至此，本地 Hexo 文件应该已经可以正常使用了。可以通过在命令窗口输入 <code>hexo g</code> 以查看能否正常部署，如果一切正常，那么恭喜，你的 Hexo 文件已经和上一次备份时完全一致了，enjoy it!</p>
+<h2 id="绑定自己的域名"><a href="#绑定自己的域名" class="headerlink" title="绑定自己的域名"></a>绑定自己的域名</h2><p>Github Pages 可以绑定自己的域名，这也就意味着你可以使用自己的域名去访问你的 Hexo 博客。在此不再赘述域名的申请和操作等步骤。</p>
+<h3 id="搞定域名解析"><a href="#搞定域名解析" class="headerlink" title="搞定域名解析"></a>搞定域名解析</h3><p>在下愚笨，找了半天愣是没找到 Github Pages 给出的最新主机 IP，于是我就直接使用 CNAME 记录指向了我的 Github Pages 地址。事实证明这种方式是可行的。操作如下：</p>
+<p>打开域名解析设置，添加两个 CNAME 记录，并分别添加 www 和裸域两种记录。这样做的目的是为了使带 www 的域名和不带 www 的域名都能正确进入博客。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/HexoGuide_3_new.png" alt=""></p>
+<h3 id="添加-CNAME-文件到-Hexo-目录下的-source-文件夹"><a href="#添加-CNAME-文件到-Hexo-目录下的-source-文件夹" class="headerlink" title="添加 CNAME 文件到 Hexo 目录下的 source 文件夹"></a>添加 CNAME 文件到 Hexo 目录下的 source 文件夹</h3><p>在 Hexo 目录下的 source 文件夹下新建一个名为 <code>CNAME</code> 的文件，里面填写你想要绑定的域名。如果你想要绑定裸域，则只需要填写域名即可；如果想要加入 www 前缀，那么你需要填入 www.yourDomain。比如，我不喜欢加入 www 前缀，那么我的 CNAME 文件只需要写入：</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/HexoGuide_4_new.png" alt=""></p>
+<p><strong>注意：</strong>一定要将 CNAME 文件置于 source 文件夹下而不是 Hexo 根目录，否则你的域名将不能绑定成功。</p>
+<h3 id="完成文件提交和-Github-方面的域名绑定"><a href="#完成文件提交和-Github-方面的域名绑定" class="headerlink" title="完成文件提交和 Github 方面的域名绑定"></a>完成文件提交和 Github 方面的域名绑定</h3><p>分别使用 <code>hexo g -d</code> 和 <code>git push origin hexo</code> 命令提交两个分支的文件。然后在 Github 中打开该远程仓库，点击 <code>Settings</code>，下拉至 <code>Github Pages</code> 选项卡，在 <code>Custom domain</code> 中填入你需要绑定的域名，然后点击 <code>Save</code> 保存。</p>
+<p>至此，你的域名绑定就结束了，通过访问你的域名查看是否绑定成功吧。</p>
+<h2 id="使用七牛云作为图床"><a href="#使用七牛云作为图床" class="headerlink" title="使用七牛云作为图床"></a>使用七牛云作为图床</h2><p>由于我的 Hexo 完全托管在 Github，那么如果我把所有的图片都放置在 Hexo 目录中，势必会引起文件夹体积的巨增，以及 push 时缓慢的速度。因此，图床是十分必要的。七牛作为老牌的云服务商，质量还是算是经得起考验的。同样，此处不再赘述七牛云的注册等步骤。</p>
+<p>不得不说七牛的文件管理实在不甚好用，好在有朋友开发了不少第三方工具以供选择。而我选择的方案是一款叫做 <code>qiniu upload files</code> 的 chrome 插件。安装此插件后，使用七牛给出的密钥即可与之链接。该插件使用了类 Windows 文件夹的操作方式，使用起来比原版的不知道要高到哪里去了。</p>
+<p>此处给出 <code>qiniu upload files</code> 插件的应用商店链接：<br><a href="https://chrome.google.com/webstore/detail/qiniu-upload-files/emmfkgdgapbjphdolealbojmcmnphdcc" target="_blank" rel="external">https://chrome.google.com/webstore/detail/qiniu-upload-files/emmfkgdgapbjphdolealbojmcmnphdcc</a></p>
+<p>如果有不能科学上网的朋友，或者不愿意使用 chrome 插件的朋友，可以使用一款叫做 <code>MPic</code> 的桌面版软件。官网链接：<br><a href="http://mpic.lzhaofu.cn/" target="_blank" rel="external">http://mpic.lzhaofu.cn/</a></p>
+<h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2><p>请查看在下的另一篇文章：<a href="http://varzy.me/2-Skill/HexoOptimization/" target="_blank" rel="external">Hexo 双线部署及性能优化</a></p>
+<h2 id="尾巴"><a href="#尾巴" class="headerlink" title="尾巴"></a>尾巴</h2><h3 id="一些注解"><a href="#一些注解" class="headerlink" title="一些注解"></a>一些注解</h3><ul>
+<li><code>hexo g</code> == <code>hexo generate</code></li>
+<li><code>hexo s</code> == <code>hexo server</code></li>
+<li><code>hexo d</code> == <code>hexo deploy</code></li>
+<li><code>hexo n</code> == <code>hexo new</code></li>
+<li><code>hexo g -d</code> == <code>hexo generate</code> -&gt; <code>hexo deploy</code></li>
+<li><code>npm install</code> == <code>npm i</code></li>
+</ul>
+<h3 id="一些链接"><a href="#一些链接" class="headerlink" title="一些链接"></a>一些链接</h3><ul>
+<li>Hexo 官方网站 : <a href="https://hexo.io/zh-cn/" target="_blank" rel="external">https://hexo.io/zh-cn/</a></li>
+<li>Hexo 官方文档 : <a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="external">https://hexo.io/zh-cn/docs/</a></li>
+<li>NexT 主题官网 : <a href="http://theme-next.iissnan.com/" target="_blank" rel="external">http://theme-next.iissnan.com/</a></li>
+<li>Visual Studio Code : <a href="https://code.visualstudio.com/" target="_blank" rel="external">https://code.visualstudio.com/</a></li>
+<li>七牛云官网 : <a href="https://www.qiniu.com/" target="_blank" rel="external">https://www.qiniu.com/</a></li>
+<li>CrazyMilk 给出的方案源地址(知乎) : <a href="https://www.zhihu.com/question/21193762/answer/79109280" target="_blank" rel="external">https://www.zhihu.com/question/21193762/answer/79109280</a></li>
+</ul>
+<h3 id="一些细节"><a href="#一些细节" class="headerlink" title="一些细节"></a>一些细节</h3><ul>
+<li>可以通过给 git 添加代理的方式加速 clone, push 等操作的速度</li>
+<li>如果想要将某些来自 Github 的主题 clone 至 themes 文件夹下，那么你将不能将这个文件夹直接 push 到 hexo 分支。解决方案是删除该主题文件夹下的 <code>.git</code> 隐藏文件夹</li>
+<li>不要在 Hexo 根目录下添加 <code>.editorconfig</code> 文件，没什么卵用，还有可能导致 markdown 格式错乱</li>
+<li>文章标题不能含有 “[]”，也就是中括号，它将导致你的页面生成失败</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;之前决定迁移博客平台的时候选择了 jekyll，但在下愚笨，连 jekyll 的开发环境都没搭建成功，调整时只能先 push 到 githu
+    
+    </summary>
+    
+      <category term="2-Skill" scheme="http://yoursite.com/categories/2-Skill/"/>
+    
+    
+      <category term="original" scheme="http://yoursite.com/tags/original/"/>
+    
+      <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
+    
+      <category term="net" scheme="http://yoursite.com/tags/net/"/>
+    
+      <category term="tutorial" scheme="http://yoursite.com/tags/tutorial/"/>
+    
+      <category term="github" scheme="http://yoursite.com/tags/github/"/>
+    
+      <category term="coding" scheme="http://yoursite.com/tags/coding/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>hello, hexo</title>
+    <link href="http://yoursite.com/2016/12/07/0-Mess/HelloHexo/"/>
+    <id>http://yoursite.com/2016/12/07/0-Mess/HelloHexo/</id>
+    <published>2016-12-06T16:00:00.000Z</published>
+    <updated>2017-07-12T02:09:28.857Z</updated>
+    
+    <content type="html"><![CDATA[<p>This is my first blog in Hexo.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;This is my first blog in Hexo.&lt;/p&gt;
+
+    
+    </summary>
+    
+      <category term="0-Mess" scheme="http://yoursite.com/categories/0-Mess/"/>
+    
+    
+      <category term="original" scheme="http://yoursite.com/tags/original/"/>
+    
+      <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>自制了一个钱包</title>
+    <link href="http://yoursite.com/2016/12/01/1-Life/HandmadeWallet/"/>
+    <id>http://yoursite.com/2016/12/01/1-Life/HandmadeWallet/</id>
+    <published>2016-11-30T16:00:00.000Z</published>
+    <updated>2017-07-12T02:09:28.881Z</updated>
+    
+    <content type="html"><![CDATA[<p>之前 18 块钱买的钱包下边裂了，就很气，什么“比真正皮革更加耐磨的人工皮革”，不就是塑料么，我当时怎么就信了这种鬼话。一气之下按照网上的教程，用装衣服的布袋子和几条双面胶自己做了一个钱包。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_life/HandmadeWallet_1.JPG" alt=""></p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_life/HandmadeWallet_2.JPG" alt=""></p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_life/HandmadeWallet_3.JPG" alt=""></p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_life/HandmadeWallet_4.JPG" alt=""></p>
+<p>教程链接：<a href="https://www.youtube.com/watch?v=xtOuWSaCiEU" target="_blank" rel="external">https://www.youtube.com/watch?v=xtOuWSaCiEU</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;之前 18 块钱买的钱包下边裂了，就很气，什么“比真正皮革更加耐磨的人工皮革”，不就是塑料么，我当时怎么就信了这种鬼话。一气之下按照网上的教程，用装衣服的布袋子和几条双面胶自己做了一个钱包。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://oi0t0q67c.bkt.clo
+    
+    </summary>
+    
+      <category term="1-Life" scheme="http://yoursite.com/categories/1-Life/"/>
+    
+    
+      <category term="original" scheme="http://yoursite.com/tags/original/"/>
+    
+  </entry>
+  
+</feed>
