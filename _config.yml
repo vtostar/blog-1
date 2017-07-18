@@ -4,7 +4,7 @@
 
 # Site
 title: Woonden Bar
-subtitle: en
+subtitle:
 description: A romantic coder's blog.
 author: Aiden Zhao
 language: en
@@ -12,7 +12,7 @@ timezone: PRC
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: http://varzy.me
 root: /blog
 permalink: :title/
 permalink_defaults:
@@ -80,4 +80,4 @@ theme: hexo-theme-apollo
 deploy:
   type: git
   repo: git@github.com:varzy/blog.git
-  branch: master
+  branch: gh-pages
