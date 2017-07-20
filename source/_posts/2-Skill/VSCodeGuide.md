@@ -41,7 +41,7 @@ tags:
 
 ## SETTINGS
 
-```
+``` json
 /**
 * @file   VSCode Main Settings
 * @author zy(i@zyis.me)
