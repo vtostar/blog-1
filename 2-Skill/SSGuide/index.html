@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+    
+    
+    <meta name="google-site-verification"
+          content="c66gcm0iMw487a2YC6w7cFbrhhe_Mh_vVNC6Pt3Dak8">
+    
+
+    
+    
+    <meta name="theme-color" content="#f5f5f5">
+    
+
+    
+    
+
+    
+    <title>
+        
+        Shadowsocks 使用教程及技巧
+        &nbsp;|&nbsp;
+        
+        Woonden Bar
+    </title>
+
+    
+    
+    <link type="image/x-icon" rel="shortcut icon"
+          href="/blog/favicon.png">
+    
+
+    
+    <link rel="stylesheet" href="/blog/css/style.css">
+
+</head>
+
+
+<body>
+
+
+<div class="body-wrapper">
+    
+    <header>
+    <div class="container">
+
+        
+        <div>
+            <h1 class="logo">
+                <a href="/blog/">
+                    Woonden Bar
+                </a>
+            </h1>
+        </div>
+
+        
+        <nav class="navbar">
+            <ul class="navbar-menus">
+                
+                <li class="navbar-menus-item">
+                    <a href="/blog/">
+                        
+                        Home
+                    </a>
+                </li>
+                
+                <li class="navbar-menus-item">
+                    <a href="/blog/categories">
+                        
+                        Categories
+                    </a>
+                </li>
+                
+                <li class="navbar-menus-item">
+                    <a href="/blog/tags">
+                        
+                        Tags
+                    </a>
+                </li>
+                
+                <li class="navbar-menus-item">
+                    <a href="/blog/about">
+                        
+                        About
+                    </a>
+                </li>
+                
+            </ul>
+        </nav>
+
+    </div>
+</header>
+
+
+    
+    <div class="main">
+    <div class="container">
+
+        <article class="post-body">
+
+    <div class="title">
+        <h1 class="title-inner">
+            Shadowsocks 使用教程及技巧
+        </h1>
+
+        <div class="title-meta">
+            <span class="title-meta-time">
+                2017-01-26
+            </span>
+        </div>
+    </div>
+
+    <div class="content">
+
+        
+        
+
+        <p>本教程谨献给那些每次用 ss 看片都要跑来问我的朋友们。</p>
+<h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>Windows 系统上您可以使用 ShadowsocksR 和 Shadowsocks 两种软件，差异不算很大，这里我们统一使用 ShadowsocksR( 以下简称为 SSR )。如果您学会了 ShadowsocksR 的操作，那么 Shadowsocks 您也一定可以无障碍使用了。<strong>注意，写下本文时，SSR 的最新版本是 4.0.3。在下不保证本文将会随着 SSR 的更新而更新。</strong></p>
+<p>在您预备艹墙时，首先您需要获取 SSR 的可执行文件。您可以从 SSR 的 Github 项目地址获取 SSR 的获取方式( 这句话真的没有语病 )。Github 项目地址：</p>
+<blockquote>
+<p><a href="https://github.com/breakwa11/shadowsocks-rss" target="_blank" rel="external">https://github.com/breakwa11/shadowsocks-rss</a></p>
+</blockquote>
+<p>完整可用的 SSR 文件应该是一个压缩包，由作者 breakwa11 发布，内含如下文件：</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/SSGuide_1.png" alt=""></p>
+<p>其中，我们只需要将红框内的三个文件复制到一个新文件夹即可。<strong>注意：<code>-dotnet2.0</code> 版本用于 Windws 7 及以下系统使用，<code>-dotnet4.0</code> 版本用于 Windows 8 及以上版本使用。</strong></p>
+<h3 id="pac-txt-amp-gui-config-json"><a href="#pac-txt-amp-gui-config-json" class="headerlink" title="pac.txt &amp; gui-config.json"></a>pac.txt &amp; gui-config.json</h3><p>一个完整可用的 SSR，在其同一文件夹内必须包含 <code>pac.txt</code> 和 <code>gui-config.json</code> 这两个文件。<code>pac.txt</code> 规定了 SSR 代理的域名，按照一定规则写入此文件的域名，都将被 SSR 代理。<code>gui-config.json</code> 则是我们的节点列表。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/SSGuide_2.png" alt=""></p>
+<p><strong>注意，如果您已经有了这两个文件，将其放入 SSR 同一目录下，并仅执行步骤 1 即可。</strong>如果您没有这两个文件，那么请按照以下步骤操作。</p>
+<p>1、双击 <code>ShadowsocksR-dotnet4.0</code> 打开 SSR，您的任务栏将会多出一个小飞机的图标<br>2、右键小飞机，选择 <code>系统代理模式</code> -&gt; <code>PAC 模式</code></p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/SSGuide_3.png" alt=""></p>
+<p>3、然后选择 <code>PAC</code> -&gt; <code>更新 PAC 为 GFWList</code></p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/SSGuide_4.png" alt=""></p>
+<p>4、添加节点。SSR 内置了很多种方式来添加节点。您可以双击打开 SSR，在 GUI 中手动添加，也可以右键 SSR，进行二维码扫描，或者通过 ssr:// 链接导入。目前的大部分 ss 卖家都提供了批量导出 gui-config.json 的功能，您也可以直接替换文件夹中的 gui-config，重启 SSR 即可。</p>
+<h3 id="选择节点"><a href="#选择节点" class="headerlink" title="选择节点"></a>选择节点</h3><p>右键小飞机，在 <code>服务器</code> 一项中即可选择自己想要使用的节点。</p>
+<h3 id="开机自启"><a href="#开机自启" class="headerlink" title="开机自启"></a>开机自启</h3><p>如果您想让 SSR 开机自启，请右键小飞机，打开 <code>选项设置</code>，勾选 <code>开机自启</code>。</p>
+<h3 id="如果某些网站打不开怎么办？"><a href="#如果某些网站打不开怎么办？" class="headerlink" title="如果某些网站打不开怎么办？"></a>如果某些网站打不开怎么办？</h3><p>即使打开了 SSR，您也不一定能访问某些国外网站。这时候您有两种解决方案：</p>
+<ol>
+<li>打开 SSR 的全局代理。右键小飞机，选择 <code>系统代理模式</code> -&gt; <code>全局模式</code>。此时您所有的流量都将通过 SSR，所以您访问国内网站或使用国内软件，其速度将会变慢。这种方式适合您临时访问某个网站时使用。</li>
+<li><p>将您需要访问的域名加入 <code>pac.txt</code>。打开 <code>pac.txt</code>，在域名列表处新起一行，按照如下格式填入您想要访问的网站的<strong>根域名</strong>。<strong>注意，左右引号、逗号都是英文半角标点符号。</strong>这种方式适合您经常访问某个网站时使用。</p>
+<blockquote>
+<p>“[test].com”,</p>
+</blockquote>
+</li>
+</ol>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/SSGuide_5.png" alt=""></p>
+<h3 id="如何测试所有节点中的最优路线？"><a href="#如何测试所有节点中的最优路线？" class="headerlink" title="如何测试所有节点中的最优路线？"></a>如何测试所有节点中的最优路线？</h3><p>在 SSR 中，有一个 <code>服务器负载均衡</code> 的选项，我们可以借助它大致测出当前最优路线。</p>
+<p>右键勾选 <code>服务器负载均衡</code>，再选择 <code>服务器</code> -&gt; <code>服务器连接统计</code>。接着我们打开 Fackbook, Twitter 或者 Instagram 等可以流式加载页面的网站，然后一边将滚轮往下滑，一边观察 <code>服务器连接统计</code> 界面，根据延迟和最高下载速度决定当前的最优节点。当您决定当前最优节点后，即可关闭 <code>服务器负载均衡</code>。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/SSGuide_6.png" alt=""></p>
+<h2 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h2><p>Android 端我目前使用的仍然是 Shadowsocks，因为我实在是对 SSR 的配色接受不能。当然，您也可以在 ShadowsocksR 的 Github 项目里找到 ShadowsocksR 的 Android 版。</p>
+<h3 id="获取-apk-文件"><a href="#获取-apk-文件" class="headerlink" title="获取 apk 文件"></a>获取 apk 文件</h3><p>您可以通过以下几个方式获取 Shadowsocks 的 apk 文件：</p>
+<ol>
+<li>Apkpure: <a href="https://apkpure.com/shadowsocks/com.github.shadowsocks" target="_blank" rel="external">https://apkpure.com/shadowsocks/com.github.shadowsocks</a></li>
+<li>Google Play: <a href="https://play.google.com/store/apps/details?id=com.github.shadowsocks" target="_blank" rel="external">https://play.google.com/store/apps/details?id=com.github.shadowsocks</a></li>
+</ol>
+<h3 id="添加节点"><a href="#添加节点" class="headerlink" title="添加节点"></a>添加节点</h3><p>Android 版本添加和更新节点最方便的方式大概是扫描 ss 节点二维码。您打开 Shadowsocks 后，可以点击左上角的 <code>shadowsocks</code> 字样进入节点列表，点击右下角的 fab 即可打开添加方式选项。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/SSGuide_7.png" alt=""></p>
+<p>如果您想从电脑端正在使用的节点添加到手机，可以双击小飞机图标，在列表上选中您想要添加的节点，将 <code>SSR 链接</code> <strong>去勾</strong>，然后点击该链接，右侧二维码区域将会出现该节点的二维码，用手机扫描即可。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/SSGuide_8.png" alt=""></p>
+<h3 id="设置"><a href="#设置" class="headerlink" title="设置"></a>设置</h3><p>当您通过手动或者扫描二维码的方式添加二维码以后，就可以返回主界面了。在主界面，您需要将 <code>Route</code> 一项改为 <code>Bypass LAN &amp; China</code>( 中文版是 <code>路由</code>，改为 <code>绕过局域网及中国大陆地址</code> )。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/SSGuide_9.png" alt=""></p>
+<p>至此，您就可以点击右上角的小飞机图标开始艹墙啦~</p>
+<h2 id="ios"><a href="#ios" class="headerlink" title="ios"></a>ios</h2><p>如果您不想越狱，那么主流的两个选择如下：</p>
+<ul>
+<li>Surge: <a href="https://itunes.apple.com/us/app/surge-web-developer-tool-proxy/id1040100637?mt=8" target="_blank" rel="external">https://itunes.apple.com/us/app/surge-web-developer-tool-proxy/id1040100637?mt=8</a></li>
+<li>Shadowrocket: <a href="https://itunes.apple.com/cn/app/shadowrocket/id932747118?mt=8" target="_blank" rel="external">https://itunes.apple.com/cn/app/shadowrocket/id932747118?mt=8</a></li>
+</ul>
+<h2 id="Mac-OS"><a href="#Mac-OS" class="headerlink" title="Mac OS"></a>Mac OS</h2><p>略略略。</p>
+
+    </div>
+
+    
+
+    
+    
+
+    
+    
+
+</article>
+
+<div class="prev-next">
+    
+    
+    <div class="prev">
+        <a href="/blog/2-Skill/HexoOptimization/">
+            Newer
+        </a>
+    </div>
+    
+
+    
+    
+    <div class="next">
+        <a href="/blog/2-Skill/GitList/">
+            Older
+        </a>
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+
+</div>
+
+
+<footer>
+    <div class="container text-center">
+
+        
+        <p class="copyright">
+            <span>&copy; 2015 - 2017</span>
+            <span> / </span>
+            <span><a href="mailto:i@zyis.me">Aiden Zhao</a></span>
+        </p>
+
+    </div>
+</footer>
+
+
+</body>
+
+</html>
