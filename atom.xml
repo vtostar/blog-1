@@ -17,8 +17,8 @@
   
   <entry>
     <title>Windows 下撸 PHP 的最佳实践</title>
-    <link href="http://varzy.me/0-Mess/win-lu-php/"/>
-    <id>http://varzy.me/0-Mess/win-lu-php/</id>
+    <link href="http://varzy.me/Mess/win-lu-php/"/>
+    <id>http://varzy.me/Mess/win-lu-php/</id>
     <published>2017-07-16T16:00:00.000Z</published>
     <updated>2017-07-20T11:09:17.319Z</updated>
     
@@ -51,30 +51,72 @@
 <p><a href="https://mirror.tuna.tsinghua.edu.cn/help/ubuntu/" target="_blank" rel="external">https://mirror.tuna.tsinghua.edu.cn/help/ubuntu/</a></p>
 </blockquote>
 <p>首先备份原始的源文件：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak</span>
+</pre></td></tr></table></figure>
 <p>再修改 <code>sources.list</code> 文件中的内容为清华大学给定的源。</p>
 <p>更新本地源列表：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt update</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo apt update</span>
+</pre></td></tr></table></figure>
 <p>(可选) 更新软件：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt upgrade</div></pre></td></tr></table></figure>
-<h2 id="搭建-lnmp-环境"><a href="#搭建-lnmp-环境" class="headerlink" title="搭建 lnmp 环境"></a>搭建 lnmp 环境</h2><h3 id="安装-nginx"><a href="#安装-nginx" class="headerlink" title="安装 nginx"></a>安装 nginx</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install nginx</div></pre></td></tr></table></figure>
-<h3 id="安装-mysql"><a href="#安装-mysql" class="headerlink" title="安装 mysql"></a>安装 mysql</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install mysql-server</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo apt upgrade</span>
+</pre></td></tr></table></figure>
+<h2 id="搭建-lnmp-环境"><a href="#搭建-lnmp-环境" class="headerlink" title="搭建 lnmp 环境"></a>搭建 lnmp 环境</h2><h3 id="安装-nginx"><a href="#安装-nginx" class="headerlink" title="安装 nginx"></a>安装 nginx</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo apt install nginx</span>
+</pre></td></tr></table></figure>
+<h3 id="安装-mysql"><a href="#安装-mysql" class="headerlink" title="安装 mysql"></a>安装 mysql</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo apt install mysql-server</span>
+</pre></td></tr></table></figure>
 <p>安装过程中需要设置 mysql 的 root 用户的初始密码</p>
 <h3 id="将-mysql-的默认编码设置为-utf-8"><a href="#将-mysql-的默认编码设置为-utf-8" class="headerlink" title="将 mysql 的默认编码设置为 utf-8"></a>将 mysql 的默认编码设置为 utf-8</h3><p>编辑 mysql 的配置文件：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo vuim /etc/mysql/conf.d/mysql.cnf</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo vuim /etc/mysql/conf.d/mysql.cnf</span>
+</pre></td></tr></table></figure>
 <p>插入字符编码的相关设置：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[client]</div><div class="line">default-character-set=utf8</div><div class="line"></div><div class="line">[mysqld]</div><div class="line">character-set-server=utf8</div><div class="line"></div><div class="line">[mysql]</div><div class="line">default-character-set=utf8</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+</pre></td><td class="code"><pre><span class="line">[client]</span>
+<span class="line">default-character-set=utf8</span>
+<span class="line"></span>
+<span class="line">[mysqld]</span>
+<span class="line">character-set-server=utf8</span>
+<span class="line"></span>
+<span class="line">[mysql]</span>
+<span class="line">default-character-set=utf8</span>
+</pre></td></tr></table></figure>
 <p>启动 mysql 服务:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo service mysql start</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo service mysql start</span>
+</pre></td></tr></table></figure>
 <p>登录 mysql，用以下命令查看当前字符编码：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SHOW VARIABLES LIKE 'character%';</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">SHOW VARIABLES LIKE 'character%';</span>
+</pre></td></tr></table></figure>
 <p>如果除了 <code>character_set_filesystem</code> 为 <code>binary</code>，其余都为 <code>utf8</code>，即表示设置成功。</p>
 <h3 id="使-mysql-的端口转发可用"><a href="#使-mysql-的端口转发可用" class="headerlink" title="使 mysql 的端口转发可用"></a>使 mysql 的端口转发可用</h3><p>mysql 的配置中默认禁止来自 <code>127.0.0.1</code> 的连接，因此我们修改 mysql 的配置使端口转发可用。</p>
 <p>编辑 mysqld.cnf:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf</span>
+</pre></td></tr></table></figure>
 <p>搜索并注释 <code>bind-address = 127.0.0.1</code></p>
-<h3 id="安装-php-及其必要扩展"><a href="#安装-php-及其必要扩展" class="headerlink" title="安装 php 及其必要扩展"></a>安装 php 及其必要扩展</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install php7.0 php7.0-mysql php7.0-fpm php7.0-dev php7.0-mbstring</div></pre></td></tr></table></figure>
-<h3 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">service nginx start</div><div class="line">service mysql start</div><div class="line">service php7.0-fpm start</div></pre></td></tr></table></figure>
+<h3 id="安装-php-及其必要扩展"><a href="#安装-php-及其必要扩展" class="headerlink" title="安装 php 及其必要扩展"></a>安装 php 及其必要扩展</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo apt install php7.0 php7.0-mysql php7.0-fpm php7.0-dev php7.0-mbstring</span>
+</pre></td></tr></table></figure>
+<h3 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">service nginx start</span>
+<span class="line">service mysql start</span>
+<span class="line">service php7.0-fpm start</span>
+</pre></td></tr></table></figure>
 <h3 id="检验劳动成果"><a href="#检验劳动成果" class="headerlink" title="检验劳动成果"></a>检验劳动成果</h3><p>在 windows 的浏览器中输入 <code>localhost:8008</code>，如果出现 <code>Welcome to nginx!</code>，则表示上述步骤完全没有问题。</p>
 <h2 id="lnmp-的一些配置"><a href="#lnmp-的一些配置" class="headerlink" title="lnmp 的一些配置"></a>lnmp 的一些配置</h2><h3 id="nmp-杂七杂八的路径"><a href="#nmp-杂七杂八的路径" class="headerlink" title="nmp 杂七杂八的路径"></a>nmp 杂七杂八的路径</h3><p>配置文件路径：</p>
 <ul>
@@ -87,13 +129,27 @@
 <p>当需要创建虚拟主机时，我们可以在 <code>sites-available</code> 目录下设置 nginx 的虚拟主机配置文件，在 <code>sites-enabled</code> 中创建一个软链接指向 <code>sites-available</code> 中的配置文件。</p>
 <h2 id="设置-VirtualBox-的共享文件夹"><a href="#设置-VirtualBox-的共享文件夹" class="headerlink" title="设置 VirtualBox 的共享文件夹"></a>设置 VirtualBox 的共享文件夹</h2><p>我们可以将本地的代码文件夹与虚拟机进行共享，那么我们在本地所有的修改就相当于通过 ftp 实时传输到了服务器上，保证我们看到的效果即时线上效果。</p>
 <h3 id="安装-VirtualBox-的扩展程序"><a href="#安装-VirtualBox-的扩展程序" class="headerlink" title="安装 VirtualBox 的扩展程序"></a>安装 VirtualBox 的扩展程序</h3><p>点击 VirtualBox 的 <code>Devices</code> -&gt; <code>Insert Guest Additions CD image</code> 选项，VirtualBox 将下载一个增强文件并自动插入 cd 介质。接着我们需要在虚拟机上挂载并安装 VirtualBox 的增强文件。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo mount /dev/cdrom /media</div><div class="line">cd /media</div><div class="line">sudo ./VBoxLinuxAdditions.run</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">sudo mount /dev/cdrom /media</span>
+<span class="line">cd /media</span>
+<span class="line">sudo ./VBoxLinuxAdditions.run</span>
+</pre></td></tr></table></figure>
 <p>等待安装完成后，取消挂载并弹出介质</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo umount /media</div><div class="line">eject</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">sudo umount /media</span>
+<span class="line">eject</span>
+</pre></td></tr></table></figure>
 <p>重启 Ubuntu 系统</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo reboot</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo reboot</span>
+</pre></td></tr></table></figure>
 <h3 id="设置-Windows-上的共享文件夹"><a href="#设置-Windows-上的共享文件夹" class="headerlink" title="设置 Windows 上的共享文件夹"></a>设置 Windows 上的共享文件夹</h3><h3 id="将共享文件夹挂载至虚拟机上"><a href="#将共享文件夹挂载至虚拟机上" class="headerlink" title="将共享文件夹挂载至虚拟机上"></a>将共享文件夹挂载至虚拟机上</h3><p>运行以下指令</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mount -t vboxsf CodeHub /mnt/cdhb</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo mount -t vboxsf CodeHub /mnt/cdhb</span>
+</pre></td></tr></table></figure>
 <p>其中，<code>CodeHub</code> 是指上一步在 VirtualBox 中设置的共享文件夹名，<code>/mnt/cdhb</code> 是虚拟机上的挂载路径。注意：<code>/mnt/cdhb</code> 文件夹必须事先手动创建</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>至此，属于你个人的 PHP 开发环境就搭建完毕了。开心的吃个黄焖鸡吧！</p>
 ]]></content>
@@ -113,8 +169,8 @@
   
   <entry>
     <title>落雨记</title>
-    <link href="http://varzy.me/1-Life/MyBirthdayOf2017/"/>
-    <id>http://varzy.me/1-Life/MyBirthdayOf2017/</id>
+    <link href="http://varzy.me/Life/MyBirthdayOf2017/"/>
+    <id>http://varzy.me/Life/MyBirthdayOf2017/</id>
     <published>2017-06-22T16:00:00.000Z</published>
     <updated>2017-07-20T01:06:23.311Z</updated>
     
@@ -141,8 +197,8 @@
   
   <entry>
     <title>VSCode 插件梳理</title>
-    <link href="http://varzy.me/2-Skill/VSCodeGuide/"/>
-    <id>http://varzy.me/2-Skill/VSCodeGuide/</id>
+    <link href="http://varzy.me/Skill/VSCodeGuide/"/>
+    <id>http://varzy.me/Skill/VSCodeGuide/</id>
     <published>2017-04-09T16:00:00.000Z</published>
     <updated>2017-07-20T09:10:04.934Z</updated>
     
@@ -173,7 +229,253 @@
 <li><code>Darktooth Theme</code>: 配色偏暗，喜欢复古风格的朋友可以试试</li>
 <li><code>Material Theme</code>: VSCode 主题中下载量最高的一个，整体素质不错，但个人认为其配色太过鲜艳，不适合 coding</li>
 </ul>
-<h2 id="SETTINGS"><a href="#SETTINGS" class="headerlink" title="SETTINGS"></a>SETTINGS</h2><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">* @file   VSCode Main Settings</div><div class="line">* @author zy(i@zyis.me)</div><div class="line">* @date   last update in 2017.05.03</div><div class="line">*/</div><div class="line">/**</div><div class="line">  * ===================================</div><div class="line">  * Editor</div><div class="line">  * ===================================</div><div class="line">  */</div><div class="line">"editor.fontFamily": "'Source Code Pro', 'Consolas', 'Courier New', 'monospace'",</div><div class="line">"editor.fontWeight": "normal",</div><div class="line">"editor.fontSize": 14,</div><div class="line">"editor.lineHeight": 16,</div><div class="line">"editor.lineNumbers": "on",</div><div class="line">"editor.tabSize": 2,</div><div class="line">"editor.minimap.enabled": true,</div><div class="line">"editor.wordWrap": "on",</div><div class="line">"editor.quickSuggestions": &#123;</div><div class="line">  "other": true,</div><div class="line">  "comments": false,</div><div class="line">  "strings": false</div><div class="line">&#125;,</div><div class="line">"editor.formatOnType": true,</div><div class="line">"editor.formatOnPaste": true,</div><div class="line">"editor.cursorBlinking": "phase",</div><div class="line">"editor.cursorStyle": "underline",</div><div class="line">"editor.mouseWheelZoom": false,</div><div class="line">"editor.fontLigatures": true,</div><div class="line">"editor.renderWhitespace": "boundary",</div><div class="line">"editor.renderIndentGuides": true,</div><div class="line">"editor.renderLineHighlight": "gutter",</div><div class="line">"editor.dragAndDrop": true,</div><div class="line">"editor.formatOnSave": false,</div><div class="line">/**</div><div class="line">  * ===================================</div><div class="line">  * Workbench</div><div class="line">  * ===================================</div><div class="line">  */</div><div class="line">"workbench.welcome.enabled": true,</div><div class="line">"workbench.colorTheme": "Railgun",</div><div class="line">"workbench.iconTheme": "vscode-icons",</div><div class="line">// ! Notes</div><div class="line">// Leftest: "activityBarBackground"</div><div class="line">// Source tree: "sideBarBackground"</div><div class="line">// Main Body: "editorBackground"</div><div class="line">// Cursor: "editorCursor"</div><div class="line">// ! end Notes</div><div class="line">"workbench.experimental.colorCustomizations": &#123;</div><div class="line">  "editorCursor": "#b7472a",</div><div class="line">  "statusBarBackground": "#121212",</div><div class="line">  "editorBackground": "#1d1d1d"</div><div class="line">&#125;,</div><div class="line">/**</div><div class="line">  * ===================================</div><div class="line">  * Windows</div><div class="line">  * ===================================</div><div class="line">  */</div><div class="line">// "window.zoomLevel": -0.2,</div><div class="line">"window.title": "$&#123;dirty&#125;$&#123;activeEditorShort&#125;$&#123;separator&#125;$&#123;rootName&#125;$&#123;separator&#125; - VSCode",</div><div class="line">"window.newWindowDimensions": "inherit",</div><div class="line">"window.menuBarVisibility": "toggle",</div><div class="line">/**</div><div class="line">  * ===================================</div><div class="line">  * File Explorer</div><div class="line">  * ===================================</div><div class="line">  */</div><div class="line">"files.insertFinalNewline": false,</div><div class="line">"files.autoSave": "onFocusChange",</div><div class="line">"explorer.openEditors.visible": 5,</div><div class="line">/**</div><div class="line">  * ===================================</div><div class="line">  * HTTP</div><div class="line">  * ===================================</div><div class="line">  */</div><div class="line">"http.proxy": "http://127.0.0.1:1080",</div><div class="line">"http.proxyStrictSSL": false,</div><div class="line">/**</div><div class="line">  * ===================================</div><div class="line">  * Markdown</div><div class="line">  * ===================================</div><div class="line">  */</div><div class="line">"markdown.styles": [],</div><div class="line">/**</div><div class="line">  * ===================================</div><div class="line">  * PHP</div><div class="line">  * ===================================</div><div class="line">  */</div><div class="line">"php.validate.executablePath": "d:/amp/php/php.exe",</div><div class="line">/**</div><div class="line">  * ===================================</div><div class="line">  * Integrated Terminal</div><div class="line">  * ===================================</div><div class="line">  */</div><div class="line">"terminal.integrated.shell.windows": "C:/Windows/Sysnative/WindowsPowerShell/v1.0/powershell.exe",</div><div class="line">/**</div><div class="line">  * ===================================</div><div class="line">  * Beautify css/sass/scss/less</div><div class="line">  * ===================================</div><div class="line">  */</div><div class="line">"beautify.tabSize": 2,</div><div class="line">/**</div><div class="line">  * ===================================</div><div class="line">  * phpfmt</div><div class="line">  * ===================================</div><div class="line">  */</div><div class="line">// "phpfmt.indent_with_space": 2,</div><div class="line">/**</div><div class="line">  * ===================================</div><div class="line">  * PHP Formatter</div><div class="line">  * ===================================</div><div class="line">  */</div><div class="line">// "phpformatter.pharPath": "d:/_Moudle/php-cs-fixer-v2.phar",</div><div class="line">// "phpformatter.arguments": [</div><div class="line">//   "--rules=psr2"</div><div class="line">// ]</div><div class="line">/**</div><div class="line">  * ===================================</div><div class="line">  * Mess</div><div class="line">  * The new settings will appear here</div><div class="line">  * ===================================</div><div class="line">  */</div><div class="line">"End Line": "----------------"</div></pre></td></tr></table></figure>
+<h2 id="SETTINGS"><a href="#SETTINGS" class="headerlink" title="SETTINGS"></a>SETTINGS</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+<span class="line">40</span>
+<span class="line">41</span>
+<span class="line">42</span>
+<span class="line">43</span>
+<span class="line">44</span>
+<span class="line">45</span>
+<span class="line">46</span>
+<span class="line">47</span>
+<span class="line">48</span>
+<span class="line">49</span>
+<span class="line">50</span>
+<span class="line">51</span>
+<span class="line">52</span>
+<span class="line">53</span>
+<span class="line">54</span>
+<span class="line">55</span>
+<span class="line">56</span>
+<span class="line">57</span>
+<span class="line">58</span>
+<span class="line">59</span>
+<span class="line">60</span>
+<span class="line">61</span>
+<span class="line">62</span>
+<span class="line">63</span>
+<span class="line">64</span>
+<span class="line">65</span>
+<span class="line">66</span>
+<span class="line">67</span>
+<span class="line">68</span>
+<span class="line">69</span>
+<span class="line">70</span>
+<span class="line">71</span>
+<span class="line">72</span>
+<span class="line">73</span>
+<span class="line">74</span>
+<span class="line">75</span>
+<span class="line">76</span>
+<span class="line">77</span>
+<span class="line">78</span>
+<span class="line">79</span>
+<span class="line">80</span>
+<span class="line">81</span>
+<span class="line">82</span>
+<span class="line">83</span>
+<span class="line">84</span>
+<span class="line">85</span>
+<span class="line">86</span>
+<span class="line">87</span>
+<span class="line">88</span>
+<span class="line">89</span>
+<span class="line">90</span>
+<span class="line">91</span>
+<span class="line">92</span>
+<span class="line">93</span>
+<span class="line">94</span>
+<span class="line">95</span>
+<span class="line">96</span>
+<span class="line">97</span>
+<span class="line">98</span>
+<span class="line">99</span>
+<span class="line">100</span>
+<span class="line">101</span>
+<span class="line">102</span>
+<span class="line">103</span>
+<span class="line">104</span>
+<span class="line">105</span>
+<span class="line">106</span>
+<span class="line">107</span>
+<span class="line">108</span>
+<span class="line">109</span>
+<span class="line">110</span>
+<span class="line">111</span>
+<span class="line">112</span>
+<span class="line">113</span>
+<span class="line">114</span>
+<span class="line">115</span>
+<span class="line">116</span>
+<span class="line">117</span>
+<span class="line">118</span>
+<span class="line">119</span>
+<span class="line">120</span>
+<span class="line">121</span>
+<span class="line">122</span>
+<span class="line">123</span>
+</pre></td><td class="code"><pre><span class="line">/**</span>
+<span class="line">* @file   VSCode Main Settings</span>
+<span class="line">* @author zy(i@zyis.me)</span>
+<span class="line">* @date   last update in 2017.05.03</span>
+<span class="line">*/</span>
+<span class="line">/**</span>
+<span class="line">  * ===================================</span>
+<span class="line">  * Editor</span>
+<span class="line">  * ===================================</span>
+<span class="line">  */</span>
+<span class="line">"editor.fontFamily": "'Source Code Pro', 'Consolas', 'Courier New', 'monospace'",</span>
+<span class="line">"editor.fontWeight": "normal",</span>
+<span class="line">"editor.fontSize": 14,</span>
+<span class="line">"editor.lineHeight": 16,</span>
+<span class="line">"editor.lineNumbers": "on",</span>
+<span class="line">"editor.tabSize": 2,</span>
+<span class="line">"editor.minimap.enabled": true,</span>
+<span class="line">"editor.wordWrap": "on",</span>
+<span class="line">"editor.quickSuggestions": &#123;</span>
+<span class="line">  "other": true,</span>
+<span class="line">  "comments": false,</span>
+<span class="line">  "strings": false</span>
+<span class="line">&#125;,</span>
+<span class="line">"editor.formatOnType": true,</span>
+<span class="line">"editor.formatOnPaste": true,</span>
+<span class="line">"editor.cursorBlinking": "phase",</span>
+<span class="line">"editor.cursorStyle": "underline",</span>
+<span class="line">"editor.mouseWheelZoom": false,</span>
+<span class="line">"editor.fontLigatures": true,</span>
+<span class="line">"editor.renderWhitespace": "boundary",</span>
+<span class="line">"editor.renderIndentGuides": true,</span>
+<span class="line">"editor.renderLineHighlight": "gutter",</span>
+<span class="line">"editor.dragAndDrop": true,</span>
+<span class="line">"editor.formatOnSave": false,</span>
+<span class="line">/**</span>
+<span class="line">  * ===================================</span>
+<span class="line">  * Workbench</span>
+<span class="line">  * ===================================</span>
+<span class="line">  */</span>
+<span class="line">"workbench.welcome.enabled": true,</span>
+<span class="line">"workbench.colorTheme": "Railgun",</span>
+<span class="line">"workbench.iconTheme": "vscode-icons",</span>
+<span class="line">// ! Notes</span>
+<span class="line">// Leftest: "activityBarBackground"</span>
+<span class="line">// Source tree: "sideBarBackground"</span>
+<span class="line">// Main Body: "editorBackground"</span>
+<span class="line">// Cursor: "editorCursor"</span>
+<span class="line">// ! end Notes</span>
+<span class="line">"workbench.experimental.colorCustomizations": &#123;</span>
+<span class="line">  "editorCursor": "#b7472a",</span>
+<span class="line">  "statusBarBackground": "#121212",</span>
+<span class="line">  "editorBackground": "#1d1d1d"</span>
+<span class="line">&#125;,</span>
+<span class="line">/**</span>
+<span class="line">  * ===================================</span>
+<span class="line">  * Windows</span>
+<span class="line">  * ===================================</span>
+<span class="line">  */</span>
+<span class="line">// "window.zoomLevel": -0.2,</span>
+<span class="line">"window.title": "$&#123;dirty&#125;$&#123;activeEditorShort&#125;$&#123;separator&#125;$&#123;rootName&#125;$&#123;separator&#125; - VSCode",</span>
+<span class="line">"window.newWindowDimensions": "inherit",</span>
+<span class="line">"window.menuBarVisibility": "toggle",</span>
+<span class="line">/**</span>
+<span class="line">  * ===================================</span>
+<span class="line">  * File Explorer</span>
+<span class="line">  * ===================================</span>
+<span class="line">  */</span>
+<span class="line">"files.insertFinalNewline": false,</span>
+<span class="line">"files.autoSave": "onFocusChange",</span>
+<span class="line">"explorer.openEditors.visible": 5,</span>
+<span class="line">/**</span>
+<span class="line">  * ===================================</span>
+<span class="line">  * HTTP</span>
+<span class="line">  * ===================================</span>
+<span class="line">  */</span>
+<span class="line">"http.proxy": "http://127.0.0.1:1080",</span>
+<span class="line">"http.proxyStrictSSL": false,</span>
+<span class="line">/**</span>
+<span class="line">  * ===================================</span>
+<span class="line">  * Markdown</span>
+<span class="line">  * ===================================</span>
+<span class="line">  */</span>
+<span class="line">"markdown.styles": [],</span>
+<span class="line">/**</span>
+<span class="line">  * ===================================</span>
+<span class="line">  * PHP</span>
+<span class="line">  * ===================================</span>
+<span class="line">  */</span>
+<span class="line">"php.validate.executablePath": "d:/amp/php/php.exe",</span>
+<span class="line">/**</span>
+<span class="line">  * ===================================</span>
+<span class="line">  * Integrated Terminal</span>
+<span class="line">  * ===================================</span>
+<span class="line">  */</span>
+<span class="line">"terminal.integrated.shell.windows": "C:/Windows/Sysnative/WindowsPowerShell/v1.0/powershell.exe",</span>
+<span class="line">/**</span>
+<span class="line">  * ===================================</span>
+<span class="line">  * Beautify css/sass/scss/less</span>
+<span class="line">  * ===================================</span>
+<span class="line">  */</span>
+<span class="line">"beautify.tabSize": 2,</span>
+<span class="line">/**</span>
+<span class="line">  * ===================================</span>
+<span class="line">  * phpfmt</span>
+<span class="line">  * ===================================</span>
+<span class="line">  */</span>
+<span class="line">// "phpfmt.indent_with_space": 2,</span>
+<span class="line">/**</span>
+<span class="line">  * ===================================</span>
+<span class="line">  * PHP Formatter</span>
+<span class="line">  * ===================================</span>
+<span class="line">  */</span>
+<span class="line">// "phpformatter.pharPath": "d:/_Moudle/php-cs-fixer-v2.phar",</span>
+<span class="line">// "phpformatter.arguments": [</span>
+<span class="line">//   "--rules=psr2"</span>
+<span class="line">// ]</span>
+<span class="line">/**</span>
+<span class="line">  * ===================================</span>
+<span class="line">  * Mess</span>
+<span class="line">  * The new settings will appear here</span>
+<span class="line">  * ===================================</span>
+<span class="line">  */</span>
+<span class="line">"End Line": "----------------"</span>
+</pre></td></tr></table></figure>
 <p>Last Update on 2017.05.03</p>
 ]]></content>
     
@@ -190,18 +492,18 @@
     
       <category term="original" scheme="http://varzy.me/tags/original/"/>
     
+      <category term="software" scheme="http://varzy.me/tags/software/"/>
+    
       <category term="microsoft" scheme="http://varzy.me/tags/microsoft/"/>
     
       <category term="tutorial" scheme="http://varzy.me/tags/tutorial/"/>
-    
-      <category term="software" scheme="http://varzy.me/tags/software/"/>
     
   </entry>
   
   <entry>
     <title>Apache + MySQL + PHP 压缩版安装</title>
-    <link href="http://varzy.me/2-Skill/AMPZipInstall/"/>
-    <id>http://varzy.me/2-Skill/AMPZipInstall/</id>
+    <link href="http://varzy.me/Skill/AMPZipInstall/"/>
+    <id>http://varzy.me/Skill/AMPZipInstall/</id>
     <published>2017-03-28T16:00:00.000Z</published>
     <updated>2017-07-20T01:06:23.343Z</updated>
     
@@ -224,42 +526,80 @@
 <li>php: D:\amp\php</li>
 </ul>
 <h2 id="安装-Apache"><a href="#安装-Apache" class="headerlink" title="安装 Apache"></a>安装 Apache</h2><p>使用文本编辑器打开 <code>/conf/httpd.conf</code>，编辑默认目录</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">Define</span> SRVROOT <span class="string">"d:/amp/apache"</span></div></pre></td></tr></table></figure>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="attribute">Define</span> SRVROOT <span class="string">"d:/amp/apache"</span></span>
+</pre></td></tr></table></figure>
 <p>使用管理员权限的 cmd 执行以下命令</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">httpd -k <span class="keyword">install</span></div></pre></td></tr></table></figure>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">httpd -k <span class="keyword">install</span></span>
+</pre></td></tr></table></figure>
 <p>如果执行以上命令无反应，有可能需要将名为 <code>vcruntime140.dll</code> 的文件拖入 <code>C:/Windows/System32</code> 文件夹下</p>
 <h2 id="安装-MySQL"><a href="#安装-MySQL" class="headerlink" title="安装 MySQL"></a>安装 MySQL</h2><p>使用管理员权限的 cmd 执行以下命令以初始化 data 目录。使用该命令，root 用户的默认密码为空</p>
-<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">mysqld</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">initialize</span><span class="literal">-</span><span class="comment">insecure</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">user=mysql</span></div></pre></td></tr></table></figure>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">mysqld</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">initialize</span><span class="literal">-</span><span class="comment">insecure</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">user=mysql</span></span>
+</pre></td></tr></table></figure>
 <p>继续执行以下命令以安装 mysql</p>
-<figure class="highlight ada"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysqld <span class="comment">--install</span></div></pre></td></tr></table></figure>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">mysqld <span class="comment">--install</span></span>
+</pre></td></tr></table></figure>
 <h2 id="配置-MySQL"><a href="#配置-MySQL" class="headerlink" title="配置 MySQL"></a>配置 MySQL</h2><p>如果使用 5.7.17 及其以下版本，可以复制一份 mysql 根目录的 <code>my_default.ini</code> 并重命名为 <code>my.ini</code></p>
 <p>如果使用 5.7.18 及其以上版本，需要手动在 mysql 根目录新建一个 my.ini 文件，在管理员权限的 cmd 中执行以下命令以设置 mysql 的配置文件路径</p>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysqld --<span class="keyword">default</span>-files=<span class="string">"d:/amp/mysql/my.ini"</span></div></pre></td></tr></table></figure>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">mysqld --<span class="keyword">default</span>-files=<span class="string">"d:/amp/mysql/my.ini"</span></span>
+</pre></td></tr></table></figure>
 <p>5.7.18 以上版本 (可能) 需要安装运行库：<code>Microsoft Visual C++ 2013 Redistributable Package (MSVCR120.dll)</code>。下载地址为</p>
 <blockquote>
 <p><a href="https://www.microsoft.com/en-hk/download/details.aspx?id=40784" target="_blank" rel="external">https://www.microsoft.com/en-hk/download/details.aspx?id=40784</a></p>
 </blockquote>
 <p>设置字符编码 (需要保持 [mysqld] 一项在最下方)。设置完毕后需要重启 cmd 并重新登录方可查看编码的更新。查看整体编码命令：<code>SHOW VARIABLES LIKE &#39;character%&#39;;</code></p>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="section">[client]</span></div><div class="line"><span class="attr">default-character-set</span>=utf8</div><div class="line"><span class="section">[mysql]</span></div><div class="line"><span class="attr">default-character-set</span>=utf8</div><div class="line"><span class="section">[mysqld]</span></div><div class="line"><span class="attr">character-set-server</span>=utf8</div></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+</pre></td><td class="code"><pre><span class="line"><span class="section">[client]</span></span>
+<span class="line"><span class="attr">default-character-set</span>=utf8</span>
+<span class="line"><span class="section">[mysql]</span></span>
+<span class="line"><span class="attr">default-character-set</span>=utf8</span>
+<span class="line"><span class="section">[mysqld]</span></span>
+<span class="line"><span class="attr">character-set-server</span>=utf8</span>
+</pre></td></tr></table></figure>
 <p>修改 mysql 的 root 用户密码。登陆 mysql，运行以下指令。<code>(&#39;&#39;)</code> 之间的是新密码</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SET</span> <span class="keyword">PASSWORD</span> <span class="keyword">FOR</span> <span class="string">'root'</span>@<span class="string">'localhost'</span>=<span class="keyword">PASSWORD</span>(<span class="string">''</span>);</div></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> <span class="keyword">PASSWORD</span> <span class="keyword">FOR</span> <span class="string">'root'</span>@<span class="string">'localhost'</span>=<span class="keyword">PASSWORD</span>(<span class="string">''</span>);</span>
+</pre></td></tr></table></figure>
 <h2 id="Apache-加载-PHP"><a href="#Apache-加载-PHP" class="headerlink" title="Apache 加载 PHP"></a>Apache 加载 PHP</h2><p>创建 php 的配置文件。在 php 目录下找到 php.ini-development，复制一份并重命名为 php.ini</p>
 <blockquote>
 <p>注意：由于空格的不兼容性，以下命令不保证复制粘贴后可以正常使用。可以使用 <code>httpd -t</code> 命令进行语法检查</p>
 </blockquote>
 <p>加载 php 模块。打开 apache 的配置文件 httpd.conf，在模块部分根据自己的 php 版本插入以下内容</p>
-<figure class="highlight apache"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="attribute"><span class="nomarkup">LoadModule</span></span> php5_module <span class="string">"d:/amp/php/php5apache2_4.dll"</span></div><div class="line"><span class="attribute"><span class="nomarkup">LoadModule</span></span> php7_module <span class="string">"d:/amp/php/php7apache2_4.dll"</span></div></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line"><span class="attribute"><span class="nomarkup">LoadModule</span></span> php5_module <span class="string">"d:/amp/php/php5apache2_4.dll"</span></span>
+<span class="line"><span class="attribute"><span class="nomarkup">LoadModule</span></span> php7_module <span class="string">"d:/amp/php/php7apache2_4.dll"</span></span>
+</pre></td></tr></table></figure>
 <p>为 php 模块分配任务。在上面的命令下发插入以上命令</p>
-<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">AddType application/x-httpd-php <span class="string">.php</span> <span class="string">.html</span></div></pre></td></tr></table></figure>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">AddType application/x-httpd-php <span class="string">.php</span> <span class="string">.html</span></span>
+</pre></td></tr></table></figure>
 <p>引入 php 的配置文件。在 httpd.conf 中搜索并插入 php.ini 的路径</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">PHPIniDir</span> <span class="string">"d:/amp/php/"</span></div></pre></td></tr></table></figure>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="attribute">PHPIniDir</span> <span class="string">"d:/amp/php/"</span></span>
+</pre></td></tr></table></figure>
 <p>修改 php 默认时区。在 php 的配置文件 php.ini 中搜索并修改 <code>date.timezone</code> 为 <code>PRC</code>。注意，需要去掉语句前的注释符号 (分号)</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">date<span class="selector-class">.timezone</span> = PRC</div></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">date<span class="selector-class">.timezone</span> = PRC</span>
+</pre></td></tr></table></figure>
 <h2 id="Apache-加载-vhosts-配置文件"><a href="#Apache-加载-vhosts-配置文件" class="headerlink" title="Apache 加载 vhosts 配置文件"></a>Apache 加载 vhosts 配置文件</h2><p>打开 http.conf 文件，搜索并取消注释</p>
-<figure class="highlight stata"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">Include</span> <span class="keyword">conf</span>/extra/httpd-vhosts.<span class="keyword">conf</span></div></pre></td></tr></table></figure>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">Include</span> <span class="keyword">conf</span>/extra/httpd-vhosts.<span class="keyword">conf</span></span>
+</pre></td></tr></table></figure>
 <h2 id="php-链接-mysql"><a href="#php-链接-mysql" class="headerlink" title="php 链接 mysql"></a>php 链接 mysql</h2><p>将 php 配置成 mysql 的客户端。在 php.ini 中搜索并设置 <code>extension=php_mysql.dll</code>，取消其注释</p>
 <p>告知 php 在哪个目录下能找到 php 的扩展文件。在 php.ini 中搜索并设置 php 扩展的绝对路径</p>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attr">extension_dir</span> = <span class="string">"d:/amp/php/ext"</span></div></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="attr">extension_dir</span> = <span class="string">"d:/amp/php/ext"</span></span>
+</pre></td></tr></table></figure>
 <h2 id="安装-phpMyAdmin"><a href="#安装-phpMyAdmin" class="headerlink" title="安装 phpMyAdmin"></a>安装 phpMyAdmin</h2><ul>
 <li>解压文件至 <code>/apache/htdosc</code> 目录 (或将其解压至其他虚拟目录)</li>
 <li>更改文件名为 <code>phpmyadmin</code></li>
@@ -273,7 +613,23 @@
 <li>将文件复制到 <code>amp/php/ext</code> 目录下，并改名为 <code>php_xdebug.dll</code> (非必需)</li>
 <li>在 php.ini 中添加以下内容</li>
 </ul>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[Xdebug]</div><div class="line"><span class="attribute">zend_extension</span>=<span class="string">"D:/amp/php/ext/php_xdebug.dll"</span></div><div class="line">xdebug.<span class="attribute">auto_trace</span>=1</div><div class="line">xdebug.<span class="attribute">collect_params</span>=1</div><div class="line">xdebug.<span class="attribute">collect_return</span>=1</div><div class="line">xdebug.<span class="attribute">trace_output_dir</span>=<span class="string">"D:/amp/_xdebug/trace"</span></div><div class="line">xdebug.<span class="attribute">profiler_enable</span>=1</div><div class="line">xdebug.<span class="attribute">profiler_output_dir</span>=<span class="string">"D:/amp/_xdebug/profiler"</span></div></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+</pre></td><td class="code"><pre><span class="line">[Xdebug]</span>
+<span class="line"><span class="attribute">zend_extension</span>=<span class="string">"D:/amp/php/ext/php_xdebug.dll"</span></span>
+<span class="line">xdebug.<span class="attribute">auto_trace</span>=1</span>
+<span class="line">xdebug.<span class="attribute">collect_params</span>=1</span>
+<span class="line">xdebug.<span class="attribute">collect_return</span>=1</span>
+<span class="line">xdebug.<span class="attribute">trace_output_dir</span>=<span class="string">"D:/amp/_xdebug/trace"</span></span>
+<span class="line">xdebug.<span class="attribute">profiler_enable</span>=1</span>
+<span class="line">xdebug.<span class="attribute">profiler_output_dir</span>=<span class="string">"D:/amp/_xdebug/profiler"</span></span>
+</pre></td></tr></table></figure>
 ]]></content>
     
     <summary type="html">
@@ -297,8 +653,8 @@
   
   <entry>
     <title>至京思</title>
-    <link href="http://varzy.me/1-Life/TravelOfBeijing/"/>
-    <id>http://varzy.me/1-Life/TravelOfBeijing/</id>
+    <link href="http://varzy.me/Life/TravelOfBeijing/"/>
+    <id>http://varzy.me/Life/TravelOfBeijing/</id>
     <published>2017-03-10T16:00:00.000Z</published>
     <updated>2017-07-20T01:06:23.343Z</updated>
     
@@ -330,18 +686,18 @@
       <category term="1-Life" scheme="http://varzy.me/categories/1-Life/"/>
     
     
-      <category term="original" scheme="http://varzy.me/tags/original/"/>
-    
       <category term="article" scheme="http://varzy.me/tags/article/"/>
     
       <category term="idea" scheme="http://varzy.me/tags/idea/"/>
+    
+      <category term="original" scheme="http://varzy.me/tags/original/"/>
     
   </entry>
   
   <entry>
     <title>如果中国一开始就禁止微软和英特尔AMD进入中国，现在的中国会出现哪些现象？ - 绝影的回答</title>
-    <link href="http://varzy.me/3-Essay/BanCPU/"/>
-    <id>http://varzy.me/3-Essay/BanCPU/</id>
+    <link href="http://varzy.me/Essay/BanCPU/"/>
+    <id>http://varzy.me/Essay/BanCPU/</id>
     <published>2017-03-01T16:00:00.000Z</published>
     <updated>2017-07-20T01:06:23.405Z</updated>
     
@@ -365,8 +721,8 @@
   
   <entry>
     <title>The Sound Of Slience</title>
-    <link href="http://varzy.me/0-Mess/TheSoundOfSlience/"/>
-    <id>http://varzy.me/0-Mess/TheSoundOfSlience/</id>
+    <link href="http://varzy.me/Mess/TheSoundOfSlience/"/>
+    <id>http://varzy.me/Mess/TheSoundOfSlience/</id>
     <published>2017-02-13T16:00:00.000Z</published>
     <updated>2017-07-20T01:06:23.280Z</updated>
     
@@ -389,16 +745,16 @@
     
       <category term="article" scheme="http://varzy.me/tags/article/"/>
     
-      <category term="music" scheme="http://varzy.me/tags/music/"/>
-    
       <category term="idea" scheme="http://varzy.me/tags/idea/"/>
+    
+      <category term="music" scheme="http://varzy.me/tags/music/"/>
     
   </entry>
   
   <entry>
     <title>关于春晚，关于后辈</title>
-    <link href="http://varzy.me/3-Essay/IdeaOnNewYear/"/>
-    <id>http://varzy.me/3-Essay/IdeaOnNewYear/</id>
+    <link href="http://varzy.me/Essay/IdeaOnNewYear/"/>
+    <id>http://varzy.me/Essay/IdeaOnNewYear/</id>
     <published>2017-01-31T12:00:00.000Z</published>
     <updated>2017-07-20T01:06:23.436Z</updated>
     
@@ -424,16 +780,16 @@
       <category term="3-Essay" scheme="http://varzy.me/categories/3-Essay/"/>
     
     
-      <category term="original" scheme="http://varzy.me/tags/original/"/>
-    
       <category term="idea" scheme="http://varzy.me/tags/idea/"/>
+    
+      <category term="original" scheme="http://varzy.me/tags/original/"/>
     
   </entry>
   
   <entry>
     <title>劝你喝酒的都是看不起你的 - 霍真布鲁兹老爷</title>
-    <link href="http://varzy.me/3-Essay/AlcoholAndPeople/"/>
-    <id>http://varzy.me/3-Essay/AlcoholAndPeople/</id>
+    <link href="http://varzy.me/Essay/AlcoholAndPeople/"/>
+    <id>http://varzy.me/Essay/AlcoholAndPeople/</id>
     <published>2017-01-31T05:00:00.000Z</published>
     <updated>2017-07-20T01:06:23.389Z</updated>
     
@@ -489,8 +845,8 @@
   
   <entry>
     <title>Hexo 双线部署及性能优化</title>
-    <link href="http://varzy.me/2-Skill/HexoOptimization/"/>
-    <id>http://varzy.me/2-Skill/HexoOptimization/</id>
+    <link href="http://varzy.me/Skill/HexoOptimization/"/>
+    <id>http://varzy.me/Skill/HexoOptimization/</id>
     <published>2017-01-29T16:00:00.000Z</published>
     <updated>2017-07-20T01:06:23.374Z</updated>
     
@@ -515,7 +871,17 @@
 </ol>
 <p>上述工作完成后，我们就可以开始下面的设置了。</p>
 <h3 id="设置部署地址"><a href="#设置部署地址" class="headerlink" title="设置部署地址"></a>设置部署地址</h3><p>打开 Hexo 的 <code>_config.yml</code> 文件，将 <code>deploy</code> 这一栏改为如下代码，格式为 <code>名称： 仓库,分支</code>：</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">deploy</span>:</div><div class="line">  <span class="attribute">type</span>: git</div><div class="line">  <span class="attribute">repo</span>:</div><div class="line">    <span class="attribute">github</span>: git<span class="variable">@github</span>.<span class="attribute">com</span>:[user_name]/[user_name].github.io.git,master</div><div class="line">    <span class="attribute">coding</span>: git<span class="variable">@git</span>.coding.<span class="attribute">net</span>:[user_name]/[user_name].coding.me.git,master</div></pre></td></tr></table></figure>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="attribute">deploy</span>:</span>
+<span class="line">  <span class="attribute">type</span>: git</span>
+<span class="line">  <span class="attribute">repo</span>:</span>
+<span class="line">    <span class="attribute">github</span>: git<span class="variable">@github</span>.<span class="attribute">com</span>:[user_name]/[user_name].github.io.git,master</span>
+<span class="line">    <span class="attribute">coding</span>: git<span class="variable">@git</span>.coding.<span class="attribute">net</span>:[user_name]/[user_name].coding.me.git,master</span>
+</pre></td></tr></table></figure>
 <h3 id="设置域名解析"><a href="#设置域名解析" class="headerlink" title="设置域名解析"></a>设置域名解析</h3><p>我的域名目前托管在阿里云，并且可以自由选择 <code>解析路线</code>。如果您的域名供应商处没有提供此设置，可以考虑将域名 DNS 改为阿里云的 DNS 服务器。</p>
 <p>在解析控制台中，将指向 Github Pages 的解析路线设置为 <code>海外</code>，将指向 Coding Pages 的解析路线设置为 <code>默认</code>，依次保存即可。</p>
 <p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/HexoOptimization.png" alt=""></p>
@@ -539,9 +905,9 @@
     
       <category term="original" scheme="http://varzy.me/tags/original/"/>
     
-      <category term="hexo" scheme="http://varzy.me/tags/hexo/"/>
-    
       <category term="net" scheme="http://varzy.me/tags/net/"/>
+    
+      <category term="hexo" scheme="http://varzy.me/tags/hexo/"/>
     
       <category term="tutorial" scheme="http://varzy.me/tags/tutorial/"/>
     
@@ -553,8 +919,8 @@
   
   <entry>
     <title>Shadowsocks 使用教程及技巧</title>
-    <link href="http://varzy.me/2-Skill/SSGuide/"/>
-    <id>http://varzy.me/2-Skill/SSGuide/</id>
+    <link href="http://varzy.me/Skill/SSGuide/"/>
+    <id>http://varzy.me/Skill/SSGuide/</id>
     <published>2017-01-25T16:00:00.000Z</published>
     <updated>2017-07-20T01:06:23.374Z</updated>
     
@@ -623,11 +989,11 @@
     
       <category term="original" scheme="http://varzy.me/tags/original/"/>
     
+      <category term="software" scheme="http://varzy.me/tags/software/"/>
+    
       <category term="net" scheme="http://varzy.me/tags/net/"/>
     
       <category term="tutorial" scheme="http://varzy.me/tags/tutorial/"/>
-    
-      <category term="software" scheme="http://varzy.me/tags/software/"/>
     
       <category term="shadowsocks" scheme="http://varzy.me/tags/shadowsocks/"/>
     
@@ -635,34 +1001,466 @@
   
   <entry>
     <title>Git 命令梳理</title>
-    <link href="http://varzy.me/2-Skill/GitList/"/>
-    <id>http://varzy.me/2-Skill/GitList/</id>
+    <link href="http://varzy.me/Skill/GitList/"/>
+    <id>http://varzy.me/Skill/GitList/</id>
     <published>2017-01-17T16:00:00.000Z</published>
     <updated>2017-07-20T01:06:23.358Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git<span class="built_in"> config </span>--global user.name <span class="string">"[user_name]"</span></div><div class="line">git<span class="built_in"> config </span>--global user.email <span class="string">"[user_email]"</span></div><div class="line"><span class="comment"># 如果留有以前的配置文件，直接将其放入 user 目录下，即可不需再次配置</span></div></pre></td></tr></table></figure>
-<h2 id="新建"><a href="#新建" class="headerlink" title="新建"></a>新建</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">git init</div><div class="line"><span class="meta">#</span><span class="bash"> 在当前目录创建 Git 仓库</span></div><div class="line"></div><div class="line">git init [floder_name]</div><div class="line"><span class="meta">#</span><span class="bash"> 新建一个目录，并将其初始化为 Git 仓库</span></div><div class="line"></div><div class="line">git init --bare</div><div class="line"><span class="meta">#</span><span class="bash"> 创建一个 Git 裸仓库​​</span></div></pre></td></tr></table></figure>
-<h2 id="增删文件"><a href="#增删文件" class="headerlink" title="增删文件"></a>增删文件</h2><h3 id="添加文件"><a href="#添加文件" class="headerlink" title="添加文件"></a>添加文件</h3><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">git <span class="keyword">add</span><span class="bash"> [dir]/[file]</span></div><div class="line"><span class="comment"># 添加指定文件或指定文件夹到暂存区</span></div><div class="line"></div><div class="line">git <span class="keyword">add</span><span class="bash"> *.[file_type]</span></div><div class="line"><span class="comment"># 添加某个类型的所有文件到暂存区</span></div><div class="line"></div><div class="line">git <span class="keyword">add</span><span class="bash"> .</span></div><div class="line"><span class="comment"># 添加当前目录所有文件到暂存区​</span></div><div class="line"></div><div class="line">git <span class="keyword">add</span><span class="bash"> -p</span></div><div class="line"><span class="comment"># 将文件添加到暂存区时，要求逐次手动确认</span></div></pre></td></tr></table></figure>
-<h3 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">git rm [file]</div><div class="line"><span class="meta">#</span><span class="bash"> 删除工作区的文件，并将此操作放入暂存区。等同于在文件资源管理器中手动删除</span></div><div class="line"></div><div class="line">git rm --cached [file]</div><div class="line"><span class="meta">#</span><span class="bash"> 停止追踪指定文件，但该文件会保留在工作区</span></div></pre></td></tr></table></figure>
-<h2 id="提交"><a href="#提交" class="headerlink" title="提交"></a>提交</h2><figure class="highlight vala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">git commit -m <span class="string">"[description]"</span></div><div class="line"><span class="meta"># 提交暂存区的所有文件到仓库</span></div><div class="line"></div><div class="line">git commit -m <span class="string">"[description]"</span> [file1] [file2]</div><div class="line"><span class="meta"># 提交暂存区的指定文件到仓库</span></div></pre></td></tr></table></figure>
-<h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">git status</div><div class="line"><span class="meta">#</span><span class="bash"> 显示变更过的文件</span></div><div class="line"></div><div class="line">git log ( -[num] )</div><div class="line"><span class="meta">#</span><span class="bash"> 显示当前分支的版本历史，默认显示三次。可以在后面跟 -[num] 参数自定义显示次数</span></div><div class="line"></div><div class="line">git log --pretty=oneline ( -[num] )</div><div class="line"><span class="meta">#</span><span class="bash"> 使提交信息一条仅占一行。如果不加 -[num] 参数，则默认显示过去 30 次提交信息</span></div><div class="line"></div><div class="line">git log --graph</div><div class="line"><span class="meta">#</span><span class="bash"> 查看分支合并图</span></div><div class="line"></div><div class="line">git reflog</div><div class="line"><span class="meta">#</span><span class="bash"> 查看 HEAD 的每一次变化历史</span></div><div class="line"></div><div class="line">git diff</div><div class="line"><span class="meta">#</span><span class="bash"> 显示所有文件的暂存区和工作区的差异</span></div><div class="line"></div><div class="line">git diff -- [file]</div><div class="line"><span class="meta">#</span><span class="bash"> 显示某个文件的暂存区和工作区的差异</span></div><div class="line"></div><div class="line">git diff HEAD</div><div class="line"><span class="meta">#</span><span class="bash"> 显示所有文件的工作区与当前分支最新 commit 之间的差异</span></div><div class="line"></div><div class="line">git diff HEAD -- [file]</div><div class="line"><span class="meta">#</span><span class="bash"> 显示某个文件的工作区与当前分支最新 commit 之间的差异</span></div></pre></td></tr></table></figure>
-<h2 id="撤销"><a href="#撤销" class="headerlink" title="撤销"></a>撤销</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">git checkout [file]</div><div class="line"><span class="meta">#</span><span class="bash"> 让某个文件回到最近一次 git commit 或 git add 时的状态</span></div><div class="line"></div><div class="line">git checkout [commit] [file]</div><div class="line"><span class="meta">#</span><span class="bash"> 恢复某个 commit 的指定文件到暂存区和工作区</span></div><div class="line"></div><div class="line">git checkout .</div><div class="line"><span class="meta">#</span><span class="bash"> 恢复目前暂存区的所有文件到工作区</span></div><div class="line"></div><div class="line">git reset --hard</div><div class="line"><span class="meta">#</span><span class="bash"> 重置暂存区与工作区，与上一次 commit 保持一致​</span></div><div class="line"></div><div class="line">git reset --hard HEAD^</div><div class="line"><span class="meta">#</span><span class="bash"> 将文件版本快速回退至上一个版本。在 Git 中，HEAD 表示当前版本，上一个版本是 HEAD^，上上一个版本是 HEAD^^。也可以用数字表示，比如上 100 个版本是 HEAD~100</span></div><div class="line"></div><div class="line">git reset [commit]</div><div class="line"><span class="meta">#</span><span class="bash"> 重置当前分支的 HEAD 为指定 commit，同时重置暂存区，但工作区不变</span></div><div class="line"></div><div class="line">git reset --hard [commit]</div><div class="line"><span class="meta">#</span><span class="bash"> 重置当前分支的 HEAD 为 指定commit，同时重置暂存区和工作区，与指定 commit 一致</span></div><div class="line"></div><div class="line">git stash</div><div class="line"><span class="meta">#</span><span class="bash"> 将未提交的变化暂时移除​</span></div><div class="line"></div><div class="line">git stash pop</div><div class="line"><span class="meta">#</span><span class="bash"> 将未提交的变化再次移入</span></div></pre></td></tr></table></figure>
-<h2 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">git branch</div><div class="line"><span class="meta">#</span><span class="bash"> 列出所有本地分支</span></div><div class="line"></div><div class="line">git branch -r</div><div class="line"><span class="meta">#</span><span class="bash"> 列出所有远程分支</span></div><div class="line"></div><div class="line">git branch -a</div><div class="line"><span class="meta">#</span><span class="bash"> 列出所有本地分支和远程分支</span></div><div class="line"></div><div class="line">git branch [branch]</div><div class="line"><span class="meta">#</span><span class="bash"> 新建一个分支，但依然停留在当前分支</span></div><div class="line"></div><div class="line">git checkout -b [branch]</div><div class="line"><span class="meta">#</span><span class="bash"> 新建一个分支，并切换到该分支</span></div><div class="line"></div><div class="line">git checkout -b [branch] origin/[branch]</div><div class="line"><span class="meta">#</span><span class="bash"> 在本地新建一个分支，并使其与远程分支保持同步</span></div><div class="line"></div><div class="line">git checkout --orphan [branch]</div><div class="line"><span class="meta">#</span><span class="bash"> 新建一个空白分支​。常用于创建 gh-pages 分支</span></div><div class="line"></div><div class="line">git merge [branch]</div><div class="line"><span class="meta">#</span><span class="bash"> 使用快速合并，合并指定分支到当前分支</span></div><div class="line"></div><div class="line">git merge --no-ff [branch]</div><div class="line"><span class="meta">#</span><span class="bash"> 使用正常合并，合并指定分支到当前分支​</span></div><div class="line"></div><div class="line">git rebase [branch]</div><div class="line"><span class="meta">#</span><span class="bash"> 在一个分支里提交的改变移到另一个分支里重放一遍</span></div><div class="line"></div><div class="line">git push origin -d [branch]</div><div class="line">git branch -dr [remote/branch]</div><div class="line"><span class="meta">#</span><span class="bash"> 删除远程分支</span></div><div class="line"></div><div class="line">git branch [branch] [commit]</div><div class="line"><span class="meta">#</span><span class="bash"> 新建一个分支，指向指定 commit</span></div></pre></td></tr></table></figure>
-<h2 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h2><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">git <span class="keyword">tag</span></div><div class="line"><span class="title"># 列出所有标签</span></div><div class="line"></div><div class="line">git <span class="keyword">tag</span> <span class="title">[tag</span>]</div><div class="line"><span class="comment"># 在当前 commit 新建一个标签</span></div><div class="line"></div><div class="line">git <span class="keyword">tag</span> <span class="title">[tag</span>] [commit]</div><div class="line"><span class="comment"># 在指定 commit 新建一个标签</span></div><div class="line"></div><div class="line">git show [<span class="keyword">tag</span>]</div><div class="line"><span class="comment"># 查看标签信息</span></div><div class="line"></div><div class="line">git push origin [<span class="keyword">tag</span>]</div><div class="line"><span class="comment"># 提交指定标签</span></div><div class="line"></div><div class="line">git push origin --tags</div><div class="line"><span class="comment"># 提交所有标签</span></div><div class="line"></div><div class="line">git <span class="keyword">tag</span> <span class="title">-d</span> [<span class="keyword">tag</span>]</div><div class="line"><span class="comment"># 删除本地标签</span></div><div class="line"></div><div class="line">git push origin :refs/tags/[<span class="keyword">tag</span>]</div><div class="line"><span class="comment"># 删除远程标签。要想删除远程标签，必须先删除本地标签</span></div><div class="line"></div><div class="line">git checkout -b [branch] [<span class="keyword">tag</span>]</div><div class="line"><span class="comment"># 新建一个分支，指向某个标签</span></div></pre></td></tr></table></figure>
-<h2 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h2><h3 id="SSH-Key"><a href="#SSH-Key" class="headerlink" title="SSH Key"></a>SSH Key</h3><figure class="highlight vala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa -C <span class="string">"[user_email]"</span></div><div class="line"><span class="meta"># 创建 SSH 密钥</span></div><div class="line"></div><div class="line">ssh -T git@github.com</div><div class="line"><span class="meta"># 测试是否顺利连接到 Github</span></div><div class="line"></div><div class="line">ssh -T git@git.coding.net</div><div class="line"><span class="meta"># 测试是否顺利连接到 Coding.net</span></div></pre></td></tr></table></figure>
-<h3 id="克隆"><a href="#克隆" class="headerlink" title="克隆"></a>克隆</h3><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git <span class="keyword">clone</span> <span class="title">[URL</span>] ( --depth [num] )</div><div class="line"><span class="comment"># 如果添加 --depth [num] 参数可以指定克隆深度。比如 --depth 1 表示仅克隆最近的一次 commit</span></div></pre></td></tr></table></figure>
-<h3 id="拉取"><a href="#拉取" class="headerlink" title="拉取"></a>拉取</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">git remote -v</div><div class="line"><span class="meta">#</span><span class="bash"> 显示所有远程仓库</span></div><div class="line"></div><div class="line">git pull ( [remote] [remote_branch]:[local_branch] )</div><div class="line"><span class="meta">#</span><span class="bash"> 拉取远程仓库相应追踪分支的更改并直接合并到本地当前分支。如果当前分支只有一个追踪分支，连远程主机名都可以省略</span></div><div class="line"></div><div class="line">git pull origin [branch]</div><div class="line"><span class="meta">#</span><span class="bash"> 取回远程仓库的变化，并直接与本地分支合并</span></div><div class="line"></div><div class="line">git fetch ( [remote] )</div><div class="line"><span class="meta">#</span><span class="bash"> 下载远程仓库的所有变动</span></div><div class="line"></div><div class="line">git fetch -p</div><div class="line"><span class="meta">#</span><span class="bash"> 获取远程仓库对远程分支的删除操作</span></div><div class="line"></div><div class="line">git remote show [remote]</div><div class="line"><span class="meta">#</span><span class="bash"> 显示某个远程仓库的信息</span></div></pre></td></tr></table></figure>
-<h3 id="推送"><a href="#推送" class="headerlink" title="推送"></a>推送</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">git push ( [remote] [local_branch]:[remote_branch] )</div><div class="line"><span class="meta">#</span><span class="bash"> 推送本地当前分支的修改到远程仓库相应追踪分支。如果当前分支只有一个追踪分支，连远程主机名都可以省略</span></div><div class="line"><span class="meta">#</span><span class="bash"> 如果该远程分支不存在，则会被新建</span></div><div class="line"><span class="meta">#</span><span class="bash"> 注意，分支推送顺序的写法是 &lt;来源地&gt;:&lt;目的地&gt;，所以 git pull 是 &lt;远程分支&gt;:&lt;本地分支&gt;，而 git push 是 &lt;本地分支&gt;:&lt;远程分支&gt;</span></div><div class="line"></div><div class="line">git push -u origin master</div><div class="line"><span class="meta">#</span><span class="bash"> 把当前 master 分支首次推送到远程</span></div><div class="line"></div><div class="line">git push origin [branch]</div><div class="line"><span class="meta">#</span><span class="bash"> 上传本地指定分支到远程仓库</span></div><div class="line"></div><div class="line">git push origin -a</div><div class="line"><span class="meta">#</span><span class="bash"> 推送所有分支到远程仓库</span></div></pre></td></tr></table></figure>
-<h3 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h3><figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="string">git </span><span class="string">remote </span><span class="string">add </span><span class="string">origin </span>[<span class="string">URL]</span></div><div class="line"><span class="comment"># 添加远程仓库</span></div><div class="line"></div><div class="line"><span class="string">git </span><span class="string">remote </span><span class="built_in">set-url</span> <span class="string">origin </span>[<span class="string">URL]</span></div><div class="line"><span class="comment"># 修改远程仓库</span></div><div class="line"></div><div class="line"><span class="string">git </span><span class="string">remote </span><span class="string">add </span>[<span class="string">name]</span> [<span class="string">URL]</span></div><div class="line"><span class="comment"># 添加一个名为 [name] 的新远程仓库</span></div><div class="line"></div><div class="line"><span class="string">git </span><span class="string">remote </span><span class="built_in">set-url</span> <span class="built_in">--add</span> <span class="string">origin </span>[<span class="string">URL]</span></div><div class="line"><span class="comment"># 添加一个远程仓库，并使其名字为 origin</span></div><div class="line"><span class="comment"># 使用此方法可以实现一键推送至多个远程仓库</span></div><div class="line"><span class="comment"># 但拉取时仅能拉取 .git/config 中列出的第一个原始仓库的更改</span></div></pre></td></tr></table></figure>
-<h2 id="子模块"><a href="#子模块" class="headerlink" title="子模块"></a>子模块</h2><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">git <span class="keyword">submodule </span><span class="keyword">add </span>[URL]</div><div class="line"><span class="comment"># 添加子模块</span></div><div class="line"></div><div class="line">git <span class="keyword">submodule </span>init</div><div class="line"><span class="comment"># 初始化你的本地配置文件</span></div><div class="line"></div><div class="line">git <span class="keyword">submodule </span>update</div><div class="line"><span class="comment"># 更新子模块</span></div></pre></td></tr></table></figure>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="配置命令别名"><a href="#配置命令别名" class="headerlink" title="配置命令别名"></a>配置命令别名</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git<span class="built_in"> config </span>--global alias.[st] status</div><div class="line"><span class="comment"># 配置命令别名。比如用 st 代替 status</span></div><div class="line"><span class="comment"># --global 参数是全局参数，也就是这些命令在这台电脑的所有 Git 仓库下都有用</span></div><div class="line"><span class="comment"># 此修改将保存至 .gitconfig 文件中，也可以直接进入 .gitconfig 文件批量修改</span></div></pre></td></tr></table></figure>
+    <content type="html"><![CDATA[<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">git<span class="built_in"> config </span>--global user.name <span class="string">"[user_name]"</span></span>
+<span class="line">git<span class="built_in"> config </span>--global user.email <span class="string">"[user_email]"</span></span>
+<span class="line"><span class="comment"># 如果留有以前的配置文件，直接将其放入 user 目录下，即可不需再次配置</span></span>
+</pre></td></tr></table></figure>
+<h2 id="新建"><a href="#新建" class="headerlink" title="新建"></a>新建</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+</pre></td><td class="code"><pre><span class="line">git init</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 在当前目录创建 Git 仓库</span></span>
+<span class="line"></span>
+<span class="line">git init [floder_name]</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 新建一个目录，并将其初始化为 Git 仓库</span></span>
+<span class="line"></span>
+<span class="line">git init --bare</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 创建一个 Git 裸仓库​​</span></span>
+</pre></td></tr></table></figure>
+<h2 id="增删文件"><a href="#增删文件" class="headerlink" title="增删文件"></a>增删文件</h2><h3 id="添加文件"><a href="#添加文件" class="headerlink" title="添加文件"></a>添加文件</h3><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+</pre></td><td class="code"><pre><span class="line">git <span class="keyword">add</span><span class="bash"> [dir]/[file]</span>
+<span class="line"></span><span class="comment"># 添加指定文件或指定文件夹到暂存区</span></span>
+<span class="line"></span>
+<span class="line">git <span class="keyword">add</span><span class="bash"> *.[file_type]</span>
+<span class="line"></span><span class="comment"># 添加某个类型的所有文件到暂存区</span></span>
+<span class="line"></span>
+<span class="line">git <span class="keyword">add</span><span class="bash"> .</span>
+<span class="line"></span><span class="comment"># 添加当前目录所有文件到暂存区​</span></span>
+<span class="line"></span>
+<span class="line">git <span class="keyword">add</span><span class="bash"> -p</span>
+<span class="line"></span><span class="comment"># 将文件添加到暂存区时，要求逐次手动确认</span></span>
+</pre></td></tr></table></figure>
+<h3 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line">git rm [file]</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 删除工作区的文件，并将此操作放入暂存区。等同于在文件资源管理器中手动删除</span></span>
+<span class="line"></span>
+<span class="line">git rm --cached [file]</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 停止追踪指定文件，但该文件会保留在工作区</span></span>
+</pre></td></tr></table></figure>
+<h2 id="提交"><a href="#提交" class="headerlink" title="提交"></a>提交</h2><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">"[description]"</span></span>
+<span class="line"><span class="meta"># 提交暂存区的所有文件到仓库</span></span>
+<span class="line"></span>
+<span class="line">git commit -m <span class="string">"[description]"</span> [file1] [file2]</span>
+<span class="line"><span class="meta"># 提交暂存区的指定文件到仓库</span></span>
+</pre></td></tr></table></figure>
+<h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+</pre></td><td class="code"><pre><span class="line">git status</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 显示变更过的文件</span></span>
+<span class="line"></span>
+<span class="line">git log ( -[num] )</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 显示当前分支的版本历史，默认显示三次。可以在后面跟 -[num] 参数自定义显示次数</span></span>
+<span class="line"></span>
+<span class="line">git log --pretty=oneline ( -[num] )</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 使提交信息一条仅占一行。如果不加 -[num] 参数，则默认显示过去 30 次提交信息</span></span>
+<span class="line"></span>
+<span class="line">git log --graph</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 查看分支合并图</span></span>
+<span class="line"></span>
+<span class="line">git reflog</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 查看 HEAD 的每一次变化历史</span></span>
+<span class="line"></span>
+<span class="line">git diff</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 显示所有文件的暂存区和工作区的差异</span></span>
+<span class="line"></span>
+<span class="line">git diff -- [file]</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 显示某个文件的暂存区和工作区的差异</span></span>
+<span class="line"></span>
+<span class="line">git diff HEAD</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 显示所有文件的工作区与当前分支最新 commit 之间的差异</span></span>
+<span class="line"></span>
+<span class="line">git diff HEAD -- [file]</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 显示某个文件的工作区与当前分支最新 commit 之间的差异</span></span>
+</pre></td></tr></table></figure>
+<h2 id="撤销"><a href="#撤销" class="headerlink" title="撤销"></a>撤销</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+</pre></td><td class="code"><pre><span class="line">git checkout [file]</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 让某个文件回到最近一次 git commit 或 git add 时的状态</span></span>
+<span class="line"></span>
+<span class="line">git checkout [commit] [file]</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 恢复某个 commit 的指定文件到暂存区和工作区</span></span>
+<span class="line"></span>
+<span class="line">git checkout .</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 恢复目前暂存区的所有文件到工作区</span></span>
+<span class="line"></span>
+<span class="line">git reset --hard</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 重置暂存区与工作区，与上一次 commit 保持一致​</span></span>
+<span class="line"></span>
+<span class="line">git reset --hard HEAD^</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 将文件版本快速回退至上一个版本。在 Git 中，HEAD 表示当前版本，上一个版本是 HEAD^，上上一个版本是 HEAD^^。也可以用数字表示，比如上 100 个版本是 HEAD~100</span></span>
+<span class="line"></span>
+<span class="line">git reset [commit]</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 重置当前分支的 HEAD 为指定 commit，同时重置暂存区，但工作区不变</span></span>
+<span class="line"></span>
+<span class="line">git reset --hard [commit]</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 重置当前分支的 HEAD 为 指定commit，同时重置暂存区和工作区，与指定 commit 一致</span></span>
+<span class="line"></span>
+<span class="line">git stash</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 将未提交的变化暂时移除​</span></span>
+<span class="line"></span>
+<span class="line">git stash pop</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 将未提交的变化再次移入</span></span>
+</pre></td></tr></table></figure>
+<h2 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+</pre></td><td class="code"><pre><span class="line">git branch</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 列出所有本地分支</span></span>
+<span class="line"></span>
+<span class="line">git branch -r</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 列出所有远程分支</span></span>
+<span class="line"></span>
+<span class="line">git branch -a</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 列出所有本地分支和远程分支</span></span>
+<span class="line"></span>
+<span class="line">git branch [branch]</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 新建一个分支，但依然停留在当前分支</span></span>
+<span class="line"></span>
+<span class="line">git checkout -b [branch]</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 新建一个分支，并切换到该分支</span></span>
+<span class="line"></span>
+<span class="line">git checkout -b [branch] origin/[branch]</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 在本地新建一个分支，并使其与远程分支保持同步</span></span>
+<span class="line"></span>
+<span class="line">git checkout --orphan [branch]</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 新建一个空白分支​。常用于创建 gh-pages 分支</span></span>
+<span class="line"></span>
+<span class="line">git merge [branch]</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 使用快速合并，合并指定分支到当前分支</span></span>
+<span class="line"></span>
+<span class="line">git merge --no-ff [branch]</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 使用正常合并，合并指定分支到当前分支​</span></span>
+<span class="line"></span>
+<span class="line">git rebase [branch]</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 在一个分支里提交的改变移到另一个分支里重放一遍</span></span>
+<span class="line"></span>
+<span class="line">git push origin -d [branch]</span>
+<span class="line">git branch -dr [remote/branch]</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 删除远程分支</span></span>
+<span class="line"></span>
+<span class="line">git branch [branch] [commit]</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 新建一个分支，指向指定 commit</span></span>
+</pre></td></tr></table></figure>
+<h2 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h2><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+</pre></td><td class="code"><pre><span class="line">git <span class="keyword">tag</span></span>
+<span class="line"><span class="title"># 列出所有标签</span>
+<span class="line"></span>
+<span class="line">git</span> <span class="keyword">tag</span> <span class="title">[tag</span>]</span>
+<span class="line"><span class="comment"># 在当前 commit 新建一个标签</span></span>
+<span class="line"></span>
+<span class="line">git <span class="keyword">tag</span> <span class="title">[tag</span>] [commit]</span>
+<span class="line"><span class="comment"># 在指定 commit 新建一个标签</span></span>
+<span class="line"></span>
+<span class="line">git show [<span class="keyword">tag</span>]</span>
+<span class="line"><span class="comment"># 查看标签信息</span></span>
+<span class="line"></span>
+<span class="line">git push origin [<span class="keyword">tag</span>]</span>
+<span class="line"><span class="comment"># 提交指定标签</span></span>
+<span class="line"></span>
+<span class="line">git push origin --tags</span>
+<span class="line"><span class="comment"># 提交所有标签</span></span>
+<span class="line"></span>
+<span class="line">git <span class="keyword">tag</span> <span class="title">-d</span> [<span class="keyword">tag</span>]</span>
+<span class="line"><span class="comment"># 删除本地标签</span></span>
+<span class="line"></span>
+<span class="line">git push origin :refs/tags/[<span class="keyword">tag</span>]</span>
+<span class="line"><span class="comment"># 删除远程标签。要想删除远程标签，必须先删除本地标签</span></span>
+<span class="line"></span>
+<span class="line">git checkout -b [branch] [<span class="keyword">tag</span>]</span>
+<span class="line"><span class="comment"># 新建一个分支，指向某个标签</span></span>
+</pre></td></tr></table></figure>
+<h2 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h2><h3 id="SSH-Key"><a href="#SSH-Key" class="headerlink" title="SSH Key"></a>SSH Key</h3><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+</pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">"[user_email]"</span></span>
+<span class="line"><span class="meta"># 创建 SSH 密钥</span></span>
+<span class="line"></span>
+<span class="line">ssh -T git@github.com</span>
+<span class="line"><span class="meta"># 测试是否顺利连接到 Github</span></span>
+<span class="line"></span>
+<span class="line">ssh -T git@git.coding.net</span>
+<span class="line"><span class="meta"># 测试是否顺利连接到 Coding.net</span></span>
+</pre></td></tr></table></figure>
+<h3 id="克隆"><a href="#克隆" class="headerlink" title="克隆"></a>克隆</h3><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">git <span class="keyword">clone</span> <span class="title">[URL</span>] ( --depth [num] )</span>
+<span class="line"><span class="comment"># 如果添加 --depth [num] 参数可以指定克隆深度。比如 --depth 1 表示仅克隆最近的一次 commit</span></span>
+</pre></td></tr></table></figure>
+<h3 id="拉取"><a href="#拉取" class="headerlink" title="拉取"></a>拉取</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+</pre></td><td class="code"><pre><span class="line">git remote -v</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 显示所有远程仓库</span></span>
+<span class="line"></span>
+<span class="line">git pull ( [remote] [remote_branch]:[local_branch] )</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 拉取远程仓库相应追踪分支的更改并直接合并到本地当前分支。如果当前分支只有一个追踪分支，连远程主机名都可以省略</span></span>
+<span class="line"></span>
+<span class="line">git pull origin [branch]</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 取回远程仓库的变化，并直接与本地分支合并</span></span>
+<span class="line"></span>
+<span class="line">git fetch ( [remote] )</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 下载远程仓库的所有变动</span></span>
+<span class="line"></span>
+<span class="line">git fetch -p</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 获取远程仓库对远程分支的删除操作</span></span>
+<span class="line"></span>
+<span class="line">git remote show [remote]</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 显示某个远程仓库的信息</span></span>
+</pre></td></tr></table></figure>
+<h3 id="推送"><a href="#推送" class="headerlink" title="推送"></a>推送</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+</pre></td><td class="code"><pre><span class="line">git push ( [remote] [local_branch]:[remote_branch] )</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 推送本地当前分支的修改到远程仓库相应追踪分支。如果当前分支只有一个追踪分支，连远程主机名都可以省略</span></span>
+<span class="line"><span class="meta">#</span><span class="bash"> 如果该远程分支不存在，则会被新建</span></span>
+<span class="line"><span class="meta">#</span><span class="bash"> 注意，分支推送顺序的写法是 &lt;来源地&gt;:&lt;目的地&gt;，所以 git pull 是 &lt;远程分支&gt;:&lt;本地分支&gt;，而 git push 是 &lt;本地分支&gt;:&lt;远程分支&gt;</span></span>
+<span class="line"></span>
+<span class="line">git push -u origin master</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 把当前 master 分支首次推送到远程</span></span>
+<span class="line"></span>
+<span class="line">git push origin [branch]</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 上传本地指定分支到远程仓库</span></span>
+<span class="line"></span>
+<span class="line">git push origin -a</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 推送所有分支到远程仓库</span></span>
+</pre></td></tr></table></figure>
+<h3 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h3><figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+</pre></td><td class="code"><pre><span class="line"><span class="string">git </span><span class="string">remote </span><span class="string">add </span><span class="string">origin </span>[<span class="string">URL]</span></span>
+<span class="line"><span class="comment"># 添加远程仓库</span></span>
+<span class="line"></span>
+<span class="line"><span class="string">git </span><span class="string">remote </span><span class="built_in">set-url</span> <span class="string">origin </span>[<span class="string">URL]</span></span>
+<span class="line"><span class="comment"># 修改远程仓库</span></span>
+<span class="line"></span>
+<span class="line"><span class="string">git </span><span class="string">remote </span><span class="string">add </span>[<span class="string">name]</span> [<span class="string">URL]</span></span>
+<span class="line"><span class="comment"># 添加一个名为 [name] 的新远程仓库</span></span>
+<span class="line"></span>
+<span class="line"><span class="string">git </span><span class="string">remote </span><span class="built_in">set-url</span> <span class="built_in">--add</span> <span class="string">origin </span>[<span class="string">URL]</span></span>
+<span class="line"><span class="comment"># 添加一个远程仓库，并使其名字为 origin</span></span>
+<span class="line"><span class="comment"># 使用此方法可以实现一键推送至多个远程仓库</span></span>
+<span class="line"><span class="comment"># 但拉取时仅能拉取 .git/config 中列出的第一个原始仓库的更改</span></span>
+</pre></td></tr></table></figure>
+<h2 id="子模块"><a href="#子模块" class="headerlink" title="子模块"></a>子模块</h2><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+</pre></td><td class="code"><pre><span class="line">git <span class="keyword">submodule </span><span class="keyword">add </span>[URL]</span>
+<span class="line"><span class="comment"># 添加子模块</span></span>
+<span class="line"></span>
+<span class="line">git <span class="keyword">submodule </span>init</span>
+<span class="line"><span class="comment"># 初始化你的本地配置文件</span></span>
+<span class="line"></span>
+<span class="line">git <span class="keyword">submodule </span>update</span>
+<span class="line"><span class="comment"># 更新子模块</span></span>
+</pre></td></tr></table></figure>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="配置命令别名"><a href="#配置命令别名" class="headerlink" title="配置命令别名"></a>配置命令别名</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">git<span class="built_in"> config </span>--global alias.[st] status</span>
+<span class="line"><span class="comment"># 配置命令别名。比如用 st 代替 status</span></span>
+<span class="line"><span class="comment"># --global 参数是全局参数，也就是这些命令在这台电脑的所有 Git 仓库下都有用</span></span>
+<span class="line"><span class="comment"># 此修改将保存至 .gitconfig 文件中，也可以直接进入 .gitconfig 文件批量修改</span></span>
+</pre></td></tr></table></figure>
 <h3 id="一些参数简写意义"><a href="#一些参数简写意义" class="headerlink" title="一些参数简写意义"></a>一些参数简写意义</h3><p>来自 <a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html" target="_blank" rel="external">阮一峰：常用 Git 命令清单</a> 一文中 AnnabellChan 的评论：</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">git checkout -b，b 其实是 browse 的 abbr</div><div class="line">git branch -r, r -&gt; remote</div><div class="line">git branch -a, a -&gt; all</div><div class="line">git<span class="built_in"> config </span>-l, l -&gt; list</div><div class="line">git commit -m, m -&gt; message</div></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line">git checkout -b，b 其实是 browse 的 abbr</span>
+<span class="line">git branch -r, r -&gt; remote</span>
+<span class="line">git branch -a, a -&gt; all</span>
+<span class="line">git<span class="built_in"> config </span>-l, l -&gt; list</span>
+<span class="line">git commit -m, m -&gt; message</span>
+</pre></td></tr></table></figure>
 ]]></content>
     
     <summary type="html">
     
-      &lt;h2 id=&quot;配置&quot;&gt;&lt;a href=&quot;#配置&quot; class=&quot;headerlink&quot; title=&quot;配置&quot;&gt;&lt;/a&gt;配置&lt;/h2&gt;&lt;figure class=&quot;highlight routeros&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;di
+      &lt;h2 id=&quot;配置&quot;&gt;&lt;a href=&quot;#配置&quot; class=&quot;headerlink&quot; title=&quot;配置&quot;&gt;&lt;/a&gt;配置&lt;/h2&gt;&lt;figure class=&quot;highlight routeros&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;sp
     
     </summary>
     
@@ -681,8 +1479,8 @@
   
   <entry>
     <title>使用同步盘建立自己的私有 Git 仓库</title>
-    <link href="http://varzy.me/2-Skill/PrivateGitRepository/"/>
-    <id>http://varzy.me/2-Skill/PrivateGitRepository/</id>
+    <link href="http://varzy.me/Skill/PrivateGitRepository/"/>
+    <id>http://varzy.me/Skill/PrivateGitRepository/</id>
     <published>2017-01-06T16:00:00.000Z</published>
     <updated>2017-07-20T01:06:23.374Z</updated>
     
@@ -692,11 +1490,17 @@
 <p><strong>在自己的同步盘里仅建立一个 Git 仓库，把它当作项目的远程仓库。当需要使用时，就像使用 Github 一样，通过 clone 命令将代码克隆至其他文件夹进行操作。</strong></p>
 <p>上网一查，发现有很多“前辈”已经想到了这种办法。实现方法如下：</p>
 <h2 id="在同步盘中初始化一个-Git-裸仓库"><a href="#在同步盘中初始化一个-Git-裸仓库" class="headerlink" title="在同步盘中初始化一个 Git 裸仓库"></a>在同步盘中初始化一个 Git 裸仓库</h2><p>在合适的同步盘文件夹内此处使用该命令：</p>
-<figure class="highlight ada"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git init <span class="comment">--bare</span></div></pre></td></tr></table></figure>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">git init <span class="comment">--bare</span></span>
+</pre></td></tr></table></figure>
 <h2 id="将“远程仓库”克隆至其他文件夹"><a href="#将“远程仓库”克隆至其他文件夹" class="headerlink" title="将“远程仓库”克隆至其他文件夹"></a>将“远程仓库”克隆至其他文件夹</h2><p>使用 git clone 的方式，将同步盘内的“远程仓库”克隆至非同步盘文件夹下。克隆的地址就是远程仓库文件夹的路径。</p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git <span class="keyword">clone</span> <span class="title">[path</span>]</div></pre></td></tr></table></figure>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">git <span class="keyword">clone</span> <span class="title">[path</span>]</span>
+</pre></td></tr></table></figure>
 <p>比如我的远程仓库建立在 <code>D:\Nutstore\zyStudio\demo</code> 路径下，那么我就应当输入</p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git <span class="keyword">clone</span> <span class="title">D</span>:\Nutstore\zyStudio\demo</div></pre></td></tr></table></figure>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">git <span class="keyword">clone</span> <span class="title">D</span>:\Nutstore\zyStudio\demo</span>
+</pre></td></tr></table></figure>
 <h2 id="不同计算机之间的代码互通"><a href="#不同计算机之间的代码互通" class="headerlink" title="不同计算机之间的代码互通"></a>不同计算机之间的代码互通</h2><p>由于 git 不像同步盘那样可以时时同步代码，所以当我们切换电脑进行工作时，必须提交上一台电脑的代码，并在新的电脑上使用 <code>git fetch</code> 或 <code>git pull</code> 等命令进行代码同步。</p>
 ]]></content>
     
@@ -721,8 +1525,8 @@
   
   <entry>
     <title>八等人</title>
-    <link href="http://varzy.me/3-Essay/Rank8People/"/>
-    <id>http://varzy.me/3-Essay/Rank8People/</id>
+    <link href="http://varzy.me/Essay/Rank8People/"/>
+    <id>http://varzy.me/Essay/Rank8People/</id>
     <published>2017-01-04T16:00:00.000Z</published>
     <updated>2017-07-20T01:06:23.436Z</updated>
     
@@ -757,8 +1561,8 @@
   
   <entry>
     <title>2016 年度小结</title>
-    <link href="http://varzy.me/1-Life/2016Summary/"/>
-    <id>http://varzy.me/1-Life/2016Summary/</id>
+    <link href="http://varzy.me/Life/2016Summary/"/>
+    <id>http://varzy.me/Life/2016Summary/</id>
     <published>2016-12-31T15:59:59.000Z</published>
     <updated>2017-07-20T01:06:23.296Z</updated>
     
@@ -828,8 +1632,8 @@
   
   <entry>
     <title>将域名邮箱服务迁移到 FastMail</title>
-    <link href="http://varzy.me/1-Life/FastMail/"/>
-    <id>http://varzy.me/1-Life/FastMail/</id>
+    <link href="http://varzy.me/Life/FastMail/"/>
+    <id>http://varzy.me/Life/FastMail/</id>
     <published>2016-12-29T16:00:00.000Z</published>
     <updated>2017-07-20T01:06:23.311Z</updated>
     
@@ -857,8 +1661,8 @@
   
   <entry>
     <title>Github Pages 知识梳理</title>
-    <link href="http://varzy.me/2-Skill/GithubPages/"/>
-    <id>http://varzy.me/2-Skill/GithubPages/</id>
+    <link href="http://varzy.me/Skill/GithubPages/"/>
+    <id>http://varzy.me/Skill/GithubPages/</id>
     <published>2016-12-09T16:00:00.000Z</published>
     <updated>2017-07-21T05:10:20.742Z</updated>
     
@@ -912,8 +1716,8 @@
   
   <entry>
     <title>Hexo 不完全指北</title>
-    <link href="http://varzy.me/2-Skill/HexoGuide/"/>
-    <id>http://varzy.me/2-Skill/HexoGuide/</id>
+    <link href="http://varzy.me/Skill/HexoGuide/"/>
+    <id>http://varzy.me/Skill/HexoGuide/</id>
     <published>2016-12-07T16:00:00.000Z</published>
     <updated>2017-07-20T01:06:23.358Z</updated>
     
@@ -972,7 +1776,19 @@
 <p>打开该仓库的 <code>Settings</code>，将页面下拉至 <code>GitHub Pages</code> 位置，在 <code>Source</code> 中选择 <code>master branch</code> 并点击 <code>Save</code> 保存。如果不出意外，你将得到一个页面链接：<code>https://yourUserName.github.io</code>，这就是你之后将要访问的博客链接。</p>
 <p>至此，Github 仓库部分的配置已经全部完成了。可能有小伙伴有疑问，是否可以先将该仓库全部配置好，再 clone 至本地，然后在该仓库的本地文件夹下初始化一个 Hexo 目录呢？经过我的尝试发现这是不行的。<code>hexo init</code> 命名将会清空该文件夹下的所有文件，包括 <code>.git</code> 隐藏目录，导致与远程仓库的链接断开。所以，老老实实用我现在的步骤进行操作吧~</p>
 <h3 id="配置本地-Hexo-文件夹"><a href="#配置本地-Hexo-文件夹" class="headerlink" title="配置本地 Hexo 文件夹"></a>配置本地 Hexo 文件夹</h3><p>打开本地 Hexo 文件夹，使用 Visual Studio Code 等工具打开 <code>_config.yml</code>，在最下方找到 <code># Deployment</code>，将其修改为如下格式：</p>
-<figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta"># Deployment</span></div><div class="line"><span class="meta">## Docs: https:<span class="comment">//hexo.io/docs/deployment.html</span></span></div><div class="line"><span class="symbol">deploy:</span></div><div class="line"><span class="symbol">  type:</span> git</div><div class="line"><span class="symbol">  repo:</span> git@github.com:&#123;UserName&#125;<span class="class">/&#123;UserName&#125;.github.io.git</span></div><div class="line"><span class="symbol">  branch:</span> master</div></pre></td></tr></table></figure>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta"># Deployment</span></span>
+<span class="line"><span class="meta">## Docs: https:<span class="comment">//hexo.io/docs/deployment.html</span></span></span>
+<span class="line"><span class="symbol">deploy:</span></span>
+<span class="line"><span class="symbol">  type:</span> git</span>
+<span class="line"><span class="symbol">  repo:</span> git@github.com:&#123;UserName&#125;<span class="class">/&#123;UserName&#125;.github.io.git</span>
+<span class="line"><span class="symbol">  branch:</span> master</span></span>
+</pre></td></tr></table></figure>
 <p>保存并关闭 <code>_config.yml</code> 文件，在根目录空白处按下 <code>Shift</code> + <code>鼠标右键</code>，打开命令提示符，输入以下命令以安装 git 依赖文件：</p>
 <blockquote>
 <p>npm install hexo-deployer-git –save</p>
@@ -1076,9 +1892,9 @@
     
       <category term="original" scheme="http://varzy.me/tags/original/"/>
     
-      <category term="hexo" scheme="http://varzy.me/tags/hexo/"/>
-    
       <category term="net" scheme="http://varzy.me/tags/net/"/>
+    
+      <category term="hexo" scheme="http://varzy.me/tags/hexo/"/>
     
       <category term="tutorial" scheme="http://varzy.me/tags/tutorial/"/>
     
@@ -1090,8 +1906,8 @@
   
   <entry>
     <title>hello, hexo</title>
-    <link href="http://varzy.me/0-Mess/HelloHexo/"/>
-    <id>http://varzy.me/0-Mess/HelloHexo/</id>
+    <link href="http://varzy.me/Mess/HelloHexo/"/>
+    <id>http://varzy.me/Mess/HelloHexo/</id>
     <published>2016-12-06T16:00:00.000Z</published>
     <updated>2017-07-20T01:06:23.280Z</updated>
     
@@ -1116,8 +1932,8 @@
   
   <entry>
     <title>自制了一个钱包</title>
-    <link href="http://varzy.me/1-Life/HandmadeWallet/"/>
-    <id>http://varzy.me/1-Life/HandmadeWallet/</id>
+    <link href="http://varzy.me/Life/HandmadeWallet/"/>
+    <id>http://varzy.me/Life/HandmadeWallet/</id>
     <published>2016-11-30T16:00:00.000Z</published>
     <updated>2017-07-20T01:06:23.311Z</updated>
     
