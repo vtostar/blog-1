@@ -1,6 +1,5 @@
 ---
 title: About
-layout: page
 ---
 
-Just a coder.
+a coder.

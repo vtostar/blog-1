@@ -4,7 +4,7 @@
 
 # Site
 title: Woonden Bar
-subtitle:
+subtitle: A romantic coder's blog.
 description: A romantic coder's blog.
 author: Aiden Zhao
 language: en
@@ -74,10 +74,22 @@ pagination_dir: page
 ## Themes: https://hexo.io/themes/
 # theme: landscape
 theme: hexo-theme-slience
+# theme: old_slience
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
+# deploy:
+#   type: git
+#   repo: git@github.com:varzy/blog.git
+#   branch: gh-pages
+  
+# deploy:
+#   type: git
+#   repo: git@git.coding.net:varzy/blog.git
+#   branch: master
+
 deploy:
   type: git
-  repo: git@github.com:varzy/blog.git
-  branch: gh-pages
+  repo:
+    # github: git@github.com:varzy/blog.git,gh-pages
+    coding: git@git.coding.net:varzy/blog.git,master

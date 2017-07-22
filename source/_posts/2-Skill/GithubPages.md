@@ -47,9 +47,12 @@ index.html 必须放置在用作 master 分支或 gh-pages 分支的根目录下
 
 有的。详见 Github Pages 帮助文档：
 
-> GitHub Pages source repositories have a recommended limit of 1GB .  
-> Published GitHub Pages sites may be no larger than 1 GB.  
-> GitHub Pages sites have a bandwidth limit of 100GB or 100,000 requests per month.  
+> GitHub Pages source repositories have a recommended limit of 1GB .
+> 
+> Published GitHub Pages sites may be no larger than 1 GB.
+> 
+> GitHub Pages sites have a bandwidth limit of 100GB or 100,000 requests per month.
+> 
 > GitHub Pages sites have a limit of 10 builds per hour.
 
 **Q: 国内 Github 访问缓慢，有没有解决办法？**
