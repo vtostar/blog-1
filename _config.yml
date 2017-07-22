@@ -91,5 +91,5 @@ theme: hexo-theme-slience
 deploy:
   type: git
   repo:
-    # github: git@github.com:varzy/blog.git,gh-pages
+    github: git@github.com:varzy/blog.git,gh-pages
     coding: git@git.coding.net:varzy/blog.git,master

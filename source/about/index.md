@@ -2,4 +2,4 @@
 title: About
 ---
 
-a coder.
+Just a Coder.
