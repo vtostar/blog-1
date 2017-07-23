@@ -1,7 +1,7 @@
 ---
 title: 为什么异性恋要支持同性恋平权？ - 啊ha的回答
 date: 2016-03-11
-categories: 3-Essay
+categories: Essay
 tags:
   - zhihu
 ---

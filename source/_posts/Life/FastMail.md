@@ -1,7 +1,7 @@
 ---
 title: 将域名邮箱服务迁移到 FastMail
 date: 2016-12-30
-categories: 1-Life
+categories: Life
 tags:
   - original
   - net

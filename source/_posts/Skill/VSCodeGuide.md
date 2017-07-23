@@ -1,7 +1,7 @@
 ---
 title: VSCode 插件梳理
 date: 2017-04-10
-categories: 2-Skill
+categories: Skill
 tags:
   - original
 	- tutorial

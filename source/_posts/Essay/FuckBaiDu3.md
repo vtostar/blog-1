@@ -1,7 +1,7 @@
 ---
 title: 百度既然这样，不能有新的搜索引擎代替吗？
 date: 2016-05-05
-categories: 3-Essay
+categories: Essay
 tags:
   - fuckBaiDu
   - zhihu

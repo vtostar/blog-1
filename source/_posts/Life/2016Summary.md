@@ -1,7 +1,7 @@
 ---
 title: 2016 年度小结
 date: 2016-12-31 23:59:59
-categories: 1-Life
+categories: Life
 tags:
   - original
   - summary

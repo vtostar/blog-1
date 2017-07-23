@@ -1,7 +1,7 @@
 ---
 title: 终于搞好了自己的简历
 date: 2016-10-08
-categories: 1-Life
+categories: Life
 tags:
   - original
 ---

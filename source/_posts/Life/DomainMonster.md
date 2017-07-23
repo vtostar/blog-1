@@ -1,7 +1,7 @@
 ---
 title: 给 DomainMonster 客服发邮件的一点感悟
 date: 2016-02-18
-categories: 1-Life
+categories: Life
 tags:
   - original
 ---

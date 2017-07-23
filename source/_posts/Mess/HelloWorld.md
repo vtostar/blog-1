@@ -1,7 +1,7 @@
 ---
 title: hello, world
 date: 2015-12-31
-categories: 0-Mess
+categories: Mess
 tags:
   - original
   - article

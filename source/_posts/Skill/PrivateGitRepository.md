@@ -1,7 +1,7 @@
 ---
 title: 使用同步盘建立自己的私有 Git 仓库
 date: 2017-01-07
-categories: 2-Skill
+categories: Skill
 tags:
   - original
   - git

@@ -1,7 +1,7 @@
 ---
 title: 如何回答「你们九零后吃过什么苦」这个问题？ - 曾加的回答
 date: 2016-03-11
-categories: 3-Essay
+categories: Essay
 tags:
   - zhihu
 ---

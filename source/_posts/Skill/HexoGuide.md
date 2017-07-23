@@ -1,7 +1,7 @@
 ---
 title: Hexo 不完全指北
 date: 2016-12-08
-categories: 2-Skill
+categories: Skill
 tags:
   - hexo
   - net

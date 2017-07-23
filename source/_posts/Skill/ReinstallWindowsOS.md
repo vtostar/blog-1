@@ -1,7 +1,7 @@
 ---
 title: Windows 重装系统教程精简版
 date: 2016-09-17
-categories: 2-Skill
+categories: Skill
 tags:
   - computer
   - original

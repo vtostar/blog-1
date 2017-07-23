@@ -1,7 +1,7 @@
 ---
 title: 我是如何坚持10多年站在反百度第一线的 - 霍炬
 date: 2016-03-09
-categories: 3-Essay
+categories: Essay
 tags:
   - fuckBaiDu
   - zhihu

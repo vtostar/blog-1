@@ -1,7 +1,7 @@
 ---
 title: 落雨记
 date: 2017-06-23
-categories: 1-Life
+categories: Life
 tags:
   - original
 ---

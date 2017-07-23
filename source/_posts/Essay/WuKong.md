@@ -1,7 +1,7 @@
 ---
 title: 悟空，为师是在下一盘很大的棋啊 - 张佳玮
 date: 2016-03-09
-categories: 3-Essay
+categories: Essay
 tags:
   - article
 ---

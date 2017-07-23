@@ -1,7 +1,7 @@
 ---
 title: 读大刘《思想者》有感
 date: 2016-04-24
-categories: 3-Essay
+categories: Essay
 tags:
   - idea
   - original

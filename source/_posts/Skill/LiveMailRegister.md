@@ -1,7 +1,7 @@
 ---
 title: (转载) 微软 live、msn 等后缀邮箱注册方法
 date: 2016-09-08
-categories: 2-Skill
+categories: Skill
 tags:
   - net
   - microsoft

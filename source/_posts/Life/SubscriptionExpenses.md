@@ -1,7 +1,7 @@
 ---
 title: 大致算了一下自己的订阅服务开支
 date: 2016-11-11
-categories: 1-Life
+categories: Life
 tags:
   - original
 ---

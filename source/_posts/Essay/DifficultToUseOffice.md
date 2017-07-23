@@ -1,7 +1,7 @@
 ---
 title: 论 14 寸笔记本用 Office 有多么痛苦
 date: 2016-06-29
-categories: 3-Essay
+categories: Essay
 tags:
   - software
   - original

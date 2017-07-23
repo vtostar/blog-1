@@ -1,7 +1,7 @@
 ---
 title: 来自 bing 的兔子
 date: 2016-03-27
-categories: 0-Mess
+categories: Mess
 tags:
   - original
 ---

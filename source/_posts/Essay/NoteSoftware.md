@@ -1,7 +1,7 @@
 ---
 title: 想找一个好用的笔记软件怎么就那么难
 date: 2016-10-01
-categories: 3-Essay
+categories: Essay
 tags:
   - original
   - software

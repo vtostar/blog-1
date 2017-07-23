@@ -1,7 +1,7 @@
 ---
 title: 至京思
 date: 2017-03-11
-categories: 1-Life
+categories: Life
 tag:
   - original
   - article

@@ -1,7 +1,7 @@
 ---
 title: 如何看待人民日报微博批评国产动漫？ - 立文
 date: 2016-03-26
-categories: 3-Essay
+categories: Essay
 tags:
   - zhihu
 ---

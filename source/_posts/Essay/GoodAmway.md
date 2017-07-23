@@ -1,7 +1,7 @@
 ---
 title: 来一发软件安利
 date: 2016-07-30
-categories: 3-Essay
+categories: Essay
 tags:
   - original
   - software

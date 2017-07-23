@@ -1,7 +1,7 @@
 ---
 title: 自制了一个钱包
 date: 2016-12-01
-categories: 1-Life
+categories: Life
 tags:
   - original
 ---

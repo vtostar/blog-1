@@ -1,7 +1,7 @@
 ---
 title: Hexo 双线部署及性能优化
 date: 2017-01-30
-categories: 2-Skill
+categories: Skill
 tags:
   - hexo
   - net

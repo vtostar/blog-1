@@ -1,7 +1,7 @@
 ---
 title: 劝你喝酒的都是看不起你的 - 霍真布鲁兹老爷
 date: 2017-01-31 13:00:00 
-categories: 3-Essay
+categories: Essay
 tags:
   - article
 ---

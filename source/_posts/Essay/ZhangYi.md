@@ -1,7 +1,7 @@
 ---
 title: 「仗义每从屠狗辈，负心多是读书人」这句话是否有道理？ - 霍真布鲁兹老爷的回答
 date: 2016-03-10
-categories: 3-Essay
+categories: Essay
 tags:
   - zhihu
 ---

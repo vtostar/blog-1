@@ -1,7 +1,7 @@
 ---
 title: 硬盘分区转换命令
 date: 2016-03-11
-categories: 2-Skill
+categories: Skill
 tags:
   - computer
 ---

@@ -1,7 +1,7 @@
 ---
 title: hello, hexo
 date: 2016-12-07
-categories: 0-Mess
+categories: Mess
 tags:
   - hexo
   - original

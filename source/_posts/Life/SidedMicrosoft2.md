@@ -1,7 +1,7 @@
 ---
 title: 牛逼的微软与反人类的微软 - 之二
 date: 2016-10-26
-categories: 1-Life
+categories: Life
 tags:
   - microsoft
   - original

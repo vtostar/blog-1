@@ -1,7 +1,7 @@
 ---
 title: 支付婊这是在下很大的一盘棋啊！
 date: 2016-03-11
-categories: 3-Essay
+categories: Essay
 tags:
   - original
 ---

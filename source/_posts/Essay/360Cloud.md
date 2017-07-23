@@ -1,7 +1,7 @@
 ---
 title: 360 云盘停止服务有感
 date: 2016-10-20
-categories: 3-Essay
+categories: Essay
 tags:
   - idea
   - original

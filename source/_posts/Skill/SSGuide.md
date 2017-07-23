@@ -1,7 +1,7 @@
 ---
 title: Shadowsocks 使用教程及技巧
 date: 2017-01-26
-categories: 2-Skill
+categories: Skill
 tags:
   - software
   - net

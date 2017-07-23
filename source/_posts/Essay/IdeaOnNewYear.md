@@ -1,7 +1,7 @@
 ---
 title: 关于春晚，关于后辈
 date: 2017-01-31 20:00:00
-categories: 3-Essay
+categories: Essay
 tags:
   - idea
   - original

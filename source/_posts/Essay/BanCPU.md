@@ -1,7 +1,7 @@
 ---
 title: 如果中国一开始就禁止微软和英特尔AMD进入中国，现在的中国会出现哪些现象？ - 绝影的回答
 date: 2017-03-02
-categories: 3-Essay
+categories: Essay
 tags:
   - zhihu
 ---

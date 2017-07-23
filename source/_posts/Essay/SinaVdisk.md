@@ -1,7 +1,7 @@
 ---
 title: 新浪微盘为什么要停止个人免费服务？有什么影响？ - Calvin Shi 的回答
 date: 2016-04-25
-categories: 3-Essay
+categories: Essay
 tags:
   - zhihu
 ---

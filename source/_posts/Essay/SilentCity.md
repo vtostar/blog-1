@@ -1,7 +1,7 @@
 ---
 title: 寂静之城 - 马伯庸
 date: 2016-03-11
-categories: 3-Essay
+categories: Essay
 tags:
   - article
 ---

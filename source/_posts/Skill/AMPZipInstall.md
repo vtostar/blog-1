@@ -1,7 +1,7 @@
 ---
 title: Apache + MySQL + PHP 压缩版安装
 date: 2017-03-29
-categories: 2-Skill
+categories: Skill
 tags:
   - original
 	- tutorial

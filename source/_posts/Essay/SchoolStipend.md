@@ -1,7 +1,7 @@
 ---
 title: 每次评选助学金都是对辅导员的一次考验
 date: 2016-09-21
-categories: 3-Essay
+categories: Essay
 tags:
   - idea
   - original

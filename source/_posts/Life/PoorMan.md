@@ -1,7 +1,7 @@
 ---
 title: 贫穷真可怕
 date: 2016-06-17
-categories: 1-Life
+categories: Life
 tags:
   - original
 ---

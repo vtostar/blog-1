@@ -1,7 +1,7 @@
 ---
 title: YouTube 视频的广告为什么可以跳过？对广告商的负面影响大吗？ - Lobatt的回答
 date: 2016-03-10
-categories: 3-Essay
+categories: Essay
 tags:
   - zhihu
 ---

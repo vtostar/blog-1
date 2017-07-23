@@ -1,7 +1,7 @@
 ---
 title: 计划生育政策真的有这么不堪吗？
 date: 2016-06-09
-categories: 3-Essay
+categories: Essay
 tags:
   - zhihu
 ---

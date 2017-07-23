@@ -1,7 +1,7 @@
 ---
 title: 如何评价湖南卫视的《变形计》？ - [已重置]的回答
 date: 2016-04-09
-categories: 3-Essay
+categories: Essay
 tags:
   - zhihu
 ---

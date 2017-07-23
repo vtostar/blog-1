@@ -1,7 +1,7 @@
 ---
 title: Github Pages 知识梳理
 date: 2016-12-10
-categories: 2-Skill
+categories: Skill
 tags:
   - net
   - github

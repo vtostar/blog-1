@@ -1,7 +1,7 @@
 ---
 title: 怎样理解《悟空》歌词:「叫一声佛祖 回头无岸 跪一人为师 生死无关」？ - 云帆的回答
 date: 2016-03-11
-categories: 3-Essay
+categories: Essay
 tags:
   - zhihu
 ---

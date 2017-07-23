@@ -1,7 +1,7 @@
 ---
 title: 八等人
 date: 2017-01-05
-categories: 3-Essay
+categories: Essay
 tags:
   - zhihu
 ---
