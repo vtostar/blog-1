@@ -1,9 +1,11 @@
 ---
 title: Windows 下撸 PHP 的最佳实践
 date: 2017-07-17
-categories: Mess
+categories: Skill
 tags:
   - original
+  - php
+  - tutorial
 ---
 
 撸 PHP 代码讲究的是一个 ~~说学逗唱~~ 开发环境与运行环境的大一统。而 Windows 平台天生与 PHP 相性不合，怎么在 Windows 下撸 PHP 也算是一门学问。谨以此文献给和我一样买不起 mac，玩不转 Gnome，又离不开 Windows 的 phper。
@@ -206,7 +208,7 @@ sudo reboot
 
 ### 设置 Windows 上的共享文件夹
 
-
+在 VirtualBox 的共享文件夹选项中关联一个本地的 Windows 文件夹。步骤略。
 
 ### 将共享文件夹挂载至虚拟机上
 

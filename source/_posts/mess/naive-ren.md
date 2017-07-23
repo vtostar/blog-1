@@ -8,4 +8,4 @@ tags:
 
 以此致敬我们所爱♂的江长者。我感觉有人要为我续一秒了。
 
-![](http://oi0t0q67c.bkt.clouddn.com/blog_mess/naive.ren.jpg)
+![naive.ren](http://oi0t0q67c.bkt.clouddn.com/blog_mess/naive.ren.jpg)
