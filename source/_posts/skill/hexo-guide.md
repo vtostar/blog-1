@@ -231,7 +231,7 @@ Github Pages 可以绑定自己的域名，这也就意味着你可以使用自�
 
 ## 性能优化
 
-请查看在下的另一篇文章：[Hexo 双线部署及性能优化](http://varzy.me/2-Skill/HexoOptimization/)
+请查看在下的另一篇文章：**Hexo 双线部署及性能优化**
 
 ## 尾巴
 
