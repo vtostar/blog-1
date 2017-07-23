@@ -5,7 +5,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="http://varzy.me/"/>
-  <updated>2017-07-23T02:02:23.174Z</updated>
+  <updated>2017-07-23T09:55:55.231Z</updated>
   <id>http://varzy.me/</id>
   
   <author>
@@ -16,11 +16,44 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>如何以《桃花源记》为素材写一篇黑暗小小说？ - 施眠 的回答</title>
+    <link href="http://varzy.me/essay/dark-tao-hua-yuan-ji/"/>
+    <id>http://varzy.me/essay/dark-tao-hua-yuan-ji/</id>
+    <published>2017-07-22T16:00:00.000Z</published>
+    <updated>2017-07-23T09:55:55.231Z</updated>
+    
+    <content type="html"><![CDATA[<p>二十二世纪初，一美国德州人，将网络钓鱼诈骗作为自己的事业。</p>
+<p>一日，在暗网浏览，遇见一网页，排版拙劣，都是不认识的文字。他对此感到奇怪，点入页面中唯一的链接，想要一探其中奥秘。</p>
+<p>弹出一网页，开始时十分卡顿，浏览器陷入假死，又等了一会儿，豁然开朗，刷新出页面。见是一论坛。文字依然不识，便点入论坛相册。</p>
+<p>图片中，有高楼大厦，密密麻麻，隐藏于白色雾气中，美轮美奂。又有卡通绵羊，手撕军人之类图片。又有跳舞的老人，背诵古书的小孩，都十分开心的样子。</p>
+<p>德州人在论坛发帖。论坛人见到英语，十分惊讶，可是皆不懂其中的意思。德州人用人工智能翻译，终于与他们聊了起来。论坛人听说此人，纷纷回帖。自己说一百年前为躲避资本主义侵蚀，率举国上下自设长城，来此乌有之乡，不再出来，于是与外国人间隔。问他们世界形势，竟然不知道美利坚，更不知道美利坚的空气是甜的。德州人给他们说起外面的事情，更留下很多图片和种子，种子虽不能用，但是论坛人感激不尽。时至深夜，德州人下线，论坛人对他说。不要和外面的人说起这件事。</p>
+<p>德州人已经下线，顺便保存网址。到了有关部门，汇报德州太守。太守派人寻找先前论坛，输入网址，只得到404，不能再次找到原来的页面。</p>
+<p>华盛顿特工，是技术高超的人士，听说这件事，开心地计划去寻找。没有结果，神秘死亡，后来就没有问津的人了。</p>
+<hr>
+<p>作者：施眠<br>链接：<a href="https://www.zhihu.com/question/37473154/answer/201173002" target="_blank" rel="external">https://www.zhihu.com/question/37473154/answer/201173002</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;二十二世纪初，一美国德州人，将网络钓鱼诈骗作为自己的事业。&lt;/p&gt;
+&lt;p&gt;一日，在暗网浏览，遇见一网页，排版拙劣，都是不认识的文字。他对此感到奇怪，点入页面中唯一的链接，想要一探其中奥秘。&lt;/p&gt;
+&lt;p&gt;弹出一网页，开始时十分卡顿，浏览器陷入假死，又等了一会儿，豁然开朗，刷
+    
+    </summary>
+    
+      <category term="Essay" scheme="http://varzy.me/categories/Essay/"/>
+    
+    
+      <category term="zhihu" scheme="http://varzy.me/tags/zhihu/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Windows 下撸 PHP 的最佳实践</title>
-    <link href="http://varzy.me/Mess/win-lu-php/"/>
-    <id>http://varzy.me/Mess/win-lu-php/</id>
+    <link href="http://varzy.me/skill/win-lu-php/"/>
+    <id>http://varzy.me/skill/win-lu-php/</id>
     <published>2017-07-16T16:00:00.000Z</published>
-    <updated>2017-07-23T02:02:23.174Z</updated>
+    <updated>2017-07-23T09:29:03.721Z</updated>
     
     <content type="html"><![CDATA[<p>撸 PHP 代码讲究的是一个 <del>说学逗唱</del> 开发环境与运行环境的大一统。而 Windows 平台天生与 PHP 相性不合，怎么在 Windows 下撸 PHP 也算是一门学问。谨以此文献给和我一样买不起 mac，玩不转 Gnome，又离不开 Windows 的 phper。</p>
 <a id="more"></a>
@@ -146,7 +179,8 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
 </pre></td><td class="code"><pre><span class="line">sudo reboot</span>
 </pre></td></tr></table></figure>
-<h3 id="设置-Windows-上的共享文件夹"><a href="#设置-Windows-上的共享文件夹" class="headerlink" title="设置 Windows 上的共享文件夹"></a>设置 Windows 上的共享文件夹</h3><h3 id="将共享文件夹挂载至虚拟机上"><a href="#将共享文件夹挂载至虚拟机上" class="headerlink" title="将共享文件夹挂载至虚拟机上"></a>将共享文件夹挂载至虚拟机上</h3><p>运行以下指令</p>
+<h3 id="设置-Windows-上的共享文件夹"><a href="#设置-Windows-上的共享文件夹" class="headerlink" title="设置 Windows 上的共享文件夹"></a>设置 Windows 上的共享文件夹</h3><p>在 VirtualBox 的共享文件夹选项中关联一个本地的 Windows 文件夹。步骤略。</p>
+<h3 id="将共享文件夹挂载至虚拟机上"><a href="#将共享文件夹挂载至虚拟机上" class="headerlink" title="将共享文件夹挂载至虚拟机上"></a>将共享文件夹挂载至虚拟机上</h3><p>运行以下指令</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
 </pre></td><td class="code"><pre><span class="line">sudo mount -t vboxsf CodeHub /mnt/cdhb</span>
 </pre></td></tr></table></figure>
@@ -160,17 +194,21 @@
     
     </summary>
     
-      <category term="Mess" scheme="http://varzy.me/categories/Mess/"/>
+      <category term="Skill" scheme="http://varzy.me/categories/Skill/"/>
     
     
       <category term="original" scheme="http://varzy.me/tags/original/"/>
+    
+      <category term="tutorial" scheme="http://varzy.me/tags/tutorial/"/>
+    
+      <category term="php" scheme="http://varzy.me/tags/php/"/>
     
   </entry>
   
   <entry>
     <title>落雨记</title>
-    <link href="http://varzy.me/Life/MyBirthdayOf2017/"/>
-    <id>http://varzy.me/Life/MyBirthdayOf2017/</id>
+    <link href="http://varzy.me/life/my-birthday-of-2017/"/>
+    <id>http://varzy.me/life/my-birthday-of-2017/</id>
     <published>2017-06-22T16:00:00.000Z</published>
     <updated>2017-07-23T02:01:09.701Z</updated>
     
@@ -197,8 +235,8 @@
   
   <entry>
     <title>VSCode 插件梳理</title>
-    <link href="http://varzy.me/Skill/VSCodeGuide/"/>
-    <id>http://varzy.me/Skill/VSCodeGuide/</id>
+    <link href="http://varzy.me/skill/vscode-guide/"/>
+    <id>http://varzy.me/skill/vscode-guide/</id>
     <published>2017-04-09T16:00:00.000Z</published>
     <updated>2017-07-23T02:03:02.112Z</updated>
     
@@ -502,8 +540,8 @@
   
   <entry>
     <title>Apache + MySQL + PHP 压缩版安装</title>
-    <link href="http://varzy.me/Skill/AMPZipInstall/"/>
-    <id>http://varzy.me/Skill/AMPZipInstall/</id>
+    <link href="http://varzy.me/skill/amp-install/"/>
+    <id>http://varzy.me/skill/amp-install/</id>
     <published>2017-03-28T16:00:00.000Z</published>
     <updated>2017-07-23T02:02:31.119Z</updated>
     
@@ -653,8 +691,8 @@
   
   <entry>
     <title>至京思</title>
-    <link href="http://varzy.me/Life/TravelOfBeijing/"/>
-    <id>http://varzy.me/Life/TravelOfBeijing/</id>
+    <link href="http://varzy.me/life/travel-of-beijing/"/>
+    <id>http://varzy.me/life/travel-of-beijing/</id>
     <published>2017-03-10T16:00:00.000Z</published>
     <updated>2017-07-23T02:01:31.808Z</updated>
     
@@ -696,8 +734,8 @@
   
   <entry>
     <title>如果中国一开始就禁止微软和英特尔AMD进入中国，现在的中国会出现哪些现象？ - 绝影的回答</title>
-    <link href="http://varzy.me/Essay/BanCPU/"/>
-    <id>http://varzy.me/Essay/BanCPU/</id>
+    <link href="http://varzy.me/essay/ban-cpu/"/>
+    <id>http://varzy.me/essay/ban-cpu/</id>
     <published>2017-03-01T16:00:00.000Z</published>
     <updated>2017-07-23T01:59:29.532Z</updated>
     
@@ -721,8 +759,8 @@
   
   <entry>
     <title>The Sound Of Slience</title>
-    <link href="http://varzy.me/Mess/TheSoundOfSlience/"/>
-    <id>http://varzy.me/Mess/TheSoundOfSlience/</id>
+    <link href="http://varzy.me/mess/the-sound-of-slience/"/>
+    <id>http://varzy.me/mess/the-sound-of-slience/</id>
     <published>2017-02-13T16:00:00.000Z</published>
     <updated>2017-07-23T02:02:20.397Z</updated>
     
@@ -753,8 +791,8 @@
   
   <entry>
     <title>关于春晚，关于后辈</title>
-    <link href="http://varzy.me/Essay/IdeaOnNewYear/"/>
-    <id>http://varzy.me/Essay/IdeaOnNewYear/</id>
+    <link href="http://varzy.me/essay/idea-on-new-year/"/>
+    <id>http://varzy.me/essay/idea-on-new-year/</id>
     <published>2017-01-31T12:00:00.000Z</published>
     <updated>2017-07-23T02:00:04.371Z</updated>
     
@@ -788,8 +826,8 @@
   
   <entry>
     <title>劝你喝酒的都是看不起你的 - 霍真布鲁兹老爷</title>
-    <link href="http://varzy.me/Essay/AlcoholAndPeople/"/>
-    <id>http://varzy.me/Essay/AlcoholAndPeople/</id>
+    <link href="http://varzy.me/essay/alcohol-and-people/"/>
+    <id>http://varzy.me/essay/alcohol-and-people/</id>
     <published>2017-01-31T05:00:00.000Z</published>
     <updated>2017-07-23T01:59:24.645Z</updated>
     
@@ -845,8 +883,8 @@
   
   <entry>
     <title>Hexo 双线部署及性能优化</title>
-    <link href="http://varzy.me/Skill/HexoOptimization/"/>
-    <id>http://varzy.me/Skill/HexoOptimization/</id>
+    <link href="http://varzy.me/skill/hexo-optimization/"/>
+    <id>http://varzy.me/skill/hexo-optimization/</id>
     <published>2017-01-29T16:00:00.000Z</published>
     <updated>2017-07-23T02:02:45.911Z</updated>
     
@@ -919,8 +957,8 @@
   
   <entry>
     <title>Shadowsocks 使用教程及技巧</title>
-    <link href="http://varzy.me/Skill/SSGuide/"/>
-    <id>http://varzy.me/Skill/SSGuide/</id>
+    <link href="http://varzy.me/skill/ss-guide/"/>
+    <id>http://varzy.me/skill/ss-guide/</id>
     <published>2017-01-25T16:00:00.000Z</published>
     <updated>2017-07-23T02:02:59.491Z</updated>
     
@@ -1001,8 +1039,8 @@
   
   <entry>
     <title>Git 命令梳理</title>
-    <link href="http://varzy.me/Skill/GitList/"/>
-    <id>http://varzy.me/Skill/GitList/</id>
+    <link href="http://varzy.me/skill/git-comb/"/>
+    <id>http://varzy.me/skill/git-comb/</id>
     <published>2017-01-17T16:00:00.000Z</published>
     <updated>2017-07-23T02:02:39.480Z</updated>
     
@@ -1053,16 +1091,16 @@
 <span class="line">git <span class="keyword">add</span><span class="bash"> -p</span>
 <span class="line"></span><span class="comment"># 将文件添加到暂存区时，要求逐次手动确认</span></span>
 </pre></td></tr></table></figure>
-<h3 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<h3 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h3><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
 <span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line">git rm [file]</span>
-<span class="line"><span class="meta">#</span><span class="bash"> 删除工作区的文件，并将此操作放入暂存区。等同于在文件资源管理器中手动删除</span></span>
+</pre></td><td class="code"><pre><span class="line"><span class="attribute">git</span> rm<span class="meta"> [file]</span></span>
+<span class="line"><span class="comment"># 删除工作区的文件，并将此操作放入暂存区。等同于在文件资源管理器中手动删除</span></span>
 <span class="line"></span>
-<span class="line">git rm --cached [file]</span>
-<span class="line"><span class="meta">#</span><span class="bash"> 停止追踪指定文件，但该文件会保留在工作区</span></span>
+<span class="line"><span class="attribute">git</span> rm --cached<span class="meta"> [file]</span></span>
+<span class="line"><span class="comment"># 停止追踪指定文件，但该文件会保留在工作区</span></span>
 </pre></td></tr></table></figure>
 <h2 id="提交"><a href="#提交" class="headerlink" title="提交"></a>提交</h2><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
@@ -1075,7 +1113,7 @@
 <span class="line">git commit -m <span class="string">"[description]"</span> [file1] [file2]</span>
 <span class="line"><span class="meta"># 提交暂存区的指定文件到仓库</span></span>
 </pre></td></tr></table></figure>
-<h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
@@ -1102,31 +1140,31 @@
 <span class="line">25</span>
 <span class="line">26</span>
 </pre></td><td class="code"><pre><span class="line">git status</span>
-<span class="line"><span class="meta">#</span><span class="bash"> 显示变更过的文件</span></span>
+<span class="line"><span class="comment"># 显示变更过的文件</span></span>
 <span class="line"></span>
-<span class="line">git log ( -[num] )</span>
-<span class="line"><span class="meta">#</span><span class="bash"> 显示当前分支的版本历史，默认显示三次。可以在后面跟 -[num] 参数自定义显示次数</span></span>
+<span class="line">git <span class="built_in">log</span> ( -[<span class="built_in">num</span>] )</span>
+<span class="line"><span class="comment"># 显示当前分支的版本历史，默认显示三次。可以在后面跟 -[num] 参数自定义显示次数</span></span>
 <span class="line"></span>
-<span class="line">git log --pretty=oneline ( -[num] )</span>
-<span class="line"><span class="meta">#</span><span class="bash"> 使提交信息一条仅占一行。如果不加 -[num] 参数，则默认显示过去 30 次提交信息</span></span>
+<span class="line">git <span class="built_in">log</span> <span class="comment">--pretty=oneline ( -[num] )</span></span>
+<span class="line"><span class="comment"># 使提交信息一条仅占一行。如果不加 -[num] 参数，则默认显示过去 30 次提交信息</span></span>
 <span class="line"></span>
-<span class="line">git log --graph</span>
-<span class="line"><span class="meta">#</span><span class="bash"> 查看分支合并图</span></span>
+<span class="line">git <span class="built_in">log</span> <span class="comment">--graph</span></span>
+<span class="line"><span class="comment"># 查看分支合并图</span></span>
 <span class="line"></span>
 <span class="line">git reflog</span>
-<span class="line"><span class="meta">#</span><span class="bash"> 查看 HEAD 的每一次变化历史</span></span>
+<span class="line"><span class="comment"># 查看 HEAD 的每一次变化历史</span></span>
 <span class="line"></span>
 <span class="line">git diff</span>
-<span class="line"><span class="meta">#</span><span class="bash"> 显示所有文件的暂存区和工作区的差异</span></span>
+<span class="line"><span class="comment"># 显示所有文件的暂存区和工作区的差异</span></span>
 <span class="line"></span>
-<span class="line">git diff -- [file]</span>
-<span class="line"><span class="meta">#</span><span class="bash"> 显示某个文件的暂存区和工作区的差异</span></span>
+<span class="line">git diff <span class="comment">-- [file]</span></span>
+<span class="line"><span class="comment"># 显示某个文件的暂存区和工作区的差异</span></span>
 <span class="line"></span>
 <span class="line">git diff HEAD</span>
-<span class="line"><span class="meta">#</span><span class="bash"> 显示所有文件的工作区与当前分支最新 commit 之间的差异</span></span>
+<span class="line"><span class="comment"># 显示所有文件的工作区与当前分支最新 commit 之间的差异</span></span>
 <span class="line"></span>
-<span class="line">git diff HEAD -- [file]</span>
-<span class="line"><span class="meta">#</span><span class="bash"> 显示某个文件的工作区与当前分支最新 commit 之间的差异</span></span>
+<span class="line">git diff HEAD <span class="comment">-- [file]</span></span>
+<span class="line"><span class="comment"># 显示某个文件的工作区与当前分支最新 commit 之间的差异</span></span>
 </pre></td></tr></table></figure>
 <h2 id="撤销"><a href="#撤销" class="headerlink" title="撤销"></a>撤销</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
@@ -1364,7 +1402,7 @@
 <span class="line">git remote show [remote]</span>
 <span class="line"><span class="meta">#</span><span class="bash"> 显示某个远程仓库的信息</span></span>
 </pre></td></tr></table></figure>
-<h3 id="推送"><a href="#推送" class="headerlink" title="推送"></a>推送</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<h3 id="推送"><a href="#推送" class="headerlink" title="推送"></a>推送</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
@@ -1378,18 +1416,18 @@
 <span class="line">12</span>
 <span class="line">13</span>
 </pre></td><td class="code"><pre><span class="line">git push ( [remote] [local_branch]:[remote_branch] )</span>
-<span class="line"><span class="meta">#</span><span class="bash"> 推送本地当前分支的修改到远程仓库相应追踪分支。如果当前分支只有一个追踪分支，连远程主机名都可以省略</span></span>
-<span class="line"><span class="meta">#</span><span class="bash"> 如果该远程分支不存在，则会被新建</span></span>
-<span class="line"><span class="meta">#</span><span class="bash"> 注意，分支推送顺序的写法是 &lt;来源地&gt;:&lt;目的地&gt;，所以 git pull 是 &lt;远程分支&gt;:&lt;本地分支&gt;，而 git push 是 &lt;本地分支&gt;:&lt;远程分支&gt;</span></span>
+<span class="line"><span class="meta"># 推送本地当前分支的修改到远程仓库相应追踪分支。如果当前分支只有一个追踪分支，连远程主机名都可以省略</span></span>
+<span class="line"><span class="meta"># 如果该远程分支不存在，则会被新建</span></span>
+<span class="line"><span class="meta"># 注意，分支推送顺序的写法是 <span class="meta-string">&lt;来源地&gt;</span>:<span class="meta-string">&lt;目的地&gt;</span>，所以 git pull 是 <span class="meta-string">&lt;远程分支&gt;</span>:<span class="meta-string">&lt;本地分支&gt;</span>，而 git push 是 <span class="meta-string">&lt;本地分支&gt;</span>:<span class="meta-string">&lt;远程分支&gt;</span></span></span>
 <span class="line"></span>
 <span class="line">git push -u origin master</span>
-<span class="line"><span class="meta">#</span><span class="bash"> 把当前 master 分支首次推送到远程</span></span>
+<span class="line"><span class="meta"># 把当前 master 分支首次推送到远程</span></span>
 <span class="line"></span>
 <span class="line">git push origin [branch]</span>
-<span class="line"><span class="meta">#</span><span class="bash"> 上传本地指定分支到远程仓库</span></span>
+<span class="line"><span class="meta"># 上传本地指定分支到远程仓库</span></span>
 <span class="line"></span>
 <span class="line">git push origin -a</span>
-<span class="line"><span class="meta">#</span><span class="bash"> 推送所有分支到远程仓库</span></span>
+<span class="line"><span class="meta"># 推送所有分支到远程仓库</span></span>
 </pre></td></tr></table></figure>
 <h3 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h3><figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
@@ -1479,8 +1517,8 @@
   
   <entry>
     <title>使用同步盘建立自己的私有 Git 仓库</title>
-    <link href="http://varzy.me/Skill/PrivateGitRepository/"/>
-    <id>http://varzy.me/Skill/PrivateGitRepository/</id>
+    <link href="http://varzy.me/skill/private-git-repository-build/"/>
+    <id>http://varzy.me/skill/private-git-repository-build/</id>
     <published>2017-01-06T16:00:00.000Z</published>
     <updated>2017-07-23T02:02:53.332Z</updated>
     
@@ -1525,8 +1563,8 @@
   
   <entry>
     <title>八等人</title>
-    <link href="http://varzy.me/Essay/Rank8People/"/>
-    <id>http://varzy.me/Essay/Rank8People/</id>
+    <link href="http://varzy.me/essay/rank-8-people/"/>
+    <id>http://varzy.me/essay/rank-8-people/</id>
     <published>2017-01-04T16:00:00.000Z</published>
     <updated>2017-07-23T02:00:15.243Z</updated>
     
@@ -1561,8 +1599,8 @@
   
   <entry>
     <title>2016 年度小结</title>
-    <link href="http://varzy.me/Life/2016Summary/"/>
-    <id>http://varzy.me/Life/2016Summary/</id>
+    <link href="http://varzy.me/life/2016-summary/"/>
+    <id>http://varzy.me/life/2016-summary/</id>
     <published>2016-12-31T15:59:59.000Z</published>
     <updated>2017-07-23T02:00:56.404Z</updated>
     
@@ -1632,8 +1670,8 @@
   
   <entry>
     <title>将域名邮箱服务迁移到 FastMail</title>
-    <link href="http://varzy.me/Life/FastMail/"/>
-    <id>http://varzy.me/Life/FastMail/</id>
+    <link href="http://varzy.me/life/change-to-fastmail/"/>
+    <id>http://varzy.me/life/change-to-fastmail/</id>
     <published>2016-12-29T16:00:00.000Z</published>
     <updated>2017-07-23T02:01:03.566Z</updated>
     
@@ -1661,8 +1699,8 @@
   
   <entry>
     <title>Github Pages 知识梳理</title>
-    <link href="http://varzy.me/Skill/GithubPages/"/>
-    <id>http://varzy.me/Skill/GithubPages/</id>
+    <link href="http://varzy.me/skill/github-pages/"/>
+    <id>http://varzy.me/skill/github-pages/</id>
     <published>2016-12-09T16:00:00.000Z</published>
     <updated>2017-07-23T02:02:36.399Z</updated>
     
@@ -1716,8 +1754,8 @@
   
   <entry>
     <title>Hexo 不完全指北</title>
-    <link href="http://varzy.me/Skill/HexoGuide/"/>
-    <id>http://varzy.me/Skill/HexoGuide/</id>
+    <link href="http://varzy.me/skill/hexo-guide/"/>
+    <id>http://varzy.me/skill/hexo-guide/</id>
     <published>2016-12-07T16:00:00.000Z</published>
     <updated>2017-07-23T02:02:42.311Z</updated>
     
@@ -1906,8 +1944,8 @@
   
   <entry>
     <title>hello, hexo</title>
-    <link href="http://varzy.me/Mess/HelloHexo/"/>
-    <id>http://varzy.me/Mess/HelloHexo/</id>
+    <link href="http://varzy.me/mess/hello-hexo/"/>
+    <id>http://varzy.me/mess/hello-hexo/</id>
     <published>2016-12-06T16:00:00.000Z</published>
     <updated>2017-07-23T02:01:44.832Z</updated>
     
@@ -1927,35 +1965,6 @@
       <category term="original" scheme="http://varzy.me/tags/original/"/>
     
       <category term="hexo" scheme="http://varzy.me/tags/hexo/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>自制了一个钱包</title>
-    <link href="http://varzy.me/Life/HandmadeWallet/"/>
-    <id>http://varzy.me/Life/HandmadeWallet/</id>
-    <published>2016-11-30T16:00:00.000Z</published>
-    <updated>2017-07-23T02:01:06.561Z</updated>
-    
-    <content type="html"><![CDATA[<p>之前 18 块钱买的钱包下边裂了，就很气，什么“比真正皮革更加耐磨的人工皮革”，不就是塑料么，我当时怎么就信了这种鬼话。一气之下按照网上的教程，用装衣服的布袋子和几条双面胶自己做了一个钱包。</p>
-<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_life/HandmadeWallet_1.JPG" alt=""></p>
-<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_life/HandmadeWallet_2.JPG" alt=""></p>
-<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_life/HandmadeWallet_3.JPG" alt=""></p>
-<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_life/HandmadeWallet_4.JPG" alt=""></p>
-<p>教程链接：<a href="https://www.youtube.com/watch?v=xtOuWSaCiEU" target="_blank" rel="external">https://www.youtube.com/watch?v=xtOuWSaCiEU</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;之前 18 块钱买的钱包下边裂了，就很气，什么“比真正皮革更加耐磨的人工皮革”，不就是塑料么，我当时怎么就信了这种鬼话。一气之下按照网上的教程，用装衣服的布袋子和几条双面胶自己做了一个钱包。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://oi0t0q67c.bkt.clo
-    
-    </summary>
-    
-      <category term="Life" scheme="http://varzy.me/categories/Life/"/>
-    
-    
-      <category term="original" scheme="http://varzy.me/tags/original/"/>
     
   </entry>
   

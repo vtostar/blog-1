@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en>">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+    
+    
+    <meta name="google-site-verification"
+          content="c66gcm0iMw487a2YC6w7cFbrhhe_Mh_vVNC6Pt3Dak8">
+    
+
+    
+    
+    <meta name="theme-color" content="#f9f9f9">
+    
+
+    
+    
+
+    
+    <title>
+        
+        Windows 重装系统教程精简版
+        &nbsp;|&nbsp;
+        
+        Woonden Bar
+    </title>
+
+    
+    
+    <link type="image/x-icon" rel="shortcut icon"
+          href="/blog/favicon.png">
+    
+
+    
+    
+    <link rel="author" content="/blog/humans.txt">
+    
+
+    
+     <link rel="stylesheet" href="/blog/css/style.css">
+
+</head>
+
+
+<body>
+
+<div class="body-wrapper">
+    <header>
+    <div class="container">
+
+        
+        <div>
+            <h1 class="logo">
+                <a href="/blog/">
+                    Woonden Bar
+                </a>
+            </h1>
+        </div>
+
+        
+        <nav class="navbar">
+            <ul class="navbar-menus">
+                
+                <li class="navbar-menus-item">
+                    <a href="/blog/">
+                        
+                        Home
+                    </a>
+                </li>
+                
+                <li class="navbar-menus-item">
+                    <a href="/blog/categories">
+                        
+                        Categories
+                    </a>
+                </li>
+                
+                <li class="navbar-menus-item">
+                    <a href="/blog/tags">
+                        
+                        Tags
+                    </a>
+                </li>
+                
+                <li class="navbar-menus-item">
+                    <a href="/blog/about">
+                        
+                        About
+                    </a>
+                </li>
+                
+            </ul>
+        </nav>
+
+    </div>
+</header>
+
+
+    <div class="main">
+    <div class="container">
+
+        <article class="post-body">
+
+    <div class="title">
+        <h1 class="title-inner">
+            Windows 重装系统教程精简版
+        </h1>
+
+        <div class="title-meta">
+            <span class="title-meta-time">
+                2016-09-17
+            </span>
+        </div>
+    </div>
+
+    <div class="content">
+
+        
+        
+
+        <p>最近我的表妹考上了大学，为了防止世界被破坏，为了维护世界的和平，啊呸，为了防止她被修电脑的奸商坑，所以我决定再次写起这篇重装系统的教程，以备她不时之需。</p>
+<p>首先声明以下几点：</p>
+<ul>
+<li>我是菜鸡，若您发现文中的错误，还望给予斧正。</li>
+<li>这篇教程只涉及 Windows 10 。之前写过一篇洋洋洒洒上万字的教程，自以为神，然而读者却被 bios 和各种分区格式搞得十分混乱，因此本文只打算介绍 Windows 10 的安装。注意：如果你稍微变通一下，也可以用这个方法完美安装 Windows 8 或 Windows 8.1 。</li>
+<li>这篇教程不带 win 7 玩。如果带上 win 7 ，那就必然要引入一大堆其他的姿势，怕是又要搞晕一大波人了。</li>
+<li>这篇教程仅使用 U 盘和 iso 格式的原版系统，无需 PE ，绿色安全无污染。</li>
+<li>这篇教程力求精简，只讲步骤，不说原理。如有性趣，还请自行谷歌。若文中某些链接无法打开，还请自备科学上网姿势。</li>
+<li>本篇教程使用的方法比起安装 Ghost 系统略显麻烦，但是！装好后的系统干净到令人发指。</li>
+<li>如果您的电脑主板未被记忆，那么你应当提前提取你的 OEM Key 以进行之后的系统激活。如果这是一台未安装系统的电脑，或者不能提取 OEM key ，那么安装系统后也可以使用 kms 等方式进行激活，激活后的系统与正版系统使用体验完全一致，但并不算是正版系统，且有可能需要每隔 180 天重复激活一次。这方面还请自行斟酌。</li>
+<li>按照本教程安装系统时，您的电脑出现的任何意外情况，本人概不负责。</li>
+</ul>
+<h2 id="〇、需要的硬件"><a href="#〇、需要的硬件" class="headerlink" title="〇、需要的硬件"></a>〇、需要的硬件</h2><ul>
+<li>一台能联网能下载的电脑（废话）</li>
+<li>一个容量大于等于 8G 的 U 盘，最好为 usb 3.0 接口</li>
+</ul>
+<h2 id="一、准备工作"><a href="#一、准备工作" class="headerlink" title="一、准备工作"></a>一、准备工作</h2><h3 id="1、下载-iso-格式原版系统"><a href="#1、下载-iso-格式原版系统" class="headerlink" title="1、下载 iso 格式原版系统"></a>1、下载 iso 格式原版系统</h3><p>你可以在 <a href="http://msdn.itellyou.cn/" target="_blank" rel="external">msdn, i tell you</a> 找到各种原版系统：</p>
+<blockquote>
+<p><a href="http://msdn.itellyou.cn/" target="_blank" rel="external">http://msdn.itellyou.cn/</a></p>
+</blockquote>
+<p>打开网站后，点击侧边栏 <code>操作系统</code> 这一项，选择你想要安装的系统版本。此处我选择了最新发布的 <code>Windows 10, Version 1607</code> 这一版。接着选择我们需要的语言版本，像我这种四级都过不去的人还是玩简体中文吧。</p>
+<p>再然后，我们需要选择系统的版本和位数。关于系统版本的详细说明可以参考维基百科给出的这一词条：</p>
+<blockquote>
+<p><a href="https://zh.wikipedia.org/wiki/Windows_10%E7%89%88%E6%9C%AC%E5%88%97%E8%A1%A8" target="_blank" rel="external">https://zh.wikipedia.org/wiki/Windows_10%E7%89%88%E6%9C%AC%E5%88%97%E8%A1%A8</a></p>
+</blockquote>
+<p>当你选择好了系统版本后，就要考虑系统位数了。一般来说，如果你的电脑内存<strong>小于</strong> 4G ，就选择 x86 的系统，如果<strong>大于等于</strong> 4G，就选择 x64 的系统。</p>
+<p>此处我选择的是 64 位的 <code>Multiple Editions</code> 版本，也就是多版本的意思。这种系统集成了不同的系统版本，根据你使用的密钥进行切换。点开详细信息，你就看到一个 ed2k 链接，复制这个链接到迅雷或其他下载工具中，就可以解析出一个 iso 格式的文件，点击下载即可。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_1.png" alt=""></p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_2.png" alt=""></p>
+<p><strong>Tips：</strong> msdn, i tell you 的维护者 余晓榕 长久以来一直免费为大家收录微软各类系统和软件，坚持至此实属不易。前段时间，作者已开通捐助选项，如果你希望帮助和支持他，请点击网站右上角的 <code>九年相伴</code> 这一选项，通过扫描支付宝二维码的方式进行转账。</p>
+<h3 id="2、格式化-U-盘"><a href="#2、格式化-U-盘" class="headerlink" title="2、格式化 U 盘"></a>2、格式化 U 盘</h3><p>将 U 盘插到电脑上，最好也插到电脑的 usb 3.0 接口上。当电脑识别出 U 盘以后，右键 U 盘盘符，进行格式化操作。</p>
+<p><strong>注意：</strong></p>
+<ul>
+<li>格式化操作将会清空 U 盘内所有内容，所以请提前转移 U 盘中的重要文件</li>
+<li>格式化时文件系统一定要选择 FAT32</li>
+</ul>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_3.png" alt=""></p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_4.png" alt=""></p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_5.png" alt=""></p>
+<h3 id="3、将系统文件放入-U-盘中"><a href="#3、将系统文件放入-U-盘中" class="headerlink" title="3、将系统文件放入 U 盘中"></a>3、将系统文件放入 U 盘中</h3><p>U 盘格式化完成后，就要将下载好的系统文件转移至 U 盘中。用解压缩软件打开下载好的 iso 格式原版系统，然后解压全部文件至 U 盘中。</p>
+<p>此处以 WinRAR 解压 Windows 10 Version 1607 为例：</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_6.png" alt=""></p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_7.png" alt=""></p>
+<p>等待解压完成后，弹出并拔掉 U 盘。</p>
+<h2 id="二、从-U-盘安装系统"><a href="#二、从-U-盘安装系统" class="headerlink" title="二、从 U 盘安装系统"></a>二、从 U 盘安装系统</h2><h3 id="1、进入系统安装界面"><a href="#1、进入系统安装界面" class="headerlink" title="1、进入系统安装界面"></a>1、进入系统安装界面</h3><p><strong>情况一：你的电脑能够正常开机</strong></p>
+<p>注意：如果你现在的系统还是出厂自带的原版系统且能正常开机，那么请务必先使用 <code>RWEverything</code> 等工具提取 OEM key 以用于之后的系统激活，使用方法请自行了解。如果你的系统曾经重装过，或者不愿意使用这种方式进行激活，那么你可能需要用到 kms 激活，效果与正版系统完全一致，但有可能需要每隔 180 天重复激活一次。</p>
+<p>将电脑正常开机，再把做好的 U 盘启动盘插入电脑上，依次点击下列按钮进入系统安装界面：</p>
+<blockquote>
+<p><code>开始菜单</code> -&gt; <code>设置</code> -&gt; <code>更新和安全</code> -&gt; <code>恢复</code> -&gt; <code>立即重启</code> -&gt; <code>使用设备</code> -&gt; <code>EFI USB  Device</code></p>
+</blockquote>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_8.png" alt=""></p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_9.png" alt=""></p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_10.png" alt=""></p>
+<p><strong>情况二：你的电脑已经不能够正常开机了 / 这是一台新电脑 / 这是一块新硬盘</strong></p>
+<p>如果需要安装系统的电脑已经不能够正常开机了，或者你需要给一台新电脑或新硬盘安装系统，那么你可以通过更改启动项的方式来进入系统安装界面。这种方式下，你需要先进入 Boot ，再从 Boot 中选择 U 盘启动。</p>
+<p>由于不同品牌不同型号的电脑进入 Boot 的方法不尽相同，所以此处没法详细说明。不过，现在的电脑一般都默认设置为开机时狂按 <code>F12</code> 或 <code>Fn + F12</code> 即可进入 Boot ，如果不能进入，则强制关机，以消除 Windows 的快速启动效果。之后再次开机，重试几次。如果还是不成功，那就谷歌一下该型号的电脑如何进入 Boot 吧。</p>
+<p>进入 Boot 后，一般来说你会发现有两个 USB 打头的选项，这两个的区别你可以自行了解。这里我们都要选择 <code>EFI USB Device</code> 。除此之外，你还可能遇到标注 <code>UEFI USB Device</code> 或者只有一个 USB 打头的启动项的情况，这时候尽量选择带 <code>EFI</code> 的，如果没有就选择 USB 打头的。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_11.png" alt=""></p>
+<h3 id="2、系统安装步骤详解"><a href="#2、系统安装步骤详解" class="headerlink" title="2、系统安装步骤详解"></a>2、系统安装步骤详解</h3><p>选择你需要的语言和时区，一般来说可以直接点击 <code>下一步</code>。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_12.jpg" alt=""></p>
+<p>点击 <code>现在安装</code>。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_13.jpg" alt=""></p>
+<p>如果你有正版密钥，或者可用的 OEM key ，可以直接输入。如果没有，请选择 <code>我没有产品密钥</code>。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_14.jpg" alt=""></p>
+<p>此处请根据你的 OEM key 所在的原系统版本进行选择。一般来说大部分可以使用 OEM Key 的系统都是家庭版。如果你没有 OEM Key，或者这台电脑的激活已经被记录了，那么选择哪个都是可以的。此处我选择 <code>Windows 10 专业版</code>。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_15.jpg" alt=""></p>
+<p>打勾后点击 <code>下一步</code>。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_16.jpg" alt=""></p>
+<p>选择 <code>自定义</code> 的安装方式。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_17.jpg" alt=""></p>
+<p>接着我们就到了磁盘管理界面。此处你可以对你的磁盘进行一系列操作，比如删除、新建、格式化。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_18.jpg" alt=""></p>
+<p>我的电脑有两块硬盘，分别是位于主硬盘位的 SSD ，也就是下图中显示的 <code>驱动器 0</code> ，还有就是位于光驱位的 HDD ，也就是 <code>驱动器 1</code> 。如果你的电脑只有一块硬盘，那么一般来说都是 <code>驱动器 0</code> 。</p>
+<p>按照从上到下的顺序，一般来说分区会是这样的结构：</p>
+<ul>
+<li>系统恢复分区 （450M）</li>
+<li>EFI 系统分区 （100M）</li>
+<li>MSR 保留分区 （16M）</li>
+<li>主分区 4 （C 盘）</li>
+<li>主分区 5 （D 盘）</li>
+<li>……</li>
+</ul>
+<p>此处我想让系统装在 SSD 里，那么我需要格式化 <code>驱动器 0</code> 中的第一个主分区，也就是 <code>驱动器 0 分区 4</code> 。为了防止出现引导问题，我们可以删除第一个主分区及之前的所有分区，并重新新建。完成后我将得到一个容量为 119.2G 的 <code>未分配的空间</code> 。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_19.jpg" alt=""></p>
+<p>然后我需要将 <code>未分配的空间</code> 变为系统可用的分区，那么我需要选中 <code>未分配的空间</code> ，点击右下角的 <code>新建</code>，并输入我想要的大小。此处我选择全部分配，那么我就可以直接点击 <code>应用</code> 了。</p>
+<p>那如果我想分一个 60G 的分区，该怎么办呢？请拿出计算器，算一下 60 x 1024 = 61440 。但是！如果你输入了 61440 点击了应用，那么你会得到一个 59.9G 的分区，这就很尴尬了。为了避免这种情况的发生，你需要给 61440 多加一些空间。经过我的实践，发现加上 560M 左右就可以得到完整的 60G 了。那么我需要输入的是 60 x 1024 + 560 = 62000 。那如果是 80G 呢？那就是 80 x 1024 + 560 = 82480 。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_20.jpg" alt=""></p>
+<p>点击 <code>确定</code> 。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_21.jpg" alt=""></p>
+<p>你想让系统装在哪个分区，就选中哪个分区，点击 <code>下一步</code>。一般来说都选择第一个主分区，它代表的即是 C 盘。</p>
+<p>Tips：</p>
+<blockquote>
+<p>如果你想安装双系统，那么只需要选中除过原来有系统的分区并点击 <code>下一步</code> 即可。比如分区 4 中有一个系统，那么我此时只需要选择分区 5 ，并点击下一步，即可安装双系统。</p>
+</blockquote>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_22.jpg" alt=""></p>
+<p>等待步骤完成。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_23.jpg" alt=""></p>
+<p>当以上步骤全部完成后，会出现一个 10s 的倒计时，请务必在此期间拔掉 U 盘以防止再次进入系统安装界面。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_24.jpg" alt=""></p>
+<p>到此，整个系统安装已经全部结束了。如果你已经到了这一步，那么恭喜，你已经战胜了最难的步骤，距离进入桌面仅剩一步之遥！接下来，你的电脑将多次重启，请耐心等待直至看到画面。</p>
+<h3 id="3、后续设置详解"><a href="#3、后续设置详解" class="headerlink" title="3、后续设置详解"></a>3、后续设置详解</h3><p>你最先能够看到的画面就是 <code>建立连接</code> 。如果你有微软账户并打算在安装系统过程中直接登陆，那么你可以在此处连接网络。如果你没有微软账户或者打算进入系统后再登陆微软账户，那么你可以直接跳过网络连接。我选择在此处连接网络，并在系统安装过程中直接登陆。</p>
+<p>注意：有一部分电脑此处没有 <code>建立连接</code> 的选项，这可能是由于你没有连接可用的以太网，而无线网卡又不兼容 Windows 10 自带的网卡驱动，造成无法接收无线信号。无须担心，你可以在进入系统后，安装合适的无线网卡驱动以解决这个问题。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_25.jpg" alt=""></p>
+<p>直接 <code>使用快速设置</code> 即可。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_26.jpg" alt=""></p>
+<p>按需选择</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_27.jpg" alt=""></p>
+<p>此处即是微软账户的登陆界面。如果有微软账户，可以在此直接登陆，如果没有，可以选择 <code>跳过此步骤</code> 或者 <code>创建一个</code></p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_28.jpg" alt=""></p>
+<p>设置 PIN 。PIN 是一个与设备绑定的短数字密码，如果你不愿意每次开机都输入微软账户密码，那么创建一个 PIN 是很不错的选择。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_29.jpg" alt=""></p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_30.jpg" alt=""></p>
+<p>按需选择是否 <code>启用 Cortana (小娜)</code></p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_31.jpg" alt=""></p>
+<p>至此，你已经完成了所有的设置工作，请坐等系统进行最后的准备工作。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_32.jpg" alt=""></p>
+<p>tada~ 这就是重装后的桌面。干净的只有回收站~</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_33.png" alt=""></p>
+<h2 id="三、装完系统后的工作"><a href="#三、装完系统后的工作" class="headerlink" title="三、装完系统后的工作"></a>三、装完系统后的工作</h2><h3 id="1、激活系统"><a href="#1、激活系统" class="headerlink" title="1、激活系统"></a>1、激活系统</h3><p>打开 <code>开始菜单</code> -&gt; <code>设置</code> -&gt; <code>更新和安全</code> -&gt; <code>激活</code> 查看系统激活状态，如果显示已激活，那么恭喜，你可以跳过这一步了。</p>
+<p>如果显示未激活，你可以通过购买正版 key 、使用 OEM key 的方式进行激活，如果你都没有，那么还可以使用 kms 进行激活。使用 kms 激活的系统与正版系统完全无异，但有可能需要每隔 180 天重新激活一次。</p>
+<p><strong>我必须强调，使用盗版不可怕，不丢人，但使用盗版不应该抱有优越感，你可以不给微软交钱，但还请抱着一颗对微软的敬仰之心。</strong></p>
+<p>此处我不公开提供 kms 激活软件，如果你不自信自己能找到合适的激活软件，或者懒癌发作，可以在本文最下方找到我的联系方式，向我索要。</p>
+<h3 id="2、验证账户-（如果登陆了微软账户）"><a href="#2、验证账户-（如果登陆了微软账户）" class="headerlink" title="2、验证账户 （如果登陆了微软账户）"></a>2、验证账户 （如果登陆了微软账户）</h3><p>打开 <code>开始菜单</code> -&gt; <code>设置</code> -&gt;<code>账户</code> ，你可以在 <code>管理我的 Microsoft 账户</code> 下面找到一个 <code>验证</code> 的按钮，点击，按照提示对你的账户进行验证即可。</p>
+<h3 id="3、更新驱动"><a href="#3、更新驱动" class="headerlink" title="3、更新驱动"></a>3、更新驱动</h3><p>一般来说，Windows 10 自带的网卡驱动都是可用的，你可以直接连接 wifi 或网线上网。这时候，你只需要打开 <code>开始菜单</code> -&gt; <code>设置</code> -&gt; <code>更新和安全</code> -&gt; <code>Windows 更新</code> -&gt; <code>检查更新</code> 即可自行更新系统驱动程序和补丁。</p>
+<p>如果你的电脑无法上网，或者出现其他异常，你可以用其他电脑在官网下载适合自己电脑的驱动程序，然后转移到自己的电脑上进行安装。一般来说你都能在电脑的背后找到保修贴纸，你可以使用上面的 S/N 码快速找到驱动程序。下面给出几家常见的 OEM 厂商的官方驱动网站：</p>
+<ul>
+<li>联想 | Lenovo : <a href="http://support1.lenovo.com.cn/lenovo/wsi/Modules/NewDrive.aspx" target="_blank" rel="external">http://support1.lenovo.com.cn/lenovo/wsi/Modules/NewDrive.aspx</a></li>
+<li>华硕 | Asus : <a href="https://www.asus.com/cn/support" target="_blank" rel="external">https://www.asus.com/cn/support</a></li>
+<li>戴尔 | Dell : <a href="http://www.dell.com/support/home/cn/zh/19/products/?app=drivers" target="_blank" rel="external">http://www.dell.com/support/home/cn/zh/19/products/?app=drivers</a></li>
+<li>宏碁 | Acer : <a href="http://www.acer.com/ac/zh/CN/content/drivers" target="_blank" rel="external">http://www.acer.com/ac/zh/CN/content/drivers</a></li>
+<li>三星 | Samsung : <a href="http://www.samsung.com/cn/support/" target="_blank" rel="external">http://www.samsung.com/cn/support/</a></li>
+<li>惠普 | hp : <a href="http://support.hp.com/cn-zh/drivers" target="_blank" rel="external">http://support.hp.com/cn-zh/drivers</a></li>
+</ul>
+<h3 id="4、设置侧边栏各文件夹的位置-可跳过"><a href="#4、设置侧边栏各文件夹的位置-可跳过" class="headerlink" title="4、设置侧边栏各文件夹的位置(可跳过)"></a>4、设置侧边栏各文件夹的位置(可跳过)</h3><p>Windows 左侧边默认给出了 <code>视频</code>、<code>图片</code>、<code>文档</code>、<code>下载</code>、<code>音乐</code>、<code>桌面</code> 这六大快捷目录，基本能囊括你能见到的大部分文件类型。很多人也习惯于使用左侧边栏的这些目录存放文件，然而，这些目录的默认地址都在 C 盘，如果你直接使用这些目录可能导致 C 盘的空间愈来愈小，so~ 我们可以更改这些目录的存储位置到其他盘符。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_34.png" alt=""></p>
+<p>以 <code>视频</code> 目录为例，右键视频，选择 <code>属性</code> -&gt; <code>位置</code> -&gt; <code>移动</code> ，然后选择一个合适的盘符，并选择你喜欢的文件夹即可更改位置。更改好后，就可以放心的直接往里面塞东西而不用怕 C 盘空间不足啦。</p>
+<p><img src="http://oi0t0q67c.bkt.clouddn.com/blog_skill/ReinstallWindowsOS_35.png" alt=""></p>
+<h2 id="四、尾巴"><a href="#四、尾巴" class="headerlink" title="四、尾巴"></a>四、尾巴</h2><p>装系统简直就是 21 世纪的必备技能，无论是从省心还是省钱的角度，你都应该学会这玩意。不过如果你有一个会装系统的男(女)朋友，当我没说。</p>
+<p>总有一些人认为会重装系统就是玩电脑的大神了，照这个逻辑，会搬砖的人都能盖个卢浮宫出来么？世界上哪有什么大牛，所谓的大牛只是比小白多了一颗爱折腾的心罢了。</p>
+
+    </div>
+
+    
+    
+
+    
+    
+
+</article>
+
+<div class="prev-next">
+    <div class="wrapper">
+
+        
+        
+        <div class="prev">
+            <a href="/blog/essay/school-stipend/">
+                < Newer
+            </a>
+        </div>
+        
+
+        
+        
+        <div class="next">
+            <a href="/blog/skill/live-mail-register/">
+                Older >
+            </a>
+        </div>
+        
+
+    </div>
+</div>
+
+
+
+    </div>
+</div>
+
+</div>
+
+<footer>
+    <div class="container text-center">
+
+        
+        <p class="copyright">
+            <span>&copy; 2015 - 2017</span>
+            <span> / </span>
+            <span><a href="http://varzy.me" target="_blank">Aiden Zhao</a></span>
+        </p>
+
+    </div>
+</footer>
+
+
+</body>
+
+</html>

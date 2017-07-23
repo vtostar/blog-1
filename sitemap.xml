@@ -2,378 +2,385 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://varzy.me/about/index.html</loc>
+    <loc>http://varzy.me/404.html</loc>
     
-    <lastmod>2017-07-23T02:10:18.391Z</lastmod>
+    <lastmod>2017-07-23T10:44:08.599Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Skill/VSCodeGuide/</loc>
+    <loc>http://varzy.me/about/index.html</loc>
+    
+    <lastmod>2017-07-23T10:25:35.576Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://varzy.me/essay/dark-tao-hua-yuan-ji/</loc>
+    
+    <lastmod>2017-07-23T09:55:55.231Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://varzy.me/skill/win-lu-php/</loc>
+    
+    <lastmod>2017-07-23T09:29:03.721Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://varzy.me/mess/naive-ren/</loc>
+    
+    <lastmod>2017-07-23T09:18:38.835Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://varzy.me/skill/vscode-guide/</loc>
     
     <lastmod>2017-07-23T02:03:02.112Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Skill/SSGuide/</loc>
+    <loc>http://varzy.me/skill/ss-guide/</loc>
     
     <lastmod>2017-07-23T02:02:59.491Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Skill/ReinstallWindowsOS/</loc>
+    <loc>http://varzy.me/skill/reinstall-windows_os/</loc>
     
     <lastmod>2017-07-23T02:02:56.740Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Skill/PrivateGitRepository/</loc>
+    <loc>http://varzy.me/skill/private-git-repository-build/</loc>
     
     <lastmod>2017-07-23T02:02:53.332Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Skill/LiveMailRegister/</loc>
+    <loc>http://varzy.me/skill/live-mail-register/</loc>
     
     <lastmod>2017-07-23T02:02:50.199Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Skill/HexoOptimization/</loc>
+    <loc>http://varzy.me/skill/hexo-optimization/</loc>
     
     <lastmod>2017-07-23T02:02:45.911Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Skill/HexoGuide/</loc>
+    <loc>http://varzy.me/skill/hexo-guide/</loc>
     
     <lastmod>2017-07-23T02:02:42.311Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Skill/GitList/</loc>
+    <loc>http://varzy.me/skill/git-comb/</loc>
     
     <lastmod>2017-07-23T02:02:39.480Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Skill/GithubPages/</loc>
+    <loc>http://varzy.me/skill/github-pages/</loc>
     
     <lastmod>2017-07-23T02:02:36.399Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Skill/DiskConversion/</loc>
+    <loc>http://varzy.me/skill/disk-conversion/</loc>
     
     <lastmod>2017-07-23T02:02:34.235Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Skill/AMPZipInstall/</loc>
+    <loc>http://varzy.me/skill/amp-install/</loc>
     
     <lastmod>2017-07-23T02:02:31.119Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Mess/win-lu-php/</loc>
-    
-    <lastmod>2017-07-23T02:02:23.174Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://varzy.me/Mess/TheSoundOfSlience/</loc>
+    <loc>http://varzy.me/mess/the-sound-of-slience/</loc>
     
     <lastmod>2017-07-23T02:02:20.397Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Mess/naive.ren/</loc>
-    
-    <lastmod>2017-07-23T02:02:11.507Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://varzy.me/Mess/HelloWorld/</loc>
+    <loc>http://varzy.me/mess/hello-world/</loc>
     
     <lastmod>2017-07-23T02:01:49.330Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Mess/HelloHexo/</loc>
+    <loc>http://varzy.me/mess/hello-hexo/</loc>
     
     <lastmod>2017-07-23T02:01:44.832Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Mess/BingBunny/</loc>
+    <loc>http://varzy.me/mess/bing-bunny/</loc>
     
     <lastmod>2017-07-23T02:01:41.661Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Life/TravelOfBeijing/</loc>
+    <loc>http://varzy.me/life/travel-of-beijing/</loc>
     
     <lastmod>2017-07-23T02:01:31.808Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Life/SubscriptionExpenses/</loc>
+    <loc>http://varzy.me/life/subscription-expenses/</loc>
     
     <lastmod>2017-07-23T02:01:28.025Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Life/SidedMicrosoft2/</loc>
+    <loc>http://varzy.me/life/sided-microsoft-2/</loc>
     
     <lastmod>2017-07-23T02:01:25.363Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Life/SidedMicrosoft/</loc>
+    <loc>http://varzy.me/life/sided-microsoft/</loc>
     
     <lastmod>2017-07-23T02:01:20.888Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Life/Resume/</loc>
-    
-    <lastmod>2017-07-23T02:01:15.608Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://varzy.me/Life/PoorMan/</loc>
+    <loc>http://varzy.me/life/poor-man/</loc>
     
     <lastmod>2017-07-23T02:01:12.606Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Life/MyBirthdayOf2017/</loc>
+    <loc>http://varzy.me/life/my-birthday-of-2017/</loc>
     
     <lastmod>2017-07-23T02:01:09.701Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Life/HandmadeWallet/</loc>
+    <loc>http://varzy.me/life/handmade-wallet/</loc>
     
     <lastmod>2017-07-23T02:01:06.561Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Life/FastMail/</loc>
+    <loc>http://varzy.me/life/change-to-fastmail/</loc>
     
     <lastmod>2017-07-23T02:01:03.566Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Life/DomainMonster/</loc>
+    <loc>http://varzy.me/life/domain-monster/</loc>
     
     <lastmod>2017-07-23T02:00:59.262Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Life/2016Summary/</loc>
+    <loc>http://varzy.me/life/2016-summary/</loc>
     
     <lastmod>2017-07-23T02:00:56.404Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Essay/ZhangYi/</loc>
+    <loc>http://varzy.me/essay/reckless-wiseman/</loc>
     
     <lastmod>2017-07-23T02:00:42.477Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Essay/YoutubeAD/</loc>
+    <loc>http://varzy.me/essay/youtube-ad/</loc>
     
     <lastmod>2017-07-23T02:00:39.401Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Essay/WuKong2/</loc>
+    <loc>http://varzy.me/essay/wu-kong-2/</loc>
     
     <lastmod>2017-07-23T02:00:36.382Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Essay/WuKong/</loc>
+    <loc>http://varzy.me/essay/wu-kong/</loc>
     
     <lastmod>2017-07-23T02:00:33.967Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Essay/ThinkerLCX/</loc>
+    <loc>http://varzy.me/essay/after-reaing-thinker/</loc>
     
     <lastmod>2017-07-23T02:00:31.576Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Essay/SinaVdisk/</loc>
+    <loc>http://varzy.me/essay/sina-vdisk/</loc>
     
     <lastmod>2017-07-23T02:00:29.092Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Essay/SilentCity/</loc>
+    <loc>http://varzy.me/essay/silent-city/</loc>
     
     <lastmod>2017-07-23T02:00:26.144Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Essay/SchoolStipend/</loc>
+    <loc>http://varzy.me/essay/school-stipend/</loc>
     
     <lastmod>2017-07-23T02:00:23.307Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Essay/RightsOfGay/</loc>
+    <loc>http://varzy.me/essay/rights-of-gay/</loc>
     
     <lastmod>2017-07-23T02:00:19.701Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Essay/Rank8People/</loc>
+    <loc>http://varzy.me/essay/rank-8-people/</loc>
     
     <lastmod>2017-07-23T02:00:15.243Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Essay/NoteSoftware/</loc>
+    <loc>http://varzy.me/essay/note-software/</loc>
     
     <lastmod>2017-07-23T02:00:07.056Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Essay/IdeaOnNewYear/</loc>
+    <loc>http://varzy.me/essay/idea-on-new-year/</loc>
     
     <lastmod>2017-07-23T02:00:04.371Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Essay/GoodAmway/</loc>
+    <loc>http://varzy.me/essay/software-amway/</loc>
     
     <lastmod>2017-07-23T02:00:00.287Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Essay/FuckingAlipay/</loc>
+    <loc>http://varzy.me/essay/fucking-alipay/</loc>
     
     <lastmod>2017-07-23T01:59:56.295Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Essay/FuckBaiDu3/</loc>
+    <loc>http://varzy.me/essay/fcuk-baidu-3/</loc>
     
     <lastmod>2017-07-23T01:59:53.402Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Essay/FuckBaiDu2/</loc>
+    <loc>http://varzy.me/essay/fcuk-baidu-2/</loc>
     
     <lastmod>2017-07-23T01:59:51.126Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Essay/FcukBaiDu/</loc>
+    <loc>http://varzy.me/essay/fcuk-baidu/</loc>
     
     <lastmod>2017-07-23T01:59:47.698Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Essay/DifficultToUseOffice/</loc>
+    <loc>http://varzy.me/essay/difficult-to-use-office/</loc>
     
     <lastmod>2017-07-23T01:59:42.105Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Essay/ChinaAnima/</loc>
+    <loc>http://varzy.me/essay/china-anima/</loc>
     
     <lastmod>2017-07-23T01:59:37.804Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Essay/BirthControl/</loc>
+    <loc>http://varzy.me/essay/birth-control/</loc>
     
     <lastmod>2017-07-23T01:59:34.892Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Essay/BianXingJi/</loc>
+    <loc>http://varzy.me/essay/bian-xing-ji/</loc>
     
     <lastmod>2017-07-23T01:59:32.139Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Essay/BanCPU/</loc>
+    <loc>http://varzy.me/essay/ban-cpu/</loc>
     
     <lastmod>2017-07-23T01:59:29.532Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Essay/AlcoholAndPeople/</loc>
+    <loc>http://varzy.me/essay/alcohol-and-people/</loc>
     
     <lastmod>2017-07-23T01:59:24.645Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Essay/360Cloud/</loc>
+    <loc>http://varzy.me/essay/360-cloud-close/</loc>
     
     <lastmod>2017-07-23T01:59:21.943Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://varzy.me/Essay/90Teen/</loc>
+    <loc>http://varzy.me/essay/90-teen/</loc>
     
     <lastmod>2017-07-23T01:59:17.920Z</lastmod>
     
