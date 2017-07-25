@@ -1,7 +1,7 @@
 ---
 title: Git 命令梳理
 date: 2017-01-18
-categories: Skill
+categories: Code
 tags:
   - original
   - git
