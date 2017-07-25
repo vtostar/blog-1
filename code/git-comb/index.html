@@ -170,16 +170,16 @@
 <span class="line">git <span class="keyword">add</span><span class="bash"> -p</span>
 <span class="line"></span><span class="comment"># 将文件添加到暂存区时，要求逐次手动确认</span></span>
 </pre></td></tr></table></figure>
-<h3 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h3><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<h3 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
 <span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="attribute">git</span> rm<span class="meta"> [file]</span></span>
-<span class="line"><span class="comment"># 删除工作区的文件，并将此操作放入暂存区。等同于在文件资源管理器中手动删除</span></span>
+</pre></td><td class="code"><pre><span class="line">git rm [file]</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 删除工作区的文件，并将此操作放入暂存区。等同于在文件资源管理器中手动删除</span></span>
 <span class="line"></span>
-<span class="line"><span class="attribute">git</span> rm --cached<span class="meta"> [file]</span></span>
-<span class="line"><span class="comment"># 停止追踪指定文件，但该文件会保留在工作区</span></span>
+<span class="line">git rm --cached [file]</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 停止追踪指定文件，但该文件会保留在工作区</span></span>
 </pre></td></tr></table></figure>
 <h2 id="提交"><a href="#提交" class="headerlink" title="提交"></a>提交</h2><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
@@ -192,7 +192,7 @@
 <span class="line">git commit -m <span class="string">"[description]"</span> [file1] [file2]</span>
 <span class="line"><span class="meta"># 提交暂存区的指定文件到仓库</span></span>
 </pre></td></tr></table></figure>
-<h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
@@ -219,31 +219,31 @@
 <span class="line">25</span>
 <span class="line">26</span>
 </pre></td><td class="code"><pre><span class="line">git status</span>
-<span class="line"><span class="comment"># 显示变更过的文件</span></span>
+<span class="line"><span class="meta">#</span><span class="bash"> 显示变更过的文件</span></span>
 <span class="line"></span>
-<span class="line">git <span class="built_in">log</span> ( -[<span class="built_in">num</span>] )</span>
-<span class="line"><span class="comment"># 显示当前分支的版本历史，默认显示三次。可以在后面跟 -[num] 参数自定义显示次数</span></span>
+<span class="line">git log ( -[num] )</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 显示当前分支的版本历史，默认显示三次。可以在后面跟 -[num] 参数自定义显示次数</span></span>
 <span class="line"></span>
-<span class="line">git <span class="built_in">log</span> <span class="comment">--pretty=oneline ( -[num] )</span></span>
-<span class="line"><span class="comment"># 使提交信息一条仅占一行。如果不加 -[num] 参数，则默认显示过去 30 次提交信息</span></span>
+<span class="line">git log --pretty=oneline ( -[num] )</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 使提交信息一条仅占一行。如果不加 -[num] 参数，则默认显示过去 30 次提交信息</span></span>
 <span class="line"></span>
-<span class="line">git <span class="built_in">log</span> <span class="comment">--graph</span></span>
-<span class="line"><span class="comment"># 查看分支合并图</span></span>
+<span class="line">git log --graph</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 查看分支合并图</span></span>
 <span class="line"></span>
 <span class="line">git reflog</span>
-<span class="line"><span class="comment"># 查看 HEAD 的每一次变化历史</span></span>
+<span class="line"><span class="meta">#</span><span class="bash"> 查看 HEAD 的每一次变化历史</span></span>
 <span class="line"></span>
 <span class="line">git diff</span>
-<span class="line"><span class="comment"># 显示所有文件的暂存区和工作区的差异</span></span>
+<span class="line"><span class="meta">#</span><span class="bash"> 显示所有文件的暂存区和工作区的差异</span></span>
 <span class="line"></span>
-<span class="line">git diff <span class="comment">-- [file]</span></span>
-<span class="line"><span class="comment"># 显示某个文件的暂存区和工作区的差异</span></span>
+<span class="line">git diff -- [file]</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 显示某个文件的暂存区和工作区的差异</span></span>
 <span class="line"></span>
 <span class="line">git diff HEAD</span>
-<span class="line"><span class="comment"># 显示所有文件的工作区与当前分支最新 commit 之间的差异</span></span>
+<span class="line"><span class="meta">#</span><span class="bash"> 显示所有文件的工作区与当前分支最新 commit 之间的差异</span></span>
 <span class="line"></span>
-<span class="line">git diff HEAD <span class="comment">-- [file]</span></span>
-<span class="line"><span class="comment"># 显示某个文件的工作区与当前分支最新 commit 之间的差异</span></span>
+<span class="line">git diff HEAD -- [file]</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 显示某个文件的工作区与当前分支最新 commit 之间的差异</span></span>
 </pre></td></tr></table></figure>
 <h2 id="撤销"><a href="#撤销" class="headerlink" title="撤销"></a>撤销</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
@@ -481,7 +481,7 @@
 <span class="line">git remote show [remote]</span>
 <span class="line"><span class="meta">#</span><span class="bash"> 显示某个远程仓库的信息</span></span>
 </pre></td></tr></table></figure>
-<h3 id="推送"><a href="#推送" class="headerlink" title="推送"></a>推送</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<h3 id="推送"><a href="#推送" class="headerlink" title="推送"></a>推送</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
@@ -495,18 +495,18 @@
 <span class="line">12</span>
 <span class="line">13</span>
 </pre></td><td class="code"><pre><span class="line">git push ( [remote] [local_branch]:[remote_branch] )</span>
-<span class="line"><span class="meta"># 推送本地当前分支的修改到远程仓库相应追踪分支。如果当前分支只有一个追踪分支，连远程主机名都可以省略</span></span>
-<span class="line"><span class="meta"># 如果该远程分支不存在，则会被新建</span></span>
-<span class="line"><span class="meta"># 注意，分支推送顺序的写法是 <span class="meta-string">&lt;来源地&gt;</span>:<span class="meta-string">&lt;目的地&gt;</span>，所以 git pull 是 <span class="meta-string">&lt;远程分支&gt;</span>:<span class="meta-string">&lt;本地分支&gt;</span>，而 git push 是 <span class="meta-string">&lt;本地分支&gt;</span>:<span class="meta-string">&lt;远程分支&gt;</span></span></span>
+<span class="line"><span class="meta">#</span><span class="bash"> 推送本地当前分支的修改到远程仓库相应追踪分支。如果当前分支只有一个追踪分支，连远程主机名都可以省略</span></span>
+<span class="line"><span class="meta">#</span><span class="bash"> 如果该远程分支不存在，则会被新建</span></span>
+<span class="line"><span class="meta">#</span><span class="bash"> 注意，分支推送顺序的写法是 &lt;来源地&gt;:&lt;目的地&gt;，所以 git pull 是 &lt;远程分支&gt;:&lt;本地分支&gt;，而 git push 是 &lt;本地分支&gt;:&lt;远程分支&gt;</span></span>
 <span class="line"></span>
 <span class="line">git push -u origin master</span>
-<span class="line"><span class="meta"># 把当前 master 分支首次推送到远程</span></span>
+<span class="line"><span class="meta">#</span><span class="bash"> 把当前 master 分支首次推送到远程</span></span>
 <span class="line"></span>
 <span class="line">git push origin [branch]</span>
-<span class="line"><span class="meta"># 上传本地指定分支到远程仓库</span></span>
+<span class="line"><span class="meta">#</span><span class="bash"> 上传本地指定分支到远程仓库</span></span>
 <span class="line"></span>
 <span class="line">git push origin -a</span>
-<span class="line"><span class="meta"># 推送所有分支到远程仓库</span></span>
+<span class="line"><span class="meta">#</span><span class="bash"> 推送所有分支到远程仓库</span></span>
 </pre></td></tr></table></figure>
 <h3 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h3><figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>

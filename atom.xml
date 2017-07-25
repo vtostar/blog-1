@@ -5,7 +5,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="http://varzy.me/"/>
-  <updated>2017-07-23T09:55:55.231Z</updated>
+  <updated>2017-07-25T04:01:05.861Z</updated>
   <id>http://varzy.me/</id>
   
   <author>
@@ -16,11 +16,228 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>我的 css 野路子</title>
+    <link href="http://varzy.me/code/zen-of-css/"/>
+    <id>http://varzy.me/code/zen-of-css/</id>
+    <published>2017-07-24T06:18:17.797Z</published>
+    <updated>2017-07-25T04:01:05.861Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近给我的博客撸了一套主题，编写过程中也是梳理了一番许久不用的 css 知识，正好凑一篇文章出来。本来想给本文起名《我的 css 之道》，但想来自己的那点破烂东西还远不能称道，顶多算是些野路子，遂有题如此。</p>
+<h2 id="Container-and-Wrapper"><a href="#Container-and-Wrapper" class="headerlink" title="Container and Wrapper"></a>Container and Wrapper</h2><p>现在的网页布局几乎都有一个居中的效果，在 bootstrap 中，这个样式由 <code>.container</code> 选择器控制。而在我的野路子里也有这样一个选择器用来表述布局的最外层，专门用于控制页面的缩进。</p>
+<p>scss:</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+</pre></td><td class="code"><pre><span class="line">@<span class="keyword">media</span> screen and (min-width: <span class="variable">$width-break-point</span>) &#123;</span>
+<span class="line">  <span class="selector-class">.container</span> &#123;</span>
+<span class="line">    <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">3rem</span>;</span>
+<span class="line">  &#125;</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line">@<span class="keyword">media</span> screen and (max-width: <span class="variable">$width-break-point</span>) &#123;</span>
+<span class="line">  <span class="selector-class">.container</span> &#123;</span>
+<span class="line">    <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">2rem</span>;</span>
+<span class="line">  &#125;</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="selector-class">.container</span> &#123;</span>
+<span class="line">  <span class="attribute">box-sizing</span>: border-box;</span>
+<span class="line">  <span class="attribute">max-width</span>: <span class="variable">$width-max-container</span>;</span>
+<span class="line">  <span class="attribute">margin</span>: <span class="number">0</span> auto;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<p>而 <code>wrapper</code> 通常被用于描述一部分样式的外层包裹，比如将 <code>wrapper</code> 设为 <code>display: flex</code> 用于实现内部元素的 flex 效果。</p>
+<p>html:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"wrapper"</span>&gt;</span></span>
+<span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span>inner-1<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>
+<span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span>inner-2<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>
+<span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>
+</pre></td></tr></table></figure>
+<p>scss:</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line"><span class="selector-class">.wrapper</span> &#123;</span>
+<span class="line">  <span class="attribute">display</span>: flex;</span>
+<span class="line">  <span class="attribute">justify-content</span>: space-around;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h2 id="CSS-BEM"><a href="#CSS-BEM" class="headerlink" title="CSS BEM?"></a>CSS BEM?</h2><p>CSS 的 BEM 思想是一个伟大的创新，使用特定的写法就可以把 css 变成类似 id 的效果，几乎完全避免了 css 间的样式干扰。但这种写法也经常被人诟病写法太过丑陋，并且一不小心就会写出极长的选择器。</p>
+<p>而 sass / less 等 css 预处理器的使用能很大程度上优化 BEM 的实现。我们完全可以使用嵌套语法和 <code>&amp;</code> 符号使选择器的编写变得简单。但实际上 BEM 结构对于小型项目来说仍然太过复杂，甚至不值得去使用。在我的博客主题开发过程中，我就深刻感觉到了这一点。因此我再次发挥创新精神，设计了一套似乎是更加简单的思想，目前自我感觉良好。</p>
+<p>首先，我们需要将网站整体分块，并作为一个选择器的根选择器，根选择器保持唯一即可，比如 <code>header</code>, <code>.main</code>, <code>footer</code>。从根选择器内部的第一层开始就是布局选择器。比如 <code>header</code> 中的标题，就可以直接书写 <code>title</code> 而非 <code>header-title</code>。当我需要往内层继续嵌套标签时，就无限级的通过 <code>-</code> 进行连接即可，而非 BEM 中的 <code>--</code> 或 <code>__</code>。</p>
+<p>这样做的好处是，我们只需要保证根选择器的不同，就可以实现该选择器内部所有 css 的互不干扰，同时 BEM 的写法也使得我们的选择器会变得极其工整易于阅读。</p>
+<p><strong>NOTICE HERE</strong>:</p>
+<ul>
+<li>如果 <code>-</code> 连接符超过两个，就表示你的 html 嵌套已经超过了三层，那么这时你应当考虑布局的合理性</li>
+<li>如果是以标签选择器作为根选择器，那么在其他使用了该标签的模块仍有可能出现样式干扰，因此我们最好为标签选择器添加 class 或 id</li>
+<li>在原生的 BEM 思想中，<code>-</code> 仅表示两个单词之间的空格，而在我的野路子中，<code>-</code> 直接就是选择器和子选择器间的连接符。因此，我使用了 <code>_</code> 来表示单词之间的连接</li>
+</ul>
+<p>html:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">header</span> <span class="attr">class</span>=<span class="string">"page_header"</span>&gt;</span></span>
+<span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span></span>
+<span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"title-meta"</span>&gt;</span></span>
+<span class="line">      <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"title-meta-inner"</span>&gt;</span>inner<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span>
+<span class="line">   <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span>
+<span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>
+<span class="line"><span class="tag">&lt;/<span class="name">header</span>&gt;</span></span>
+</pre></td></tr></table></figure>
+<p>scss:</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+</pre></td><td class="code"><pre><span class="line"><span class="selector-tag">header</span><span class="selector-class">.page_header</span> &#123;</span>
+<span class="line">  <span class="selector-class">.title</span> &#123;</span>
+<span class="line">    &amp;:before &#123;</span>
+<span class="line">      <span class="attribute">content</span>: <span class="string">''</span>;</span>
+<span class="line">    &#125;</span>
+<span class="line">    &amp;-<span class="selector-tag">meta</span> &#123;</span>
+<span class="line">      <span class="attribute">font-size</span>: <span class="number">1.6rem</span>;</span>
+<span class="line">      &amp;-inner &#123;</span>
+<span class="line">        <span class="attribute">color</span>: <span class="number">#eee</span>;</span>
+<span class="line">      &#125;</span>
+<span class="line">    &#125;</span>
+<span class="line">  &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<p>当我们的页面中的某个部分有多个“块”进行填充时，比如 <code>.main</code> 中会有 <code>.index</code> 和 <code>.post_body</code> 两个部分，那么我们应当在 <code>.main</code> 中将子模块的样式引入，这样能进一步降低 css 之间的关联。</p>
+<p>html:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"main"</span>&gt;</span></span>
+<span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"index"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>
+<span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"post_body"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>
+<span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>
+</pre></td></tr></table></figure>
+<p>scss:</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line"><span class="selector-class">.main</span> &#123;</span>
+<span class="line">  @<span class="keyword">import</span> <span class="string">"index"</span>;</span>
+<span class="line">  @<span class="keyword">import</span> <span class="string">"post_body"</span>;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h2 id="Use-rem"><a href="#Use-rem" class="headerlink" title="Use rem"></a>Use rem</h2><p>rem 是一种基于 html 根元素字体大小而定的单位，比起 px 的死板和 em 的过于灵活，rem 无疑是当下前端开发中的最优解。</p>
+<p>我使用 rem 也采用了一种当下较为流行的做法，即在 <code>html</code> 选择器中声明字体大小为 <code>62.5%</code>。这个值是怎么来的呢？</p>
+<p>1rem 默认等于 16px，因此我们在使用 rem 的时候，都需要让想要的 px 数值除以 16 才能获得我们想要的 rem 值。这样无疑增加了许多繁琐的工作，总不能撸 css 还得在旁边摆个计算器吧？</p>
+<p>而将字体大小默认设置为 62.5% 是因为</p>
+<blockquote>
+<p>10 / 16 * 100% = 62.5%</p>
+</blockquote>
+<p>那么此时 1rem 就等于 10px 了。此时我们可以直接将想要的 px 值除以 10，就能得到相应的 rem 值。</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line"><span class="selector-tag">html</span> &#123;</span>
+<span class="line">  <span class="attribute">font-size</span>: <span class="number">62.5%</span>;</span>
+<span class="line">  <span class="selector-tag">body</span> &#123;</span>
+<span class="line">    <span class="comment">// 设置网页基本字号为 16 px</span></span>
+<span class="line">    <span class="attribute">font-size</span>: <span class="number">1.6rem</span>;</span>
+<span class="line">  &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h2 id="Use-variables"><a href="#Use-variables" class="headerlink" title="Use variables"></a>Use variables</h2><p>现在的 css 预处理器甚至是原生的 css 都支持变量的使用，因此我们可以定义一些十分有效的变量用于统一页面风格，并且使修改样式的操作变得更加简单。</p>
+<p>比如我们可以定义一些常用的字体大小，并在页面中仅使用这些变量。当我们需要对某一部分的字体大小进行修改时，就可以只变动变量，就可以实现页面整体的修改。</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line"><span class="variable">$size-regular</span>: <span class="number">1.6rem</span> !default;</span>
+<span class="line"><span class="variable">$size-small</span>: <span class="variable">$size-regular</span> - .<span class="number">2rem</span> !default;</span>
+<span class="line"><span class="variable">$size-small-x</span>: <span class="variable">$size-regular</span> - .<span class="number">4rem</span> !default;</span>
+<span class="line"><span class="variable">$size-small-xx</span>: <span class="variable">$size-regular</span> - .<span class="number">6rem</span> !default;</span>
+<span class="line"><span class="variable">$size-large</span>: <span class="variable">$size-regular</span> + .<span class="number">2rem</span> !default;</span>
+<span class="line"><span class="variable">$size-large-x</span>: <span class="variable">$size-regular</span> + .<span class="number">4rem</span> !default;</span>
+<span class="line"><span class="variable">$size-large-xx</span>: <span class="variable">$size-regular</span> + .<span class="number">6rem</span> !default;</span>
+</pre></td></tr></table></figure>
+<h2 id="Color-Design"><a href="#Color-Design" class="headerlink" title="Color Design"></a>Color Design</h2><blockquote>
+<p>一个页面中不要使用三种以上的颜色。</p>
+</blockquote>
+<p>这恐怕是设计师必读金句了。而 Google 的一票设计师根据这句话提炼出了“主色”，“辅色”，“点缀色”原则，并将其运用至 Material Design 中，彻底颠覆了人们对安卓 app 傻大黑粗的印象。至今，Material Design 的色彩哲学也一直被奉为设计圈的标杆。</p>
+<p>我个人偏爱性冷淡的颜色搭配，钟爱黑白灰三种颜色，点缀色一般使用红色，其中最爱的就是 <code>#b7472a</code>。</p>
+<p>目前也有许多专门提供配色方案的网站，以下列举两个自认为不错的：</p>
+<ul>
+<li><a href="http://colorhunt.co/" target="_blank" rel="external">http://colorhunt.co/</a></li>
+<li><a href="https://coolors.co/" target="_blank" rel="external">https://coolors.co/</a></li>
+</ul>
+<h2 id="Font-Design"><a href="#Font-Design" class="headerlink" title="Font Design"></a>Font Design</h2><p>Google Fonts 大法好！</p>
+<p>我个人来讲，衬线体最爱 <code>Bellefair</code>，非衬线体最爱 <code>Roboto</code>。</p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>如今的前端框架和 ui 组件越来越多，自己动手撸 css 似乎已经成为了一件“浪漫”的事情。前段时间甚至一度有“前端已经不需要掌握 css” 的论调产生。</p>
+<p>有理，但不对。</p>
+<p>前端页面 8 分在设计，2 分在代码。现成的 ui 组件可能完美符合你的业务需求，但不一定完美符合你的内心需求。css 作为一门设计驱动的语言能最大程度的体现开发者的风格和审美，而使用前端组件库却不一定能体现之。</p>
+<p>不会 css 但能出活的前端，和能用 css 出活的前端，还是有不同的。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近给我的博客撸了一套主题，编写过程中也是梳理了一番许久不用的 css 知识，正好凑一篇文章出来。本来想给本文起名《我的 css 之道》，但想来自己的那点破烂东西还远不能称道，顶多算是些野路子，遂有题如此。&lt;/p&gt;
+&lt;h2 id=&quot;Container-and-Wrapper
+    
+    </summary>
+    
+      <category term="Code" scheme="http://varzy.me/categories/Code/"/>
+    
+    
+      <category term="original" scheme="http://varzy.me/tags/original/"/>
+    
+      <category term="front-end" scheme="http://varzy.me/tags/front-end/"/>
+    
+      <category term="css" scheme="http://varzy.me/tags/css/"/>
+    
+  </entry>
+  
+  <entry>
     <title>如何以《桃花源记》为素材写一篇黑暗小小说？ - 施眠 的回答</title>
     <link href="http://varzy.me/essay/dark-tao-hua-yuan-ji/"/>
     <id>http://varzy.me/essay/dark-tao-hua-yuan-ji/</id>
     <published>2017-07-22T16:00:00.000Z</published>
-    <updated>2017-07-23T09:55:55.231Z</updated>
+    <updated>2017-07-24T02:55:46.645Z</updated>
     
     <content type="html"><![CDATA[<p>二十二世纪初，一美国德州人，将网络钓鱼诈骗作为自己的事业。</p>
 <p>一日，在暗网浏览，遇见一网页，排版拙劣，都是不认识的文字。他对此感到奇怪，点入页面中唯一的链接，想要一探其中奥秘。</p>
@@ -30,7 +247,7 @@
 <p>德州人已经下线，顺便保存网址。到了有关部门，汇报德州太守。太守派人寻找先前论坛，输入网址，只得到404，不能再次找到原来的页面。</p>
 <p>华盛顿特工，是技术高超的人士，听说这件事，开心地计划去寻找。没有结果，神秘死亡，后来就没有问津的人了。</p>
 <hr>
-<p>作者：施眠<br>链接：<a href="https://www.zhihu.com/question/37473154/answer/201173002" target="_blank" rel="external">https://www.zhihu.com/question/37473154/answer/201173002</a></p>
+<p>作者：施眠<br>来源：知乎<br>链接：<a href="https://www.zhihu.com/question/37473154/answer/201173002" target="_blank" rel="external">https://www.zhihu.com/question/37473154/answer/201173002</a></p>
 ]]></content>
     
     <summary type="html">
@@ -50,10 +267,10 @@
   
   <entry>
     <title>Windows 下撸 PHP 的最佳实践</title>
-    <link href="http://varzy.me/skill/win-lu-php/"/>
-    <id>http://varzy.me/skill/win-lu-php/</id>
+    <link href="http://varzy.me/code/win-lu-php/"/>
+    <id>http://varzy.me/code/win-lu-php/</id>
     <published>2017-07-16T16:00:00.000Z</published>
-    <updated>2017-07-23T09:29:03.721Z</updated>
+    <updated>2017-07-24T06:23:34.731Z</updated>
     
     <content type="html"><![CDATA[<p>撸 PHP 代码讲究的是一个 <del>说学逗唱</del> 开发环境与运行环境的大一统。而 Windows 平台天生与 PHP 相性不合，怎么在 Windows 下撸 PHP 也算是一门学问。谨以此文献给和我一样买不起 mac，玩不转 Gnome，又离不开 Windows 的 phper。</p>
 <a id="more"></a>
@@ -194,14 +411,14 @@
     
     </summary>
     
-      <category term="Skill" scheme="http://varzy.me/categories/Skill/"/>
+      <category term="Code" scheme="http://varzy.me/categories/Code/"/>
     
     
       <category term="original" scheme="http://varzy.me/tags/original/"/>
     
-      <category term="tutorial" scheme="http://varzy.me/tags/tutorial/"/>
-    
       <category term="php" scheme="http://varzy.me/tags/php/"/>
+    
+      <category term="tutorial" scheme="http://varzy.me/tags/tutorial/"/>
     
   </entry>
   
@@ -530,11 +747,11 @@
     
       <category term="original" scheme="http://varzy.me/tags/original/"/>
     
+      <category term="tutorial" scheme="http://varzy.me/tags/tutorial/"/>
+    
       <category term="software" scheme="http://varzy.me/tags/software/"/>
     
       <category term="microsoft" scheme="http://varzy.me/tags/microsoft/"/>
-    
-      <category term="tutorial" scheme="http://varzy.me/tags/tutorial/"/>
     
   </entry>
   
@@ -683,9 +900,9 @@
     
       <category term="original" scheme="http://varzy.me/tags/original/"/>
     
-      <category term="tutorial" scheme="http://varzy.me/tags/tutorial/"/>
-    
       <category term="php" scheme="http://varzy.me/tags/php/"/>
+    
+      <category term="tutorial" scheme="http://varzy.me/tags/tutorial/"/>
     
   </entry>
   
@@ -724,9 +941,9 @@
       <category term="Life" scheme="http://varzy.me/categories/Life/"/>
     
     
-      <category term="idea" scheme="http://varzy.me/tags/idea/"/>
-    
       <category term="original" scheme="http://varzy.me/tags/original/"/>
+    
+      <category term="idea" scheme="http://varzy.me/tags/idea/"/>
     
       <category term="article" scheme="http://varzy.me/tags/article/"/>
     
@@ -737,11 +954,11 @@
     <link href="http://varzy.me/essay/ban-cpu/"/>
     <id>http://varzy.me/essay/ban-cpu/</id>
     <published>2017-03-01T16:00:00.000Z</published>
-    <updated>2017-07-23T01:59:29.532Z</updated>
+    <updated>2017-07-24T02:56:18.451Z</updated>
     
     <content type="html"><![CDATA[<p>前几天看到一个节目，关于津巴布韦的通货膨胀的。以前津巴布韦的70%土地在极少数的白人手中，后来政府强制从白人手中夺走土地，分给黑人，导致白人纷纷逃到国外，政府的做法也导致了其他国家对它的封锁。黑人拿到土地之后，由于没有技术，导致很多土地种植不了，饥荒饿死了很多人。后来政府更是大量印制钞票，最终通货膨胀到100万亿津巴布韦元=40美分。而且印一张100万亿的津巴布韦元的成本超过了100万亿津巴布韦元。现在是有9种法定货币（包括人民币）在津巴布韦流通，而本国的货币不用了。结论：有时候，把强者干掉，不一定弱者就能变强。把Google干掉，百度如何？</p>
 <hr>
-<p>作者：绝影<br>链接：<a href="https://www.zhihu.com/question/33611803/answer/57016358" target="_blank" rel="external">https://www.zhihu.com/question/33611803/answer/57016358</a><br>来源：知乎</p>
+<p>作者：绝影<br>来源：知乎<br>链接：<a href="https://www.zhihu.com/question/33611803/answer/57016358" target="_blank" rel="external">https://www.zhihu.com/question/33611803/answer/57016358</a></p>
 ]]></content>
     
     <summary type="html">
@@ -818,9 +1035,9 @@
       <category term="Essay" scheme="http://varzy.me/categories/Essay/"/>
     
     
-      <category term="idea" scheme="http://varzy.me/tags/idea/"/>
-    
       <category term="original" scheme="http://varzy.me/tags/original/"/>
+    
+      <category term="idea" scheme="http://varzy.me/tags/idea/"/>
     
   </entry>
   
@@ -829,13 +1046,13 @@
     <link href="http://varzy.me/essay/alcohol-and-people/"/>
     <id>http://varzy.me/essay/alcohol-and-people/</id>
     <published>2017-01-31T05:00:00.000Z</published>
-    <updated>2017-07-23T01:59:24.645Z</updated>
+    <updated>2017-07-23T10:59:03.381Z</updated>
     
     <content type="html"><![CDATA[<p>“过节了吧，喝酒了吧，你不喝这杯就是看不起他。过节了吧，喝酒了吧，从初一喝到初四了吧。”</p>
 <p>春节期间，少不了各种聚会，家族聚会，朋友聚会，甚至上下级，客户之间乘机联络感情，有聚会，自然免不了推杯换盏。中国人的聚会，是少不了酒，也少不了让人头疼的劝酒文化，尤其是这句“你不喝这杯就是看不起我”，让人形同绑架，此句一出，只有两个结果，要么撕破脸，要么得遂人愿，乖乖喝酒。</p>
 <p>很多女性很烦躁，怎么老公男朋友就这么不听劝呢，明明平时看起来优雅矜持，上了酒桌，怎么也这么不要命地喝？男人也很苦恼啊，这个是同事领导，那个是同学发小，还有一个没啥本事，那人跟你一个姥姥，哪个不得喝，哪个不得给面子？最最头疼的是，我们的父母，有的也要赴这样的酒局，甚至喝得酩酊大醉，让人不得不担忧，问起来却又振振有词，“你不喝就是看不起人家。”</p>
 <p>“你不喝就是看不起我”让人深恶痛绝，很多人对它恨之入骨，可是为什么总要有人用它来劝酒，而你偏偏又不得不喝？</p>
-<p>.酒精可以使人快速的分泌多巴胺，只要一小点就能让你快活，不是中国人爱喝酒，全世界人民其实都爱喝酒，在所有国家，喝酒都是社交的信号，酒精是一种最廉价的拉近距离的方式，喝酒跟社交紧密地联系在一起，甚至可以说，任何喝酒的吃饭都是社交。</p>
+<p>酒精可以使人快速的分泌多巴胺，只要一小点就能让你快活，不是中国人爱喝酒，全世界人民其实都爱喝酒，在所有国家，喝酒都是社交的信号，酒精是一种最廉价的拉近距离的方式，喝酒跟社交紧密地联系在一起，甚至可以说，任何喝酒的吃饭都是社交。</p>
 <p>但是劝酒文化却是中国独有，而且劝就劝高度白酒，喝白酒就喝一大杯，不喝就是看不起我，更是全世界独一份儿。“你不喝就是看不起我”这句话其实概括了中国劝酒文化的精髓，霍老爷今天给大家解读一下。</p>
 <p>首先要说 ，劝酒这个传统远远超过高度白酒的历史，中国蒸馏酒有史以来最早明确记录是元代，目前认为最早也不会超过宋代。但是劝酒却古已有之。</p>
 <p>东汉末年，张绣投降曹操，曹操一高兴张绣群臣和诸将。曹操在前面敬酒，典韦拿着斧子紧随其后。曹操向谁敬酒，典韦都举起斧子，斧刃径有尺余，寒光闪闪，这堪称史上最强势劝酒，酒宴至始自终，张绣及其将帅均不敢仰视，乖乖喝酒。当然这个故事结局也不好，张绣后来还是反了曹操。</p>
@@ -943,13 +1160,13 @@
     
       <category term="original" scheme="http://varzy.me/tags/original/"/>
     
-      <category term="net" scheme="http://varzy.me/tags/net/"/>
-    
-      <category term="hexo" scheme="http://varzy.me/tags/hexo/"/>
-    
       <category term="tutorial" scheme="http://varzy.me/tags/tutorial/"/>
     
       <category term="github" scheme="http://varzy.me/tags/github/"/>
+    
+      <category term="net" scheme="http://varzy.me/tags/net/"/>
+    
+      <category term="hexo" scheme="http://varzy.me/tags/hexo/"/>
     
       <category term="coding" scheme="http://varzy.me/tags/coding/"/>
     
@@ -1027,11 +1244,11 @@
     
       <category term="original" scheme="http://varzy.me/tags/original/"/>
     
+      <category term="tutorial" scheme="http://varzy.me/tags/tutorial/"/>
+    
       <category term="software" scheme="http://varzy.me/tags/software/"/>
     
       <category term="net" scheme="http://varzy.me/tags/net/"/>
-    
-      <category term="tutorial" scheme="http://varzy.me/tags/tutorial/"/>
     
       <category term="shadowsocks" scheme="http://varzy.me/tags/shadowsocks/"/>
     
@@ -1039,10 +1256,10 @@
   
   <entry>
     <title>Git 命令梳理</title>
-    <link href="http://varzy.me/skill/git-comb/"/>
-    <id>http://varzy.me/skill/git-comb/</id>
+    <link href="http://varzy.me/code/git-comb/"/>
+    <id>http://varzy.me/code/git-comb/</id>
     <published>2017-01-17T16:00:00.000Z</published>
-    <updated>2017-07-23T02:02:39.480Z</updated>
+    <updated>2017-07-24T06:23:38.985Z</updated>
     
     <content type="html"><![CDATA[<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
@@ -1091,16 +1308,16 @@
 <span class="line">git <span class="keyword">add</span><span class="bash"> -p</span>
 <span class="line"></span><span class="comment"># 将文件添加到暂存区时，要求逐次手动确认</span></span>
 </pre></td></tr></table></figure>
-<h3 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h3><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<h3 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
 <span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="attribute">git</span> rm<span class="meta"> [file]</span></span>
-<span class="line"><span class="comment"># 删除工作区的文件，并将此操作放入暂存区。等同于在文件资源管理器中手动删除</span></span>
+</pre></td><td class="code"><pre><span class="line">git rm [file]</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 删除工作区的文件，并将此操作放入暂存区。等同于在文件资源管理器中手动删除</span></span>
 <span class="line"></span>
-<span class="line"><span class="attribute">git</span> rm --cached<span class="meta"> [file]</span></span>
-<span class="line"><span class="comment"># 停止追踪指定文件，但该文件会保留在工作区</span></span>
+<span class="line">git rm --cached [file]</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 停止追踪指定文件，但该文件会保留在工作区</span></span>
 </pre></td></tr></table></figure>
 <h2 id="提交"><a href="#提交" class="headerlink" title="提交"></a>提交</h2><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
@@ -1113,7 +1330,7 @@
 <span class="line">git commit -m <span class="string">"[description]"</span> [file1] [file2]</span>
 <span class="line"><span class="meta"># 提交暂存区的指定文件到仓库</span></span>
 </pre></td></tr></table></figure>
-<h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
@@ -1140,31 +1357,31 @@
 <span class="line">25</span>
 <span class="line">26</span>
 </pre></td><td class="code"><pre><span class="line">git status</span>
-<span class="line"><span class="comment"># 显示变更过的文件</span></span>
+<span class="line"><span class="meta">#</span><span class="bash"> 显示变更过的文件</span></span>
 <span class="line"></span>
-<span class="line">git <span class="built_in">log</span> ( -[<span class="built_in">num</span>] )</span>
-<span class="line"><span class="comment"># 显示当前分支的版本历史，默认显示三次。可以在后面跟 -[num] 参数自定义显示次数</span></span>
+<span class="line">git log ( -[num] )</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 显示当前分支的版本历史，默认显示三次。可以在后面跟 -[num] 参数自定义显示次数</span></span>
 <span class="line"></span>
-<span class="line">git <span class="built_in">log</span> <span class="comment">--pretty=oneline ( -[num] )</span></span>
-<span class="line"><span class="comment"># 使提交信息一条仅占一行。如果不加 -[num] 参数，则默认显示过去 30 次提交信息</span></span>
+<span class="line">git log --pretty=oneline ( -[num] )</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 使提交信息一条仅占一行。如果不加 -[num] 参数，则默认显示过去 30 次提交信息</span></span>
 <span class="line"></span>
-<span class="line">git <span class="built_in">log</span> <span class="comment">--graph</span></span>
-<span class="line"><span class="comment"># 查看分支合并图</span></span>
+<span class="line">git log --graph</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 查看分支合并图</span></span>
 <span class="line"></span>
 <span class="line">git reflog</span>
-<span class="line"><span class="comment"># 查看 HEAD 的每一次变化历史</span></span>
+<span class="line"><span class="meta">#</span><span class="bash"> 查看 HEAD 的每一次变化历史</span></span>
 <span class="line"></span>
 <span class="line">git diff</span>
-<span class="line"><span class="comment"># 显示所有文件的暂存区和工作区的差异</span></span>
+<span class="line"><span class="meta">#</span><span class="bash"> 显示所有文件的暂存区和工作区的差异</span></span>
 <span class="line"></span>
-<span class="line">git diff <span class="comment">-- [file]</span></span>
-<span class="line"><span class="comment"># 显示某个文件的暂存区和工作区的差异</span></span>
+<span class="line">git diff -- [file]</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 显示某个文件的暂存区和工作区的差异</span></span>
 <span class="line"></span>
 <span class="line">git diff HEAD</span>
-<span class="line"><span class="comment"># 显示所有文件的工作区与当前分支最新 commit 之间的差异</span></span>
+<span class="line"><span class="meta">#</span><span class="bash"> 显示所有文件的工作区与当前分支最新 commit 之间的差异</span></span>
 <span class="line"></span>
-<span class="line">git diff HEAD <span class="comment">-- [file]</span></span>
-<span class="line"><span class="comment"># 显示某个文件的工作区与当前分支最新 commit 之间的差异</span></span>
+<span class="line">git diff HEAD -- [file]</span>
+<span class="line"><span class="meta">#</span><span class="bash"> 显示某个文件的工作区与当前分支最新 commit 之间的差异</span></span>
 </pre></td></tr></table></figure>
 <h2 id="撤销"><a href="#撤销" class="headerlink" title="撤销"></a>撤销</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
@@ -1402,7 +1619,7 @@
 <span class="line">git remote show [remote]</span>
 <span class="line"><span class="meta">#</span><span class="bash"> 显示某个远程仓库的信息</span></span>
 </pre></td></tr></table></figure>
-<h3 id="推送"><a href="#推送" class="headerlink" title="推送"></a>推送</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<h3 id="推送"><a href="#推送" class="headerlink" title="推送"></a>推送</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
@@ -1416,18 +1633,18 @@
 <span class="line">12</span>
 <span class="line">13</span>
 </pre></td><td class="code"><pre><span class="line">git push ( [remote] [local_branch]:[remote_branch] )</span>
-<span class="line"><span class="meta"># 推送本地当前分支的修改到远程仓库相应追踪分支。如果当前分支只有一个追踪分支，连远程主机名都可以省略</span></span>
-<span class="line"><span class="meta"># 如果该远程分支不存在，则会被新建</span></span>
-<span class="line"><span class="meta"># 注意，分支推送顺序的写法是 <span class="meta-string">&lt;来源地&gt;</span>:<span class="meta-string">&lt;目的地&gt;</span>，所以 git pull 是 <span class="meta-string">&lt;远程分支&gt;</span>:<span class="meta-string">&lt;本地分支&gt;</span>，而 git push 是 <span class="meta-string">&lt;本地分支&gt;</span>:<span class="meta-string">&lt;远程分支&gt;</span></span></span>
+<span class="line"><span class="meta">#</span><span class="bash"> 推送本地当前分支的修改到远程仓库相应追踪分支。如果当前分支只有一个追踪分支，连远程主机名都可以省略</span></span>
+<span class="line"><span class="meta">#</span><span class="bash"> 如果该远程分支不存在，则会被新建</span></span>
+<span class="line"><span class="meta">#</span><span class="bash"> 注意，分支推送顺序的写法是 &lt;来源地&gt;:&lt;目的地&gt;，所以 git pull 是 &lt;远程分支&gt;:&lt;本地分支&gt;，而 git push 是 &lt;本地分支&gt;:&lt;远程分支&gt;</span></span>
 <span class="line"></span>
 <span class="line">git push -u origin master</span>
-<span class="line"><span class="meta"># 把当前 master 分支首次推送到远程</span></span>
+<span class="line"><span class="meta">#</span><span class="bash"> 把当前 master 分支首次推送到远程</span></span>
 <span class="line"></span>
 <span class="line">git push origin [branch]</span>
-<span class="line"><span class="meta"># 上传本地指定分支到远程仓库</span></span>
+<span class="line"><span class="meta">#</span><span class="bash"> 上传本地指定分支到远程仓库</span></span>
 <span class="line"></span>
 <span class="line">git push origin -a</span>
-<span class="line"><span class="meta"># 推送所有分支到远程仓库</span></span>
+<span class="line"><span class="meta">#</span><span class="bash"> 推送所有分支到远程仓库</span></span>
 </pre></td></tr></table></figure>
 <h3 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h3><figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
@@ -1502,7 +1719,7 @@
     
     </summary>
     
-      <category term="Skill" scheme="http://varzy.me/categories/Skill/"/>
+      <category term="Code" scheme="http://varzy.me/categories/Code/"/>
     
     
       <category term="original" scheme="http://varzy.me/tags/original/"/>
@@ -1744,11 +1961,11 @@
     
       <category term="original" scheme="http://varzy.me/tags/original/"/>
     
-      <category term="net" scheme="http://varzy.me/tags/net/"/>
-    
       <category term="tutorial" scheme="http://varzy.me/tags/tutorial/"/>
     
       <category term="github" scheme="http://varzy.me/tags/github/"/>
+    
+      <category term="net" scheme="http://varzy.me/tags/net/"/>
     
   </entry>
   
@@ -1757,7 +1974,7 @@
     <link href="http://varzy.me/skill/hexo-guide/"/>
     <id>http://varzy.me/skill/hexo-guide/</id>
     <published>2016-12-07T16:00:00.000Z</published>
-    <updated>2017-07-23T02:02:42.311Z</updated>
+    <updated>2017-07-23T11:06:14.230Z</updated>
     
     <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>之前决定迁移博客平台的时候选择了 jekyll，但在下愚笨，连 jekyll 的开发环境都没搭建成功，调整时只能先 push 到 github 才能看到效果，实属痛苦。今日花了一天时间，终于把博客迁移到了 Hexo，顿时有一种脱离苦海的感觉。虽说 Hexo 非常简单，但官方文档实在简略，第三方教程又繁杂不一，我在实践过程中还是遇到了不少问题，因此还是决定自己动手写上一写，一来帮助自己梳理思路，二来如果能帮到遇到相同问题的朋友就再好不过了。如有纰漏，欢迎斧正。</p>
 <p><strong>注意：</strong></p>
@@ -1894,7 +2111,7 @@
 <p>不得不说七牛的文件管理实在不甚好用，好在有朋友开发了不少第三方工具以供选择。而我选择的方案是一款叫做 <code>qiniu upload files</code> 的 chrome 插件。安装此插件后，使用七牛给出的密钥即可与之链接。该插件使用了类 Windows 文件夹的操作方式，使用起来比原版的不知道要高到哪里去了。</p>
 <p>此处给出 <code>qiniu upload files</code> 插件的应用商店链接：<br><a href="https://chrome.google.com/webstore/detail/qiniu-upload-files/emmfkgdgapbjphdolealbojmcmnphdcc" target="_blank" rel="external">https://chrome.google.com/webstore/detail/qiniu-upload-files/emmfkgdgapbjphdolealbojmcmnphdcc</a></p>
 <p>如果有不能科学上网的朋友，或者不愿意使用 chrome 插件的朋友，可以使用一款叫做 <code>MPic</code> 的桌面版软件。官网链接：<br><a href="http://mpic.lzhaofu.cn/" target="_blank" rel="external">http://mpic.lzhaofu.cn/</a></p>
-<h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2><p>请查看在下的另一篇文章：<a href="http://varzy.me/2-Skill/HexoOptimization/">Hexo 双线部署及性能优化</a></p>
+<h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2><p>请查看在下的另一篇文章：<strong>Hexo 双线部署及性能优化</strong></p>
 <h2 id="尾巴"><a href="#尾巴" class="headerlink" title="尾巴"></a>尾巴</h2><h3 id="一些注解"><a href="#一些注解" class="headerlink" title="一些注解"></a>一些注解</h3><ul>
 <li><code>hexo g</code> == <code>hexo generate</code></li>
 <li><code>hexo s</code> == <code>hexo server</code></li>
@@ -1930,41 +2147,15 @@
     
       <category term="original" scheme="http://varzy.me/tags/original/"/>
     
-      <category term="net" scheme="http://varzy.me/tags/net/"/>
-    
-      <category term="hexo" scheme="http://varzy.me/tags/hexo/"/>
-    
       <category term="tutorial" scheme="http://varzy.me/tags/tutorial/"/>
     
       <category term="github" scheme="http://varzy.me/tags/github/"/>
     
-      <category term="coding" scheme="http://varzy.me/tags/coding/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>hello, hexo</title>
-    <link href="http://varzy.me/mess/hello-hexo/"/>
-    <id>http://varzy.me/mess/hello-hexo/</id>
-    <published>2016-12-06T16:00:00.000Z</published>
-    <updated>2017-07-23T02:01:44.832Z</updated>
-    
-    <content type="html"><![CDATA[<p>This is my first blog in Hexo.</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;This is my first blog in Hexo.&lt;/p&gt;
-
-    
-    </summary>
-    
-      <category term="Mess" scheme="http://varzy.me/categories/Mess/"/>
-    
-    
-      <category term="original" scheme="http://varzy.me/tags/original/"/>
+      <category term="net" scheme="http://varzy.me/tags/net/"/>
     
       <category term="hexo" scheme="http://varzy.me/tags/hexo/"/>
+    
+      <category term="coding" scheme="http://varzy.me/tags/coding/"/>
     
   </entry>
   
