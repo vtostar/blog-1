@@ -677,7 +677,8 @@ footer {
       vertical-align: middle; }
 
 @media screen and (min-width: 46rem) {
-  .paginator a, .paginator span {
+  .paginator a,
+  .paginator span {
     padding: 0 1.6rem; }
   .paginator .wrapper {
     text-align: center; } }
@@ -691,8 +692,11 @@ footer {
 
 .paginator {
   padding-top: 4rem; }
-  .paginator a:link, .paginator a:visited {
+  .paginator a:link,
+  .paginator a:visited {
     color: #828282; }
+  .paginator a:hover {
+    color: #b7472a; }
 
 .categories a {
   word-wrap: break-word;
@@ -728,8 +732,11 @@ footer {
   display: flex;
   justify-content: space-between;
   font-size: 1.6rem; }
-  .prev-next .wrapper a:link, .prev-next .wrapper a:visited {
+  .prev-next .wrapper a:link,
+  .prev-next .wrapper a:visited {
     color: #828282; }
+  .prev-next .wrapper a:hover {
+    color: #b7472a; }
 
 .page ul, .page ol {
   padding-left: 3.2rem; }
