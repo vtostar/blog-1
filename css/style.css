@@ -573,9 +573,7 @@ header {
 
 @media screen and (max-width: 46rem) {
   .main .index .posts-item-meta {
-    text-align: left; }
-  .main .index .posts-item-title {
-    font-size: 1.6rem; } }
+    text-align: left; } }
 
 .main .index .posts {
   margin: 0;
