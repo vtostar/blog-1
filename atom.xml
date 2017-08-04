@@ -5,7 +5,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="http://varzy.me/"/>
-  <updated>2017-07-30T01:38:38.895Z</updated>
+  <updated>2017-08-04T03:24:17.252Z</updated>
   <id>http://varzy.me/</id>
   
   <author>
@@ -14,6 +14,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>这盛世，</title>
+    <link href="http://varzy.me/mess/fuck-indescribable/"/>
+    <id>http://varzy.me/mess/fuck-indescribable/</id>
+    <published>2017-08-03T16:00:00.000Z</published>
+    <updated>2017-08-04T03:24:17.252Z</updated>
+    
+    <content type="html"><![CDATA[<p>一键关停。Resillo。</p>
+<p>这盛世，</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;一键关停。Resillo。&lt;/p&gt;
+&lt;p&gt;这盛世，&lt;/p&gt;
+
+    
+    </summary>
+    
+      <category term="Mess" scheme="http://varzy.me/categories/Mess/"/>
+    
+    
+      <category term="original" scheme="http://varzy.me/tags/original/"/>
+    
+      <category term="fuckgfw" scheme="http://varzy.me/tags/fuckgfw/"/>
+    
+  </entry>
   
   <entry>
     <title>晒桌面</title>
@@ -261,7 +289,7 @@
     <link href="http://varzy.me/essay/dark-tao-hua-yuan-ji/"/>
     <id>http://varzy.me/essay/dark-tao-hua-yuan-ji/</id>
     <published>2017-07-22T16:00:00.000Z</published>
-    <updated>2017-07-24T02:55:46.645Z</updated>
+    <updated>2017-08-04T03:25:29.978Z</updated>
     
     <content type="html"><![CDATA[<p>二十二世纪初，一美国德州人，将网络钓鱼诈骗作为自己的事业。</p>
 <p>一日，在暗网浏览，遇见一网页，排版拙劣，都是不认识的文字。他对此感到奇怪，点入页面中唯一的链接，想要一探其中奥秘。</p>
@@ -287,6 +315,8 @@
     
       <category term="zhihu" scheme="http://varzy.me/tags/zhihu/"/>
     
+      <category term="fuckgfw" scheme="http://varzy.me/tags/fuckgfw/"/>
+    
   </entry>
   
   <entry>
@@ -294,7 +324,7 @@
     <link href="http://varzy.me/code/win-lu-php/"/>
     <id>http://varzy.me/code/win-lu-php/</id>
     <published>2017-07-16T16:00:00.000Z</published>
-    <updated>2017-07-24T06:23:34.731Z</updated>
+    <updated>2017-08-03T08:04:00.270Z</updated>
     
     <content type="html"><![CDATA[<p>撸 PHP 代码讲究的是一个 <del>说学逗唱</del> 开发环境与运行环境的大一统。而 Windows 平台天生与 PHP 相性不合，怎么在 Windows 下撸 PHP 也算是一门学问。谨以此文献给和我一样买不起 mac，玩不转 Gnome，又离不开 Windows 的 phper。</p>
 <a id="more"></a>
@@ -346,7 +376,7 @@
 <p>安装过程中需要设置 mysql 的 root 用户的初始密码</p>
 <h3 id="将-mysql-的默认编码设置为-utf-8"><a href="#将-mysql-的默认编码设置为-utf-8" class="headerlink" title="将 mysql 的默认编码设置为 utf-8"></a>将 mysql 的默认编码设置为 utf-8</h3><p>编辑 mysql 的配置文件：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">sudo vuim /etc/mysql/conf.d/mysql.cnf</span>
+</pre></td><td class="code"><pre><span class="line">sudo vim /etc/mysql/conf.d/mysql.cnf</span>
 </pre></td></tr></table></figure>
 <p>插入字符编码的相关设置：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span>
@@ -978,7 +1008,7 @@
     <link href="http://varzy.me/essay/ban-cpu/"/>
     <id>http://varzy.me/essay/ban-cpu/</id>
     <published>2017-03-01T16:00:00.000Z</published>
-    <updated>2017-07-24T02:56:18.451Z</updated>
+    <updated>2017-08-04T03:25:15.774Z</updated>
     
     <content type="html"><![CDATA[<p>前几天看到一个节目，关于津巴布韦的通货膨胀的。以前津巴布韦的70%土地在极少数的白人手中，后来政府强制从白人手中夺走土地，分给黑人，导致白人纷纷逃到国外，政府的做法也导致了其他国家对它的封锁。黑人拿到土地之后，由于没有技术，导致很多土地种植不了，饥荒饿死了很多人。后来政府更是大量印制钞票，最终通货膨胀到100万亿津巴布韦元=40美分。而且印一张100万亿的津巴布韦元的成本超过了100万亿津巴布韦元。现在是有9种法定货币（包括人民币）在津巴布韦流通，而本国的货币不用了。结论：有时候，把强者干掉，不一定弱者就能变强。把Google干掉，百度如何？</p>
 <hr>
@@ -995,6 +1025,8 @@
     
     
       <category term="zhihu" scheme="http://varzy.me/tags/zhihu/"/>
+    
+      <category term="fuckgfw" scheme="http://varzy.me/tags/fuckgfw/"/>
     
   </entry>
   
@@ -1035,10 +1067,10 @@
     <link href="http://varzy.me/essay/idea-on-new-year/"/>
     <id>http://varzy.me/essay/idea-on-new-year/</id>
     <published>2017-01-31T12:00:00.000Z</published>
-    <updated>2017-07-23T02:00:04.371Z</updated>
+    <updated>2017-08-04T03:25:42.846Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
-<p>It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness, it was the epoch of belief, it was the epoch of incredulity, it was the season of Light, it was the season of Darkness, it was the spring of hope, it was the winter of despair, we had everything before us, we had nothing before us, we were all going direct to Heaven, we were all going direct the other way. </p>
+<p>It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness, it was the epoch of belief, it was the epoch of incredulity, it was the season of Light, it was the season of Darkness, it was the spring of hope, it was the winter of despair, we had everything before us, we had nothing before us, we were all going direct to Heaven, we were all going direct the other way.</p>
 <p>—— 《A Tale of Two Cities》, Charles John Huffam Dickens</p>
 </blockquote>
 <p>2017 年春晚开始之前我还抱有一丝侥幸，也许 2016 年的春晚只是导演恶意舔菊，今年会有变化呢，然而意料之中的仍然是一节欢天喜地的政治课。想来怕是未来所有的春晚都要这样了。</p>
@@ -1062,6 +1094,8 @@
       <category term="original" scheme="http://varzy.me/tags/original/"/>
     
       <category term="idea" scheme="http://varzy.me/tags/idea/"/>
+    
+      <category term="fuckgfw" scheme="http://varzy.me/tags/fuckgfw/"/>
     
   </entry>
   
@@ -1201,7 +1235,7 @@
     <link href="http://varzy.me/skill/ss-guide/"/>
     <id>http://varzy.me/skill/ss-guide/</id>
     <published>2017-01-25T16:00:00.000Z</published>
-    <updated>2017-07-23T02:02:59.491Z</updated>
+    <updated>2017-08-04T03:26:19.939Z</updated>
     
     <content type="html"><![CDATA[<p>本教程谨献给那些每次用 ss 看片都要跑来问我的朋友们。</p>
 <h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>Windows 系统上您可以使用 ShadowsocksR 和 Shadowsocks 两种软件，差异不算很大，这里我们统一使用 ShadowsocksR( 以下简称为 SSR )。如果您学会了 ShadowsocksR 的操作，那么 Shadowsocks 您也一定可以无障碍使用了。<strong>注意，写下本文时，SSR 的最新版本是 4.0.3。在下不保证本文将会随着 SSR 的更新而更新。</strong></p>
@@ -1275,6 +1309,8 @@
       <category term="net" scheme="http://varzy.me/tags/net/"/>
     
       <category term="shadowsocks" scheme="http://varzy.me/tags/shadowsocks/"/>
+    
+      <category term="fuckgfw" scheme="http://varzy.me/tags/fuckgfw/"/>
     
   </entry>
   
@@ -1933,61 +1969,6 @@
     
     
       <category term="original" scheme="http://varzy.me/tags/original/"/>
-    
-      <category term="net" scheme="http://varzy.me/tags/net/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Github Pages 知识梳理</title>
-    <link href="http://varzy.me/skill/github-pages/"/>
-    <id>http://varzy.me/skill/github-pages/</id>
-    <published>2016-12-09T16:00:00.000Z</published>
-    <updated>2017-07-23T02:02:36.399Z</updated>
-    
-    <content type="html"><![CDATA[<p>之前一直被 Github Pages 搞得很迷，昨晚通过自己的实验，总算是有了清晰的思路，故在此梳理一番。</p>
-<h2 id="到底需不需要-gh-pages-分支？"><a href="#到底需不需要-gh-pages-分支？" class="headerlink" title="到底需不需要 gh-pages 分支？"></a>到底需不需要 gh-pages 分支？</h2><p>网上关于 Github Pages 的第三方介绍都比较简单，而且有很多矛盾的描述。你会发现有些人不创建 gh-pages 分支，而有些人则创建了该分支。实际上，Github Pages 是既可以在 master 分支建立，也可以在 gh-pages 分支上建立的。其区别在于，如果你在 master 分支上建立 Github Pages，那么你必须将网页文件统统放在 master 分支下。那么如果你的仓库不是前端项目，或者不打算制作为博客，而是只需要一个不太复杂的项目展示页，那么你就可以通过创建一个 gh-pages 的方式来单独存放网页文件，而 master 分支存放项目内容。</p>
-<h2 id="Github-Pages-的分类"><a href="#Github-Pages-的分类" class="headerlink" title="Github Pages 的分类"></a>Github Pages 的分类</h2><p>根据 <a href="https://pages.github.com/" target="_blank" rel="external">Github Pages 官网</a>的解释，Github Pages 分为 <code>User or organization site</code> 和 <code>Project site</code> 两种形式。这两种形式的区别如下：</p>
-<h3 id="User-or-organization-site"><a href="#User-or-organization-site" class="headerlink" title="User or organization site"></a>User or organization site</h3><p>如果要创建这种页面，你需要新建一个名为 <code>{yourUserName}.github.io</code> 的仓库，{yourUserName} 就是你的 Github 用户名。比如我的用户名是 varzy，那么我需要创建的仓库名称就是 varzy.github.io。<strong>这个站点相当于入口，也相当于网站的顶级域名，</strong>所以网上很多人用这种方式去制作自己的个人博客或网站。比如我就用了这种方式制作了该博客。如果有兴趣，欢迎参考我的这一篇文章：<a href="http://varzy.me/2-Skill/HexoGuide/">Hexo 不完全指南 - 安装、备份、注意事项</a>。</p>
-<p>使用这种仓库，一般是不需要创建 gh-pages 分支的，我们会直接使用 master 分支来存放网站文件。当然，如果你更想使用 gh-pages 分支来存放网页文件也不是不可以。</p>
-<h3 id="Project-site"><a href="#Project-site" class="headerlink" title="Project site"></a>Project site</h3><p>如果你的某一个仓库需要一个简单的页面来介绍它的相关内容，那么你就可以新建一个名为 gh-pages 的分支，并将网页文件存放于该分支下。Github 将默认将此分支下的内容解析为一个 Github Pages，而不需要进行任何设置。</p>
-<p>Project site 的域名规则是 <code>{yourUserName}.github.io/{repoName}</code>。比如我有一个名为 demo 的仓库，那么当我创建了 gh-pages 分支并推送后，就可以在浏览器中敲入 varzy.github.io/demo 来访问该项目的 Github Pages。</p>
-<h2 id="域名绑定"><a href="#域名绑定" class="headerlink" title="域名绑定"></a>域名绑定</h2><p>任何一个项目页面都可以绑定自定义域名，只需要将域名使用 CNAME 记录指向自己的 Github Pages 地址，并在 master 分支或 gh-pages 分支下建立名为 CNAME 的文件，将需要绑定的域名写入其中即可。</p>
-<p>大致思路如此，具体做法不再赘述。</p>
-<h2 id="一些自问自答"><a href="#一些自问自答" class="headerlink" title="一些自问自答"></a>一些自问自答</h2><p><strong>Q: 为什么我的 Github Pages 不加载引用资源(css, js, 图片)？</strong></p>
-<p>index.html 必须放置在用作 master 分支或 gh-pages 分支的根目录下，并且 index.html 中的资源引用路径必须正确。</p>
-<p><strong>Q: Github Pages 有没有什么限制？</strong></p>
-<p>有的。详见 Github Pages 帮助文档：</p>
-<blockquote>
-<p>GitHub Pages source repositories have a recommended limit of 1GB .</p>
-<p>Published GitHub Pages sites may be no larger than 1 GB.</p>
-<p>GitHub Pages sites have a bandwidth limit of 100GB or 100,000 requests per month.</p>
-<p>GitHub Pages sites have a limit of 10 builds per hour.</p>
-</blockquote>
-<p><strong>Q: 国内 Github 访问缓慢，有没有解决办法？</strong></p>
-<p>共有三种解决方案，请按需选择：</p>
-<ul>
-<li>去把墙炸了；</li>
-<li>教会所有看你博客的人翻墙；</li>
-<li>选择国内的 <a href="https://coding.net/" target="_blank" rel="external">Coding.net</a> 来存放你的页面。</li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;之前一直被 Github Pages 搞得很迷，昨晚通过自己的实验，总算是有了清晰的思路，故在此梳理一番。&lt;/p&gt;
-&lt;h2 id=&quot;到底需不需要-gh-pages-分支？&quot;&gt;&lt;a href=&quot;#到底需不需要-gh-pages-分支？&quot; class=&quot;headerlink&quot; 
-    
-    </summary>
-    
-      <category term="Skill" scheme="http://varzy.me/categories/Skill/"/>
-    
-    
-      <category term="original" scheme="http://varzy.me/tags/original/"/>
-    
-      <category term="tutorial" scheme="http://varzy.me/tags/tutorial/"/>
-    
-      <category term="github" scheme="http://varzy.me/tags/github/"/>
     
       <category term="net" scheme="http://varzy.me/tags/net/"/>
     
