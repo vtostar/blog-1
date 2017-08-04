@@ -101,7 +101,7 @@ sudo apt install mysql-server
 编辑 mysql 的配置文件：
 
 ``` shell
-sudo vuim /etc/mysql/conf.d/mysql.cnf
+sudo vim /etc/mysql/conf.d/mysql.cnf
 ```
 
 插入字符编码的相关设置：

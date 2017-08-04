@@ -4,6 +4,7 @@ date: 2017-07-23
 categories: Essay
 tags:
   - zhihu
+  - fuckgfw
 ---
 
 二十二世纪初，一美国德州人，将网络钓鱼诈骗作为自己的事业。

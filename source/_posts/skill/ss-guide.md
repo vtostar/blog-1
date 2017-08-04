@@ -8,6 +8,7 @@ tags:
   - shadowsocks
   - original
 	- tutorial
+  - fuckgfw
 ---
 
 本教程谨献给那些每次用 ss 看片都要跑来问我的朋友们。
